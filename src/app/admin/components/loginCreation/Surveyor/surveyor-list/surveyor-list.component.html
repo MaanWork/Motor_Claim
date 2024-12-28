@@ -1,0 +1,290 @@
+<mat-card>
+
+    <mat-expansion-panel hideToggle [expanded]="panelOpen">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i>&nbsp;EXISTING ASSESSOR'S</h6>
+            </mat-panel-title>
+            <mat-panel-description class="admin-grid-header">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{insuranceName}}</b>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row">
+            <div class="col-4">
+
+            </div>
+            <div class="col-2 offset-6 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNewSurveyor()">
+                    ADD NEW ASSESSOR
+                  </button>
+            </div>
+        </div>
+        <!-- <form [formGroup]="SurveyorInsForm">
+
+            <div class="row my-3">
+                <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto3">
+                        <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete" (optionSelected)="onChangeCompanyGridList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="SurveyorInsForm.get('InsuranceId').errors">
+                            {{SurveyorInsForm.controls['InsuranceId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </form> -->
+        <ng-container *ngIf="tableData && SurveyorList.length!=0">
+            <app-data-table-two [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)" (onSurveyEmit)="onEditLoginDetails($event)"></app-data-table-two>
+        </ng-container>
+        <ng-container *ngIf="tableData && SurveyorList.length==0">
+            <div class="row text-center">
+                <h3>No Data Available</h3>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!tableData && InsuGridCode!=''">
+            <app-loader></app-loader>
+        </ng-container>
+
+    </mat-expansion-panel>
+    <ng-container *ngIf="!panelOpen">
+        <form [formGroup]="SurveyorForm">
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Assessor Name</mat-label>
+                        <input matInput type="text" formControlName="Username" required />
+                        <mat-error *ngIf="SurveyorForm.get('Username').errors">
+                            {{SurveyorForm.controls['Username'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" formControlName="CoreLoginId" maxlength="12" appNumbersOnly required/>
+                        <mat-error *ngIf="SurveyorForm.get('CoreLoginId').errors">
+                            {{SurveyorForm.controls['CoreLoginId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Regulatory Code</mat-label>
+                        <input matInput type="text" formControlName="CoreLoginId" maxlength="12" appNumbersOnly required/>
+                        <mat-error *ngIf="SurveyorForm.get('CoreLoginId').errors">
+                            {{SurveyorForm.controls['CoreLoginId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+
+
+
+            </div>
+
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput type="text" formControlName="UserMail" required />
+                        <mat-error *ngIf="SurveyorForm.get('UserMail').errors">
+                            {{SurveyorForm.controls['UserMail'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput type="text" formControlName="MobileNumber" required />
+                        <mat-error *ngIf="SurveyorForm.get('MobileNumber').errors">
+                            {{SurveyorForm.controls['MobileNumber'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address 1</mat-label>
+                        <input matInput type="text" formControlName="SurveyorAddress" required />
+                        <mat-error *ngIf="SurveyorForm.get('SurveyorAddress').errors">
+                            {{SurveyorForm.controls['SurveyorAddress'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address 2</mat-label>
+                        <input matInput type="text" formControlName="SurveyorAddress" required />
+                        <mat-error *ngIf="SurveyorForm.get('SurveyorAddress').errors">
+                            {{SurveyorForm.controls['SurveyorAddress'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsuranceComp | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="SurveyorForm.get('InsuranceId').errors">
+                            {{SurveyorForm.controls['InsuranceId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+
+                </div> -->
+                <!-- <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Region</mat-label>
+                        <input type="text" placeholder="Select Region" matInput formControlName="RegionCode" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredRegionList | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="SurveyorForm.get('RegionCode').errors">
+                            {{SurveyorForm.controls['RegionCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+
+                </div> -->
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input matInput type="text" formControlName="SurveyorAddress" required />
+                        <mat-error *ngIf="SurveyorForm.get('SurveyorAddress').errors">
+                            {{SurveyorForm.controls['SurveyorAddress'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Branch</mat-label>
+                        <mat-select formControlName="BranchCode" name="BranchCode" required multiple>
+                            <mat-select-trigger>
+                                {{(SurveyorForm?.controls?.BranchCode.value?.length === 0 ? '' : SurveyorForm?.controls?.BranchCode?.value[0])| branchbyname |async}}
+                                <span *ngIf="SurveyorForm.controls.BranchCode.value?.length > 1" class="example-additional-selection">
+                                    (+{{SurveyorForm.controls.BranchCode.value.length - 1}}
+                                    {{SurveyorForm.controls.BranchCode.value?.length === 2 ? 'other' : 'others'}})
+                                </span>
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let option of filteredBranchList | async" [value]="option.Code">
+                                {{option.CodeDesc}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Branch</mat-label>
+                        <input type="text" placeholder="Select Branch" matInput formControlName="BranchCode" [matAutocomplete]="auto2" required>
+                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onChangeBranchList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredBranchList | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="SurveyorForm.get('BranchCode').errors">
+                            {{SurveyorForm.controls['BranchCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field> -->
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <textarea matInput required formControlName="Remarks" name="Remarks"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <div class="py-1">Assessor Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <ng-container *ngIf="loginSection">
+                <div class="row my-2">
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Login Id</mat-label>
+                            <input matInput type="text" formControlName="LoginId" required />
+                            <mat-error *ngIf="SurveyorForm.get('LoginId').errors">
+                                {{SurveyorForm.controls['LoginId'].errors.message}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="text" formControlName="Password" required />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Re-Password</mat-label>
+                            <input matInput type="text" formControlName="RePassword" required />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <div class="py-1">Login Status</div>
+                        <mat-radio-group aria-label="Select an option" formControlName="Status">
+                            <mat-radio-button value="Y">Active</mat-radio-button>
+                            <mat-radio-button value="N">De-Active</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </ng-container>
+
+
+            <ng-container *ngIf="InsertMode == 'Update'">
+                <div class="row my-2">
+                    <div class="col-4">
+                        <div class="py-2 text-primary">Do You Want Change Password ?</div>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="ChangePassword" [ngModelOptions]="{standalone: true}">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <ng-container *ngIf="ChangePassword == 'Y'">
+                        <div class="col-3">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>New Password</mat-label>
+                                <input matInput type="text" [(ngModel)]="NewPassword" required [ngModelOptions]="{standalone: true}" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Re-New Password</mat-label>
+                                <input matInput type="text" [(ngModel)]="ReNewPassword" required [ngModelOptions]="{standalone: true}" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 py-2">
+                            <button mat-raised-button color="warn" (click)="onChangePassword()">Change</button>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onFormSubmit()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>
+
+</mat-card>

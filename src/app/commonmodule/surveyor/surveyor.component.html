@@ -1,0 +1,47 @@
+<div class="flex-container">
+    <mat-card class="flex-item-left m-1 p-0">
+        <ng-container *ngIf="PolicyInformation">
+            <app-policy-information [PolicyInformation]="PolicyInformation"></app-policy-information>
+        </ng-container>
+    </mat-card>
+    <mat-card class="flex-item-right m-1 p-0">
+        <ng-container *ngIf="PolicyInformation">
+            <app-customer-information [CustomerInformation]="PolicyInformation"></app-customer-information>
+        </ng-container>
+    </mat-card>
+    
+</div>
+<div class="flex-container">
+    <mat-card class="flex-item-left m-1 p-0">
+        <ng-container *ngIf="PolicyInformation">
+            <app-vehicle-information [VehicleInformation]="PolicyInformation"></app-vehicle-information>
+        </ng-container>
+    </mat-card>
+    <mat-card class="flex-item-left m-1 p-0">
+        <ng-container>
+            <app-damage-info></app-damage-info>
+        </ng-container>
+    </mat-card>
+    
+</div>
+<div class="flex-container">
+    <mat-card class="flex-item-left m-1 p-0">
+        <ng-container *ngIf="claimIntimationInfo">
+            <app-loss-map [form]="surveryorForm"></app-loss-map>
+        </ng-container>
+    </mat-card>
+    <mat-card class="flex-item-left m-1 p-0">
+        <ng-container *ngIf="claimIntimationInfo">
+            <app-driver-details [DriverInfo]="claimIntimationInfo"></app-driver-details>
+        </ng-container>
+    </mat-card>
+</div>
+
+<div class="flex-container">
+    <mat-card class="flex-item-left m-1 p-0">
+        <ng-container>
+            <app-surveyor-grid></app-surveyor-grid>
+        </ng-container>
+    </mat-card>
+</div>
+

@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>Wave Off Document</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-card class="my-2" *ngIf="!data.isHaveDocument">
+      <div class="row">
+        <div class="col-md-6 offset-3">
+          <h3 class="text-center">{{data?.Document?.documentDesc}}</h3>
+        </div>
+          <div class="col-md-6 offset-3" *ngIf="logindata.UserType == 'surveyor'">
+            <mat-form-field class="mat-form-width" appearance="fill">
+              <mat-label>Enter Your Remarks</mat-label>
+              <textarea matInput placeholder="Report" [(ngModel)]="WaveOffRemarks"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 offset-3" *ngIf="logindata.UserType == 'claimofficer'">
+            <mat-form-field class="mat-form-width" appearance="fill">
+              <mat-label>Enter Your Remarks</mat-label>
+              <textarea matInput placeholder="Report" [(ngModel)]="WaveOffRemarksClaim"></textarea>
+            </mat-form-field>
+          </div>
+      </div>
+    <div class="my-2 text-center p-1">
+      <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+      <button class="mx-2" mat-raised-button color="primary" (click)="onSubmitDocumentReports()">Submit</button>
+    </div>
+  </mat-card>
+  <mat-card class="my-2" *ngIf="data.isHaveDocument">
+    <div class="row">
+      <div class="col-md-6 offset-3">
+        <h3 class="text-center">{{data?.Document?.documentDesc}}</h3>
+      </div>
+      <div class="col-md-6 offset-3">
+        <input style="display: none;" type="file" (change)="onLossDocuments($event)" #fileInput>
+        <div  id="Image_Set"
+          (click)="fileInput.click()" class="image-grid" style="
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                  height: 150px;
+                  width: 100%;">
+                   <div class="center">
+                    <i class="far fa-images"></i> Just Drag or Click
+                   </div>
+        </div>
+      </div>
+    </div>
+  <div class="my-2 text-center p-1">
+    <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button class="mx-2" mat-raised-button color="primary" (click)="onUpload()">Upload</button>
+  </div>
+</mat-card>
+</mat-dialog-content>

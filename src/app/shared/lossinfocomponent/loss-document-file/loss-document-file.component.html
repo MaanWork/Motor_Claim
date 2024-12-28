@@ -1,0 +1,163 @@
+<div class="card" *ngIf="DocumentImageList.length != 0">
+    <div class="card-header">
+        Damage Documents
+    </div>
+    <div class="card-body">
+        <div *ngIf="NoDocumentList.length>0">
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-warning">
+                    <div class="row">
+                        <div class="col-md-3">
+                            DOCUMENT NAME
+                        </div>
+                        <div class="col-md-3">
+                            SURVEYOR REMARKS
+                        </div>
+                        <div class="col-md-3">
+                            CLAIMOFFICER REMARKS
+                        </div>
+                        <div class="col-md-3">
+                            ACTION
+                        </div>
+
+                    </div>
+                </li>
+                <li class="list-group-item" *ngFor="let item of NoDocumentList">
+                    <div class="row">
+                        <div class="col-md-3">
+                            {{item.documentDesc}}
+                        </div>
+                        <div class="col-md-3">
+                            {{item.Remarks}}
+                        </div>
+                        <div class="col-md-3">
+                            <span class="text-primary">{{item.Waiveoffyn == 'Y'?'Officer Accepted':'Not Accepted...'}}</span>, {{item.Waiveoffclaimremarks}}
+                        </div>
+                        <div class="col-md-3">
+                            <ng-container *ngIf="logindata.UserType == 'surveyor'">
+                                <button mat-raised-button color="warn" (click)="onHaveDocument(item)">I Have Document</button>
+                            </ng-container>
+                            <ng-container *ngIf="logindata.UserType == 'claimofficer'">
+                                <mat-radio-group aria-label="Select an option" [ngModel]="item.Waiveoffyn">
+                                    <mat-radio-button value="Y" (change)="onGetWaveoff(item,'Y')">Accept</mat-radio-button>
+                                    <mat-radio-button value="R" (change)="onGetWaveoff(item,'N')">Reject</mat-radio-button>
+                                </mat-radio-group>
+                            </ng-container>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="more-document my-2">
+            <mat-expansion-panel hideToggle [expanded]="panelOpen" *ngIf="addDocSection">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <i class="fas fa-plus-circle m-2"> More Document</i>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="more-doc-grid">
+                    <div class="doc-card" *ngFor="let doc of additionalDocumentImageList">
+                        <div class="p-2">
+                            <mat-checkbox class="example-margin" (change)="addDocumentDesc($event.checked,doc)" [checked]="checkSelectedDoc(doc)">{{doc.documentDesc}}</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <button mat-raised-button class="mx-1" [disabled]="damageListDisabled()" (click)="submitAdditionalDocument()"><i class="fas fa-upload"></i>Update Document List</button>
+                </div>
+            </mat-expansion-panel>
+        </div>
+        <div>
+            <div class="lossdocument">
+                <ng-container *ngFor="let item of DocumentImageList">
+                    <div class="" *ngIf="item.docApplicable == 'CLAIM-INTIMATION' || item.docApplicable == 'CLAIM'">
+                        <div class="imag-card">
+                            <div class="text-center d-flex" *ngIf="item.IsMandatory =='Y'">
+                                <div class="text-danger flex-fill text-center" *ngIf="!claimInfo">
+                                    Required *
+                                </div>
+                            </div>
+                            <ng-container *ngIf="pagefrom!='garageComponent'">
+                                <input style="display: none;" type="file" (change)="onUploadDocuments($event,item)" #fileInput>
+                                <div id="Image_{{item.documentId}}" (click)="fileInput.click()" class="image-grid" style="
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            height: 150px;
+                            width: 100%;
+                            position: relative;">
+                                    <div class="center">
+                                        <b class="text-dark">
+                      {{item.documentDesc}}<br>
+                      <mat-icon>library_add</mat-icon><br> Add More Documents
+                    </b>
+                                    </div>
+                                </div>
+                                <div class="text-center d-flex mt-1">
+                                    <ng-container *ngIf="item.IsMandatory =='Y'">
+                                        <div *ngIf="!my['image'+item.documentId]" class="text-primary flex-fill text-center">
+                                            <mat-checkbox class="example-margin" [(ngModel)]="isCheck['document'+item.documentId]" (change)="isChangeDocumentReason($event,item)">Don't have Document</mat-checkbox>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+
+                        </div>
+                        <mat-expansion-panel [expanded]="checkPanelImage(item.documentId)">
+                            <mat-expansion-panel-header (click)="onGetTotalImagesById(item)">
+                                <mat-panel-title>
+                                    <ng-container *ngIf="pagefrom!='garageComponent'">
+                                        View Uploaded Images
+                                    </ng-container>
+
+                                    <ng-container *ngIf="pagefrom=='garageComponent'">
+                                        {{item.documentDesc}}
+                                    </ng-container>
+
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <div class="accident-gallery">
+                                    <mat-card class="accident-gallery-photo" *ngFor="let image of TotalImagesById">
+                                        <img *ngIf="image.FileType!='pdf'" class="img-fluid" [src]="image.url">
+                                        <div class="imgbox" *ngIf="image.FileType=='pdf'" style="
+                                        background-size: cover;
+                                        height: 100px;
+                                        padding: 2px;">
+                                            <h5 class="text-center">{{image.fileName}}</h5>
+                                        </div>
+                                        <div class="d-flex mt-1">
+                                            <a mat-raised-button class="mx-1" *ngIf="image.FileType!='pdf'" (click)="onViewImage(image.url,image.fileName)"><i
+                                                class="far fa-eye mx-1"></i></a>
+                                            <a mat-raised-button class="mx-1" (click)="onDownloadImage(image)" download><i
+                                                class="fas fa-download mx-1"></i></a>
+                                            <a mat-raised-button class="mx-1" id="delete_{{item.documentId}}" (click)="onDeleteDocument(item)" [hidden]="checkHidden()"><i class="far fa-trash-alt"></i></a>
+                                        </div>
+                                    </mat-card>
+                                    <div class="col-12 text-center" *ngIf="TotalImagesById.length == 0">
+                                        <h5>No Documents Available</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </mat-expansion-panel>
+
+
+
+
+
+                    </div>
+
+                </ng-container>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- <div class="card-footer text-center">
+    <button mat-raised-button class="mx-1" [disabled]="damageListDisabled()" (click)="onUploadFiles()"><i
+        class="fas fa-upload"></i>Upload Document</button>
+  </div> -->
+</div>

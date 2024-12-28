@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Garage List Assigned for this Loss</h2>
+<mat-dialog-content class="mat-typography">
+   <mat-card>
+
+    <ng-container *ngIf="tableData">
+      <app-data-table-one
+      [data]="tableData"
+      [cols]="columnHeader"
+      (onGetGarageDetails)="onGetGarageDetails($event)"
+      (onGarageSelect)="onGarageSelect($event)"
+      >
+      </app-data-table-one>
+      </ng-container>
+   </mat-card>
+   <mat-card>
+    <div class="my-2 text-center p-1">
+        <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>&nbsp;
+        <button *ngIf="selectedGarageId" class="mx-2" type="submit" mat-raised-button color="primary" (click)="onApproveGarage()" >Approve Garage</button>
+    </div>
+   </mat-card>
+</mat-dialog-content>

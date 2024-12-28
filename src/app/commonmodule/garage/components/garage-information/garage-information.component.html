@@ -1,0 +1,37 @@
+<div class="card border-0">
+  <div class="card-header">Garage Information</div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 bg-label">Garage Name</div>
+        <div class="col-lg-3 col-md-3 bg-value">
+          {{GarageInformation?.GarageName == null ? "N/A" : GarageInformation?.GarageName }}
+        </div>
+        <div class="col-lg-3 col-md-3 bg-label">Garage LoginId</div>
+        <div class="col-lg-3 col-md-3 bg-value">
+          {{GarageInformation?.GarageLoginId == null ? "N/A" : GarageInformation?.GarageLoginId }}
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 bg-label">Garage Id</div>
+        <div class="col-lg-3 col-md-3 bg-value">
+          {{GarageInformation?.GarageId == null ? "N/A" : GarageInformation?.GarageId }}
+        </div>
+        <div class="col-lg-3 col-md-3 bg-label">Garage Address</div>
+        <div class="col-lg-3 col-md-3 bg-value">
+          {{GarageInformation?.Address == null ? "N/A" : GarageInformation?.Address }}
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 bg-label">Garage Remarks</div>
+        <div class="col-lg-3 col-md-3 bg-value">
+          {{GarageInformation?.GarageRemarks == null ? "N/A" : GarageInformation?.GarageRemarks }}
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

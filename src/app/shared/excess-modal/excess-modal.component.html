@@ -1,0 +1,42 @@
+
+<mat-dialog-content class="mat-typography p-2">
+    <div class="card-header d-flex justify-content-between">
+        <div class="ml-2">
+            <h2>&nbsp;Excess Amount Details</h2>
+        </div>
+        <div class="mt-2 mr-2">
+            Claim No - {{claimDetails?.ClaimNo == null ? 'N/A': claimDetails?.ClaimNo}}&nbsp;
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mt-2">
+            <div class="col-md-10 col-lg-10 offset-1">
+                <mat-form-field appearance="outline" class="mat-form-width">
+                    <mat-label>Excess Amount ({{currencyCode}})</mat-label>
+                    <input matInput digitOnly [(ngModel)]="excessAmount" (keydown)="onReserveAmountChange($event)" (keyup)="CommaFormatted()" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-3 col-lg-3 offset-1">
+                <mat-form-field appearance="outline" class="mat-form-width">
+                    <mat-label>Excess (%)</mat-label>
+                    <input matInput digitOnly [(ngModel)]="excessPercent" required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6 col-lg-6 offset-1">
+                <label>Excess Amount Received</label>&nbsp;<strong class="text-danger">*</strong><br>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="excessYN">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<div class="my-2 text-center p-1">
+    <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button  class="mx-2" type="submit" mat-raised-button color="primary" (click)="onSaveReserve()">Submit</button>
+    <!-- <button *ngIf="logindata.UserType == 'claimofficer'" class="mx-2" type="submit" mat-raised-button color="primary" (click)="onClarifyingStatus()"
+    >Clarify</button> -->
+</div>

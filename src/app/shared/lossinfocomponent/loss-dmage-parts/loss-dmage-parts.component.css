@@ -1,0 +1,136 @@
+.damgepoints1 {
+    width: fit-content;
+    position: relative;
+    margin: auto;
+  }
+  
+  .damage_points.active .fas.fa-circle {
+      font-size: 15px;
+      color: dodgerblue;
+  }
+  
+  .First-Row {
+    position: absolute;
+  }
+  .First-Row.one {
+    left: 25%;
+    top: 2%;
+    bottom: 0;
+    right: 0;
+  }
+  .First-Row.two {
+    left: 48%;
+    top: 2%;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .First-Row.three {
+    left: 69%;
+    top: 2%;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .Third-Row {
+    position: absolute;
+  }
+  .Third-Row.one {
+    left: 25%;
+    top: 80%;
+    bottom: 0;
+    right: 0;
+  }
+  .Third-Row.two {
+    left: 48%;
+    top: 80%;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .Third-Row.three {
+    left: 69%;
+    top: 80%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row {
+    position: absolute;
+  }
+  .Second-Row.Top-one {
+    left: -1%;
+    top: 14%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row.Below-one {
+    left: -2%;
+    top: 64%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row.Right-one {
+    left: -5%;
+    top: 40%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row.Left-one {
+    left: 10%;
+    top: 40%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row.center-one {
+    left: 48%;
+    top: 40%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row.center-two {
+    left: 58%;
+    top: 40%;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .Second-Row.Top-three {
+    left: 92%;
+    top: 15%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row.Below-three {
+    left: 92%;
+    top: 65%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row.Right-three {
+    left: 88%;
+    top: 40%;
+    bottom: 0;
+    right: 0;
+  }
+  .Second-Row.Left-three {
+    left: 98%;
+    top: 40%;
+    bottom: 0;
+    right: 0;
+  }
+  
+  i.fas.fa-circle {
+    display: inline-block;
+    border-radius: 33px;
+    box-shadow: 0px 0px 2px #f1f1f1;
+    padding: 3px;
+    background-color: white;
+    border: 1px solid darkblue;
+
+  }
+  .fas.fa-circle {
+    font-size: 15px;
+    color: ghostwhite;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,372 @@
+<div class="card">
+   
+        <div class="card-header d-flex justify-content-between">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i>&nbsp;&nbsp;DOCUMENT MASTER</h6>
+            </div>
+            <div class="admin-grid-header">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{BankListForm.value.InsuranceId}}</b>
+            </div>
+        </div>
+        <div class="card-body">
+        <mat-tab-group class="mt-2">
+            <mat-tab label="Intimation Documents">
+                <ng-template matTabContent>
+                    <div class="row mt-2">
+                        <div class="col-3 offset-9 mr-5">
+                            <button mat-raised-button color="warn" (click)="onAddNew('CLAIM-INTIMATION',docmodal)">
+                            ADD NEW INTIMATION DOCUMENT
+                          </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tableData">
+                        <app-data-table-two [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,docmodal)" changestatus="true" (onStatus)="onstatus($event)"></app-data-table-two>
+                    </ng-container>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Accident Documents">
+                <ng-template matTabContent>
+                    <div class="row mt-2">
+                        <div class="col-3 offset-9 mr-5">
+                            <button mat-raised-button color="warn" (click)="onAddNew('CLAIM-ACC',docmodal)">
+                            ADD NEW ACCIDENT DOCUMENT
+                          </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tableData">
+                        <app-admin-table [cols]="columnHeader2" [data]="tableData2" (onAction)="onActionHandler($event,docmodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+                    </ng-container>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Loss Documents">
+                <ng-template matTabContent>
+                    <div class="row mt-2">
+                        <div class="col-3 offset-9 mr-5">
+                            <button mat-raised-button color="warn" (click)="onAddNew('CLAIM',docmodal)">
+                            ADD NEW LOSS DOCUMENT
+                          </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tableData">
+                        <app-admin-table [cols]="columnHeader3" [data]="tableData3" (onAction)="onActionHandler($event,docmodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+                    </ng-container>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Assessor Documents">
+                <ng-template matTabContent>
+                    <div class="row mt-2">
+                        <div class="col-3 offset-9 mr-5">
+                            <button mat-raised-button color="warn" (click)="onAddNew('CLAIM-ASSESSOR',docmodal)">
+                            ADD NEW SURVEYOR DOCUMENT
+                          </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tableData">
+                        <app-admin-table [cols]="columnHeader4" [data]="tableData4" (onAction)="onActionHandler($event,docmodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+                    </ng-container>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Garage Documents">
+                <ng-template matTabContent>
+                    <div class="row mt-2">
+                        <div class="col-3 offset-9 mr-5">
+                            <button mat-raised-button color="warn" (click)="onAddNew('CLAIM-GARAGE',docmodal)">
+                            ADD NEW GARAGE DOCUMENT
+                          </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tableData">
+                        <app-admin-table [cols]="columnHeader5" [data]="tableData5" (onAction)="onActionHandler($event,docmodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+                    </ng-container>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+        </div>
+
+   
+    <!--<ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2 mt-3">
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Document Description</mat-label>
+                        <input matInput type="text" formControlName="Documentdesc" name="Documentdesc" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" formControlName="Coreappcode" name="Coreappcode" />
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row mt-2">
+
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1 mb-2">
+                    <div class="py-1">Document Mandatory</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Mandatorystatus" name="Mandatorystatus">
+                        <mat-radio-button value="Y">Yes</mat-radio-button>
+                        <mat-radio-button value="N">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1 mb-2">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onSaveDocDetials()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>-->
+
+</div>
+
+<ng-template #docmodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Document Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2 mt-3">
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Document Description</mat-label>
+                        <input matInput type="text" formControlName="Documentdesc" name="Documentdesc" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" formControlName="Coreappcode" name="Coreappcode" />
+                    </mat-form-field>
+                </div>
+    
+            </div>
+            <div class="row mt-2">
+    
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1 mb-2">
+                    <div class="py-1">Document Mandatory</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Mandatorystatus" name="Mandatorystatus">
+                        <mat-radio-button value="Y">Yes</mat-radio-button>
+                        <mat-radio-button value="N">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1 mb-2">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                    </mat-radio-group>
+                </div>
+            </div>
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div> -->
+            <!-- <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsuranceComp | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div> -->
+    
+            <!--<div class="row my-2">
+                
+                 <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Other App Code-1</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Other App Code-2</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div> 
+            </div>-->
+    
+            <!-- <div class="row my-2">
+    
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div> -->
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSaveDocDetials(modal)">Submit</button>
+    </div>
+  </ng-template>
+
+<!--<ng-container *ngIf="!panelOpen">
+    <form [formGroup]="FormGroupData">
+        <div class="row my-2 mt-3">
+            <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Document Description</mat-label>
+                    <input matInput type="text" formControlName="Documentdesc" name="Documentdesc" />
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Core App Code</mat-label>
+                    <input matInput type="text" formControlName="Coreappcode" name="Coreappcode" />
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="row mt-2">
+
+            <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1 mb-2">
+                <div class="py-1">Document Mandatory</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Mandatorystatus" name="Mandatorystatus">
+                    <mat-radio-button value="Y">Yes</mat-radio-button>
+                    <mat-radio-button value="N">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1 mb-2">
+                <div class="py-1">Status</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                    <mat-radio-button value="R">Referral</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Insurance Company</mat-label>
+                    <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto" required>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyValue($event.option.value)">
+                        <mat-option *ngFor="let option of filteredInsuranceComp | async" [value]="option.Code">
+                            {{option.CodeDesc}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+        <div class="row my-2">
+            
+             <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Other App Code-1</mat-label>
+                    <input matInput type="text" />
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Other App Code-2</mat-label>
+                    <input matInput type="text" />
+                </mat-form-field>
+            </div> 
+        </div>
+
+        <div class="row my-2">
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="py-1">Status</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                    <mat-radio-button value="R">Referral</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <mat-action-row class="justify-content-center">
+            <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+            <button mat-raised-button color="primary" (click)="onSaveDocDetials()">Submit</button>
+        </mat-action-row>
+    </form>
+</ng-container>-->

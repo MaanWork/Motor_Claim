@@ -1,0 +1,52 @@
+<mat-toolbar class="mat-elevation-z6 top-tool-bar position-fixed menu-mat-toolbar" style="z-index: 3">
+  <button mat-icon-button class="example-icon " style="color:#362C82" aria-label="Example icon-button with menu icon"
+    (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span *ngIf="insuranceId=='100002'"  class="" style="color:#362C82"><img  src="./assets/Images/logo.jpg" width="65"  /></span>
+  <span *ngIf="insuranceId=='100003'"  class="" style="color:#362C82"><img  src="./assets/Images/AllianceAfrica.PNG" width="300"  /></span>
+  <span class="example-spacer"></span>
+    <button class="mx-2 " style="color:#362C82" mat-button [matMenuTriggerFor]="animals">
+        <i class="fas fa-user pb-2"></i>
+        Branch - {{branchValue}}
+        <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+            aria-hidden="true" data-mat-icon-type="font">arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #animals="matMenu">
+        <button mat-menu-item *ngFor="let branch of branchList" (click)="finaliseBranchValue(branch)" [value]="branch.Code">{{branch.CodeDesc}}</button>
+    </mat-menu>
+    <button mat-button class="" style="color:#362C82" (click)="onLogout()">Logout</button>
+  <button mat-icon-button class="" style="color:#362C82" [matMenuTriggerFor]="menu1" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu1="matMenu">
+    <button mat-menu-item>
+      <span>Your Profile</span>
+    </button>
+    <button mat-menu-item disabled>
+      <span>Setting</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+
+<mat-drawer-container class="example-container" autosize >
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
+    <mat-card class="mt-2 p-3 mat-elevation-z6" style="z-index: 1;background-color: white;border-radius: 0;">
+        <div class="p-2 text-dark"><i class="far fa-id-card mx-2 text-dark"></i>{{logindata?.LoginResponse?.LoginId}}</div>
+        <mat-divider></mat-divider>
+        <div class="p-2 text-dark text-uppercase"><i class="far fa-user mx-2 text-dark"></i>{{logindata?.LoginResponse?.UserType}}</div>
+    </mat-card>
+    <div>
+      <ng-container *ngIf="appitems">
+        <ng-material-multilevel-menu  [configuration]='config' [items]='appitems' (selectedItem)="selectedItem($event)">
+        </ng-material-multilevel-menu>
+      </ng-container>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="main-content p-2">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

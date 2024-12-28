@@ -1,0 +1,218 @@
+<div class="flex-container">
+    <mat-card class="flex-item-left p-0" style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div style="line-height: 30px;">
+                    Co-Insurance Details
+                </div>
+                
+        
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush" *ngIf="coInsuranceData">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 bg-label text-center">Insurance Company</div>
+                            <div class="col-lg-6 col-md-6 bg-label text-center">Shared &nbsp; (%)</div>
+                        </div>
+                    </li>
+                    <li class="list-group-item" *ngFor="let entry of coInsuranceData">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 bg-value" >{{entry.CompanyName}}</div>
+                            <div class="col-lg-6 col-md-6 bg-value text-center">{{entry.SharePercent}}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </mat-card>
+    <!-- <div class="flex-item-right p-0">
+        <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div style="line-height: 30px;">
+                        Payment Details
+                    </div>
+                    <div>
+                        <button class="button" (click)="addReserveAmount()" *ngIf="logindata.UserType=='claimofficer' && logindata.UserType != 'surveyor'  && logindata.SubUserType != 'Approver'"><i class="fa fa-plus"></i>&nbsp;Reserve Amount</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ng-container  *ngIf="reserveData.length==0">
+                        <div class="text-center">
+                            No Reserve Amount Added
+                        </div>   
+                    </ng-container>
+                    <ng-container  *ngIf="reserveData.length!=0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-Primary">
+                                <div class="row ">
+                                    <div class="col-lg-2 col-md-2 bg-label">ReserveId</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Reserve<br> ({{currencyCode}})</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Paid <br>({{currencyCode}})</div>
+                                    <div class="col-lg-2 col-md-2 bg-label">Exchange Rate</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Reserve FC <br>(USD)</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Paid FC<br> (USD)</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item" *ngFor="let entry of reserveData|paginate:{itemsPerPage: 3, currentPage:p,id: 'p'} ;">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 bg-value" >{{entry.ReserveId}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.ReserveAmount}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmount}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value" >{{entry.ExchangeRate}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.ReserveAmountFc}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmountFc}}</div>
+                                    
+                                </div>
+                            </li>
+                        </ul>
+    
+                        <div class="d-flex justify-content-end">
+                            <pagination-controls (pageChange)="p=$event" id="p"></pagination-controls>
+                          </div>
+                        <div class="text-center" *ngIf="logindata.UserType != 'surveyor' && logindata.SubUserType != 'Approver'">
+                            <button class="mx-2" type="submit" mat-raised-button color="warn" (click)="onMakePayment()"><i class="fa fa-credit-card"></i>&nbsp;Make Payment</button>
+                        </div>
+                    </ng-container>
+                    
+                </div>
+            </div>
+        </mat-card>
+        <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div style="line-height: 30px;">
+                        Excess Details
+                    </div>
+                    <div>
+                        <button class="button" (click)="addExcessAmount()" *ngIf="logindata.UserType=='claimofficer' && logindata.UserType != 'surveyor'  && logindata.SubUserType != 'Approver'"><i class="fa fa-plus"></i>&nbsp;Excess Amount</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </mat-card>
+    </div> -->
+</div>
+<!-- <div class="card" style="box-shadow: none;">
+    <div class="card-header d-flex justify-content-between">
+        <div style="line-height: 30px;">
+            Coverage Details
+        </div>
+    </div>
+    <div class="card-body">
+         <app-data-table [tableData]="coverData" [columnHeader]="coverHeader" ></app-data-table>
+    </div>
+</div> -->
+<div class="card mt-1" style="box-shadow: none;">
+    <div class="card-header d-flex justify-content-between">
+        <div style="line-height: 30px;">
+            Claim Party
+        </div>
+        <button class="mx-2" type="submit" mat-raised-button color="primary" (click)="onOpenPartyModal()" *ngIf="logindata.UserType != 'surveyor' && LossCreationYn=='Y'">Create New Party</button>
+
+    </div>
+    <div class="card-body">
+        <div class="example-action-buttons">
+            <mat-accordion class="example-headers-align" multi >
+                <ng-container *ngFor="let item of partyList;let i= index;" style="box-shadow: none;">
+                    <mat-expansion-panel [expanded]="step === i" (opened)="setStep(i)">
+                        <mat-expansion-panel-header (click)="onGetLossList(item)">
+                            <mat-panel-title>
+                                {{item.PartyName}}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                {{item.PartyInsDes}}
+                                <button mat-mini-fab color="primary">
+                                  {{item.LossCount}}
+                                </button>
+                            </mat-panel-description>
+
+                        </mat-expansion-panel-header>
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div style="line-height: 30px;">
+                                    Party Details
+                                </div>
+                                <!-- <div class="">
+                                    <button mat-raised-button color="warn" class="ml-2" (click)="onLossReservedTransactions(item)">Reserved Transactions</button>
+                                </div>  -->
+                                <div class="" *ngIf="logindata.UserType != 'surveyor'">
+                                    <button class="mx-2 transparentBtn" (click)="onEditPartyDetials(item)">
+                                      <i class="fas fa-marker"></i></button>
+                                    <button class="mx-2 transparentBtn" (click)="onDeletePartyDetials(item)"> <i class="far fa-trash-alt"></i></button>
+
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 bg-label">Email</div>
+                                        <div class="col-lg-3 col-md-3 bg-value">
+                                            {{ item?.Email == null ? "N/A" : item?.Email }}
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 bg-label">
+                                            DOB
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 bg-value">
+                                            {{ item?.Dob == null ? "N/A" : item?.Dob }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 bg-label">Nationality</div>
+                                        <div class="col-lg-3 col-md-3 bg-value">
+                                            {{ item?.NationalityName == null ? "N/A" : item?.NationalityName }}
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 bg-label">
+                                            Mobile
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 bg-value">
+                                            {{ item?.Mobile == null ? "N/A" : item?.Mobile }}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 bg-label">Address</div>
+                                        <div class="col-lg-3 col-md-3 bg-value">
+                                            {{ item?.Address == null ? "N/A" : item?.Address }}
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 bg-label">
+                                            Remarks
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 bg-value">
+                                            {{ item?.Remarks == null ? "N/A" : item?.Remarks }}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <ng-container *ngIf="tableData">
+                            <app-data-table-one [data]="tableData" [cols]="columnHeader" [innercols]="innerColumnHeader" (onLossEdit)="onLossEdit($event)" (onLossDelete)="onLossDelete($event)" (onLossAllote)="onLossAllote($event)" (onLossTrack)="onLossTrack($event)" (onSurveyorLossPdf)="onSurveyorLossPdf($event)"
+                                (onLossGarageAllot)="onLossGarageAllot($event)" (onSubLossPdf)="onSubLossPdf($event)" (onOpenPayment)="onOpenPayment($event)" (onLossReservedTransactions)="onLossReservedTransactions($event)" (onLossClaimAllot)="onLossClaimAllot($event)"
+                                (onSurveyorApproved)="onSurveyorApproved($event)" (onInvoiceLossPdf)="onInvoiceLossPdf($event)">
+
+                            </app-data-table-one>
+                            <!-- <app-data-table [tableData]="tableData" (onLossStatus)="onLossStatusView($event)"
+                              (onLossEdit)="onLossEdit($event)" (GetLossListById)="onRefreshLossList($event)"
+                              [columnHeader]="columnHeader">
+                          </app-data-table> -->
+                        </ng-container>
+                        <ng-container *ngIf="!tableData">
+                            <app-loader></app-loader>
+                        </ng-container>
+                        <div class="my-2 text-center p-1" *ngIf="logindata.UserType != 'surveyor' && logindata.UserType != 'garage'">
+                            <button mat-raised-button color="accent" (click)="onCreateNewLoss(item)">
+                              Create New Loss
+                          </button>
+
+                        </div>
+                    </mat-expansion-panel>
+                </ng-container>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

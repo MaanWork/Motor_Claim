@@ -1,0 +1,123 @@
+<section id="header" class="">
+    <nav class="navbar navbar-expand-sm bg-motor navbar-motor">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/Images/logo-2.png" width="170" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" > <i class="fas fa-user-tie"></i> {{MobileNumber}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="onLogOut()"> <i class="fa fa-sign-out"></i> Logout</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/Login/Assessor']" routerLinkActive="router-link-active"> <i class="fas fa-user-tie"></i> Assessor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/Login/Garage']" routerLinkActive="router-link-active"> <i class="fas fa-car"></i> Garage</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+  </section>
+  <section id="hero">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-lg-10 col-md-10 offset-1" style="margin: auto !important;">
+                    <div
+                    class="card content-box content-box--margin-bottom content-box--is-shadowed content-box--is-padded content-box--limit-max-width content-box--background-blue">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h1 class="motor-get-started-content__Heading motor-get-started-content__Heading--sub-heading">Existing Claim
+                            </h1>
+                        </div>
+                        <div>
+                            <button class="customBtn btn mt-2" (click)="addClaim()">Make A Claim</button>
+                        </div>
+                    </div>
+                    <hr class="divider divider--is-dark-gray divider--is-margin-20px">   
+                    <div class="card-body" style="overflow-x: scroll !important;">
+                            <!-- <div class="row" *ngIf="policyNumber">
+                                <div class="col-md-10 col-lg-10 col-xl-10 text-center">
+                                    <span ><b>{{policyNumber}}</b></span>
+                                </div>
+                            </div> -->
+                            <mat-tab-group class="mt-1">
+                                <mat-tab label="Notified Claims">
+                                    <ng-template matTabContent>
+                                        <ng-container *ngIf="NotifiedClaims">
+                                            <ng-container *ngIf="NotifiedClaims.length!=0">
+                                                <app-data-table-one [data]="NotifiedClaims" [gridType]="Notified" [cols]="columnHeader" [innercols]="innerColumnHeader" (onViewData)="onViewData($event)" (onEditClaimData)="onEditClaimData($event)" (onViewClaimDetails)="onViewClaimDetails($event)" (onGeneratePdf)="onGeneratePdf($event)">
+                                                </app-data-table-one>
+                                            </ng-container>
+                                            <ng-container *ngIf="NotifiedClaims.length==0">
+                                                    <div class="text-center">
+                                                        No Data Available
+                                                    </div>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="!NotifiedClaims">
+                                            <app-loader></app-loader>
+                                        </ng-container>
+                                    </ng-template>
+                                </mat-tab>
+                                <mat-tab label="Approved Claims">
+                                    <ng-template matTabContent>
+                                        <ng-container *ngIf="ApprovedClaims">
+                                            <ng-container *ngIf="ApprovedClaims.length!=0">
+                                                <app-data-table-one [data]="ApprovedClaims" [gridType]="Approved" [cols]="columnHeader1" [innercols]="innerColumnHeader1" (onViewData)="onViewData($event)" (onEditClaimData)="onEditClaimData($event)" (onViewClaimDetails)="onViewClaimDetails($event)" (onGeneratePdf)="onGeneratePdf($event)">
+                                                </app-data-table-one>
+                                            </ng-container>
+                                            <ng-container *ngIf="ApprovedClaims.length==0">
+                                                <div class="text-center">
+                                                    No Data Available
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="!ApprovedClaims">
+                                            <app-loader></app-loader>
+                                        </ng-container>
+                                    </ng-template>
+                                </mat-tab>
+                                <mat-tab label="Rejected Claims">
+                                    <ng-template matTabContent>
+                                        <ng-container *ngIf="RejectedClaims">
+                                            <ng-container *ngIf="RejectedClaims.length!=0">
+                                                <app-data-table-one [data]="RejectedClaims" [gridType]="Rejected" [cols]="columnHeader2" [innercols]="innerColumnHeader2" (onViewData)="onViewData($event)" (onEditClaimData)="onEditClaimData($event)" (onViewClaimDetails)="onViewClaimDetails($event)" (onGeneratePdf)="onGeneratePdf($event)">
+                                                </app-data-table-one>
+                                            </ng-container>
+                                            <ng-container *ngIf="RejectedClaims.length==0">
+                                                <div class="text-center">
+                                                    No Data Available
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="!RejectedClaims">
+                                            <app-loader></app-loader>
+                                        </ng-container>
+                                    </ng-template>
+                                </mat-tab>
+                                <mat-tab label="Clarification Required Claims">
+                                    <ng-template matTabContent>
+                                        <ng-container *ngIf="ClarificationClaims">
+                                            <app-data-table-one [data]="ClarificationClaims" [gridType]="Clarified" [cols]="columnHeader3" [innercols]="innerColumnHeader3" (onViewData)="onViewData($event)" (onEditClaimData)="onEditClaimData($event)" (onViewClaimDetails)="onViewClaimDetails($event)" (onGeneratePdf)="onGeneratePdf($event)">
+                                            </app-data-table-one>
+                                        </ng-container>
+                                        <ng-container *ngIf="!ClarificationClaims">
+                                            <app-loader></app-loader>
+                                        </ng-container>
+                                    </ng-template>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+</section>

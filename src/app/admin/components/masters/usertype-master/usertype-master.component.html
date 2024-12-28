@@ -1,0 +1,128 @@
+<div class="card">
+  
+        <div class="card-header">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> USERTYPE MASTER</h6>
+            </div>
+            <div class="admin-grid-header">
+            </div>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-2 offset-9 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNew(usermodal)">
+              ADD NEW USERTYPE
+            </button>
+            </div>
+        </div>
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,usermodal)"  changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+        </ng-container>
+        </div>
+   
+    <!--<ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>User Type</mat-label>
+                        <input matInput type="text" formControlName="Usertypedesc" name="Usertypedesc" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Short Description</mat-label>
+                        <input matInput type="text" formControlName="Shortdesp" name="Shortdesp" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker2" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onSaveUserTypeDetials()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>-->
+</div>
+
+<ng-template #usermodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">User Type Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>User Type</mat-label>
+                        <input matInput type="text" formControlName="Usertypedesc" name="Usertypedesc" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Short Description</mat-label>
+                        <input matInput type="text" formControlName="Shortdesp" name="Shortdesp" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker2" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                    </mat-radio-group>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSaveUserTypeDetials(modal)">Submit</button>
+    </div>
+  </ng-template>

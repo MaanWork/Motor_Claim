@@ -1,0 +1,91 @@
+<mat-form-field class="mt-3">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
+</mat-form-field>
+<table style="margin: 10px; width: 100% !important" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+  multiTemplateDataRows>
+  <ng-container *ngFor="let col of columnHeader; let i = index" [matColumnDef]="col.key">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
+      {{ columnHeader[i]["display"] }}
+    </th>
+    <td class="has_label_on_mobile" mat-cell *matCellDef="let element"
+      [attr.data-label]="columnHeader[i]['display'] + '-'">
+      <ng-container *ngIf="!col.config; else hasConfig">
+        {{ element[col.key] == null ? "N/A" : element[col.key] }}
+      </ng-container>
+      <ng-template #hasConfig>
+        <ng-container *ngIf="col.config.isMoreView">
+          <button mat-icon-button (click)="onGetLossList.emit(element);expandedElement = expandedElement === element ? null : element;">
+            <i class="fas fa-plus-circle"></i>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="col.config.isPayView">
+          <button mat-mini-fab color="primary" class="mx-1" #tooltip="matTooltip" matTooltip="View Payment Details"
+              matTooltipPosition="below" matTooltipHideDelay="1000" (click)="onPartyPayView.emit(element)">
+              <i class="far fa-eye"></i>
+            </button>
+        </ng-container>
+        <ng-container *ngIf="col.config.isBoolean">
+          {{ showBooleanValue(element, col) }}
+      </ng-container>
+      <ng-container *ngIf="col.config.isStatus">
+        <button (click)="onstatus(element)" mat-raised-button color="primary">
+            {{ showBooleanValue(element, col) }}
+            </button>
+    </ng-container>
+    <ng-container *ngIf="col.config.changestatus">
+        <button class="btn btn-primary btn-sm" (click)="onStatus.emit({data:element,element:element})">
+           </button>
+     </ng-container>
+        <ng-container *ngIf="col.config.isPayAction">
+          <button mat-raised-button color="accent" #tooltip="matTooltip" matTooltip="Pay Now"
+          matTooltipPosition="below" matTooltipHideDelay="1000" (click)="onPartyPayAction.emit(element)">
+            <i class="fab fa-amazon-pay"></i>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="col.config.isAction">
+          <button *ngFor="let action of col.config.actions" (click)="emitter.emit(element)" mat-raised-button color="primary">
+            <i class="fas fa-user-edit"></i>
+          </button>
+      </ng-container>
+      <ng-container *ngIf="col.config.isSurveyorEdit">
+          &nbsp;<button *ngFor="let action of col.config.actions" (click)="surveyEmit.emit(element)" mat-raised-button color="primary">
+              <i class="fas fa-edit"></i>
+          </button>
+      </ng-container>
+        <ng-container *ngIf="col.config.isActive">
+          <mat-checkbox (change)="onChangeCheckBox.emit({event:$event,element:element})" class="example-margin" [ngModel]="element[col.key] == 'Y'"> {{ showBooleanValue(element, col) }}</mat-checkbox>
+      </ng-container>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
+      <div class="example-element-detail" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+        <ng-container *ngIf="innerColumnHeader">
+          <app-inner-table
+          [cols]="innerColumnHeader"
+          [data]="innerTableData"
+          (onLossView)="onLossView($event)"
+          >
+          </app-inner-table>
+        </ng-container>
+
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="keys"></tr>
+  <tr mat-row *matRowDef="let element; columns: keys" class="example-element-row"
+    [class.example-expanded-row]="expandedElement === element"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
+<table width="100%">
+  <tr *ngIf="!dataSource.data.length">
+      <td style="text-align: center" [attr.colspan]="columnHeader.length">
+          No Records Found!
+      </td>
+  </tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+</mat-paginator>

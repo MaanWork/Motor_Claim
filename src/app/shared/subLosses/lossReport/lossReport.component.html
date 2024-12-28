@@ -1,0 +1,355 @@
+<div class="card my-1">
+    <!-- <div class="card-header">
+        {{LossTypeDes}}
+    </div> -->
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+      
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>
+      
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                       showFirstLastButtons
+                       aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+      
+      
+    <div class="card-body">
+        <form [formGroup]="createSecondaryForm">
+            <ul class="list-group list-group-flush Informationbox">
+                <li class="list-group-item">
+                    <div class="row tableheadingbg">
+                        <div class="col-md-6 p-2">
+                            Loss Report Details
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="p-2">
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Id Type</mat-label>
+                            <mat-select formControlName="IdType" name="food">
+                                  <mat-option ></mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Id Number</mat-label>
+                            <input matInput formControlName="IdNumber" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Injury Date</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="InjuryDate" required>
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>InjuryDesc</mat-label>
+                            <input matInput formControlName="InjuryDesc" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>TreatMent Start Date</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="TreatMentStartDate" required>
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>TreatMent End Date</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="TreatMentEndDate" required>
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Medical Expenses</mat-label>
+                            <input matInput  formControlName="MedicalExpenses" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Future Care  Cost</mat-label>
+                            <input matInput  formControlName="FutureCareCost" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Injury Type</mat-label>
+                            <mat-select formControlName="InjuryType" name="food">
+                                <mat-option value="PED">Permanent Disablement</mat-option>
+                                <mat-option value="PAD">Partial Disablement</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2" >
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Disability Percentage</mat-label>
+                            <input matInput formControlName="DisabilityPercentage" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Loss Of Earnings</mat-label>
+                            <input matInput formControlName="LossOfEarnings" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Final SettleMent Amount</mat-label>
+                            <input matInput formControlName="FinalSettleMentAmount" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="my-2 text-center p-1">
+                <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+                <button class="mx-2" *ngIf="!hidebtn" mat-raised-button color="accent" (click)="saveLossDetails('Save')">Save</button>
+                <button class="mx-2" *ngIf="!hidebtn" type="submit" mat-raised-button color="primary" (click)="saveLossDetails('Submit')">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- <div class="card my-1">
+    <div class="card-header">
+        {{LossTypeDes}}
+    </div>
+    <div class="card-body">
+        <form [formGroup]="createSecondaryForm">
+            <ul class="list-group list-group-flush Informationbox">
+                <li class="list-group-item">
+                    <div class="row tableheadingbg">
+                        <div class="col-md-6 p-2">
+                            Victim - Personal Details
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="p-2">
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="VictName" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Age</mat-label>
+                            <input matInput formControlName="VictAge" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <label><b>Gender</b></label><br>
+                        <mat-radio-group aria-label="Gender" formControlName="VictGender" required>
+                            <mat-radio-button matInput value="1">Male</mat-radio-button>
+                            <mat-radio-button matInput value="2">Female</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Occupation</mat-label>
+                            <input matInput formControlName="VictOccupation" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Address</mat-label>
+                            <input matInput formControlName="VictAddress" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>P.O.Box</mat-label>
+                            <input matInput formControlName="VictPoBox" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <label><b>Work Type</b></label><br>
+                        <mat-radio-group aria-label="Work Type" [ngModelOptions]="{standalone: true}" [(ngModel)]="empYn">
+                            <mat-radio-button matInput value="Employee">Employee</mat-radio-button>
+                            <mat-radio-button matInput value="SelfEmployed">Self Employed</mat-radio-button>
+                            <mat-radio-button matInput value="None">None</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <label><b>Bread Winner</b></label><br>
+                        <mat-radio-group aria-label="Bread Winner" formControlName="VictBreadWinner">
+                            <mat-radio-button matInput value="Y">Yes</mat-radio-button>
+                            <mat-radio-button matInput value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Annual Income</mat-label>
+                            <input matInput formControlName="VictAnnualIncome" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Monthly Income</mat-label>
+                            <input matInput formControlName="VictmMonthIncome" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <label><b>Loss Description</b></label><br>
+                        <textarea cols="60" rows="2" formControlName="VictLossDesc" placeholder="Enter Loss Description" class="form-control"></textarea>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <label><b>Medical Attention / Hospital Name</b></label>
+                        <textarea formControlName="VictMedAtten" cols="40" rows="2" required></textarea>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Dependant Name</mat-label>
+                            <input matInput formControlName="VictDependName" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Dependant RelationShip</mat-label>
+                            <input matInput formControlName="VictDependAddre" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Amount</mat-label>
+                            <input matInput formControlName="Amount" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput formControlName="Remarks"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <div class="py-1">VAT Required?</div>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="VatYN" [ngModelOptions]="{standalone: true}" name="VatYN">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row my-2" *ngIf="totalAmount">
+                    <div class="text-center ">
+                        <div class="py-1">Total Amount</div>
+                        <span><b>{{totalAmount}}</b></span>
+                    </div>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush Informationbox" *ngIf="empYn=='Employee'">
+                <li class="list-group-item">
+                    <div class="row tableheadingbg">
+                        <div class="col-md-6 p-2">
+                            Company Details
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="p-2" *ngIf="empYn=='Employee'">
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Company Name</mat-label>
+                            <input matInput formControlName="VictComName" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Designation</mat-label>
+                            <input matInput type="text" formControlName="VictComDesignation" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Company Address</mat-label>
+                            <input matInput type="text" formControlName="VictComAddress" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Company P.O Box</mat-label>
+                            <input matInput type="number" formControlName="VictComPoBox" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+            <div class="my-2 text-center p-1">
+                <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+                <button class="mx-2" *ngIf="!hidebtn" mat-raised-button color="accent" (click)="saveLossDetails('Save')">Save</button>
+                <button class="mx-2" *ngIf="!hidebtn" type="submit" mat-raised-button color="primary" (click)="saveLossDetails('Submit')">Submit</button>
+            </div>
+        </form>
+    </div>
+</div> -->

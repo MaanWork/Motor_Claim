@@ -1,0 +1,119 @@
+<mat-card>
+    <mat-expansion-panel hideToggle [expanded]="panelOpen">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> BANK BRANCH MASTER</h6>
+            </mat-panel-title>
+            <mat-panel-description class="admin-grid-header">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{BankListForm.value.InsuranceId}}</b>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row">
+            <div class="col-3 offset-9 mr-5" *ngIf="BankListForm.controls.Bankcode.value !=''">
+                <button mat-raised-button color="warn" (click)="onAddNew()">
+                  ADD NEW BANK BRANCH
+                </button>
+            </div>
+        </div>
+        <form [formGroup]="BankListForm">
+
+            <div class="row my-3">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Bank Name</mat-label>
+                        <input type="text" placeholder="Select Bank" matInput formControlName="Bankcode" [matAutocomplete]="auto1">
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeBankList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredBankComp | async" [value]="option.Bankcode">
+                                {{option.Bankname}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="BankListForm.get('Bankcode').errors">
+                            {{BankListForm.controls['Bankcode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)"></app-admin-table>
+        </ng-container>
+    </mat-expansion-panel>
+    <ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Bank Name</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="Bankcode" [matAutocomplete]="auto2">
+                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onChangeBankValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredBank | async" [value]="option.Bankcode">
+                                {{option.Bankname}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="FormGroupData.get('Bankcode').errors">
+                            {{FormGroupData.controls['Bankcode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input type="text" placeholder="Select City" matInput formControlName="Citycode" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCityValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCity | async" [value]="option.Sno">
+                                {{option.City}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="FormGroupData.get('Citycode').errors">
+                            {{FormGroupData.controls['Citycode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Branch Name</mat-label>
+                        <input matInput type="text" formControlName="Branchname" name="Branchname" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Swift Code</mat-label>
+                        <input matInput type="text" formControlName="Swiftcode" name="Swiftcode" />
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onSaveCityDetials()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>
+</mat-card>

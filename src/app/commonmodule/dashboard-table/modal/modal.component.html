@@ -1,0 +1,336 @@
+<div class="d-flex justify-content-between align-item-center px-4">
+    <div class="flex-fill">
+        <h2 mat-dialog-title>Claim Information</h2>
+    </div>
+    <div class="flex-fill text-end" style="padding-top: 12px;">
+        <button (click)="onEditClaimData()"  color="primary" class="mx-2 transparentBtn" aria-label="Example icon button with a delete icon">
+            <i class="fas fa-marker"></i>
+        </button>
+        <button mat-dialog-close class="mx-2 transparentBtn" aria-label="Example icon button with a delete icon">
+            <i class="fas fa-times"></i>
+        </button>
+
+    </div>
+</div>
+<mat-dialog-content class="mat-typography">
+
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <i class="far fa-list-alt"></i> Customer Information
+            </ng-template>
+            <app-customer-info [ClaimInfo]="data.ViewClaimData"></app-customer-info>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <i class="far fa-list-alt"></i> Accident Details
+            </ng-template>
+            <app-accident-info [ClaimInfo]="data.ViewClaimData"></app-accident-info>
+
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <i class="far fa-list-alt"></i> Statement Information
+            </ng-template>
+            <app-statement-info [ClaimInfo]="data.ViewClaimData"></app-statement-info>
+        </mat-tab>
+        <!-- <mat-tab>
+              <ng-template mat-tab-label>
+                <i class="far fa-list-alt"></i> Damage Details
+              </ng-template>
+              <app-damage-info [ClaimInfo]="data.ViewClaimData"></app-damage-info>
+            </mat-tab> -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <i class="far fa-list-alt"></i> Reasons Information
+            </ng-template>
+            <app-reason-info [ClaimInfo]="data.ViewClaimData"></app-reason-info>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <i class="far fa-list-alt"></i> Driver Details
+            </ng-template>
+            <app-driver-info [ClaimInfo]="data.ViewClaimData"></app-driver-info>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <i class="far fa-list-alt"></i> Document Information
+            </ng-template>
+
+            <app-document-info [ClaimInfo]="data.ViewClaimData"></app-document-info>
+        </mat-tab>
+
+    </mat-tab-group>
+    
+</mat-dialog-content>
+
+<mat-dialog-actions class="custom-footer">
+    <div class="flex-container">
+        <mat-card class="flex-item-left m-1 p-0">
+            <div class="card" style="margin-left: 10px;margin-right: 10px ;">
+                <div class="card-header">
+                    Policy Information
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-lg-2">
+                                <label><b>Policy No</b></label>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <span>
+                                    {{policyInfo?.PolicyNo == '' ?'N/A':policyInfo?.PolicyNo}}
+                                </span>
+                            </div>
+                            <div class="col-md-2 col-lg-2">
+                                <label><b>Policy Period</b></label>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <span>
+                                    {{ policyInfo?.PolicyFrom?.split(" ")[0] }} |
+                                    {{ policyInfo?.PolicyTo?.split(" ")[0] }}
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-lg-2">
+                                <label><b>Product</b></label>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <span>{{policyInfo?.ProductDesc ==null
+                                    ?'N/A':policyInfo?.ProductDesc}}</span>
+                            </div>
+                            <div class="col-md-2 col-lg-2">
+                                <label><b>Cover Type</b></label>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <span>{{vehicleInfo?.Vehtype ==null
+                                    ?'N/A':vehicleInfo?.Vehtype}}</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-lg-2">
+                                <label><b>Accident Date</b></label>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <span>{{data.ViewClaimData?.Accidentdate ==null
+                                    ?'N/A':data.ViewClaimData?.Accidentdate}}</span>
+                            </div>
+                            <div class="col-md-2 col-lg-2">
+                                <label><b>Accident Time</b></label>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <span>{{data.ViewClaimData?.Accidenttime ==null
+                                    ?'N/A':data.ViewClaimData?.Accidenttime}}</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-lg-2">
+                                <label><b>OutStanding Premium</b></label>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <span>
+                                    {{policyInfo?.OutstandingAmt == '' ?'N/A':policyInfo?.OutstandingAmt}}
+                                </span>
+                            </div>
+                            <div class="col-lg-2 col-md-2 bg-label"><b>Currency</b></div>
+                            <div class="col-lg-4 col-md-4 bg-value text-center">
+                            {{policyInfo?.CurrencyName == null ?
+                            'N/A':policyInfo?.CurrencyName}}&nbsp;({{policyInfo?.CurrencyCode == null ?
+                                'N/A':policyInfo?.CurrencyCode}})
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </mat-card>
+        <mat-card class="flex-item-right m-1 p-0">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div style="line-height: 30px;">
+                        Co-Insurance Details
+                    </div>
+                    
+            
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush" *ngIf="coInsuranceData">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 bg-label text-center">Insurance Company</div>
+                                <div class="col-lg-6 col-md-6 bg-label text-center">Shared &nbsp; (%)</div>
+                            </div>
+                        </li>
+                        <li class="list-group-item" *ngFor="let entry of coInsuranceData">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 bg-value" >{{entry.CompanyName}}</div>
+                                <div class="col-lg-6 col-md-6 bg-value text-center">{{entry.SharePercent}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div *ngIf="!isStatusUpdate">
+        <h2 mat-dialog-title *ngIf="(policyInformation.ClaimStatus != 'Claim Intimated')">
+            Claim Status Information
+        </h2>
+        <h2 mat-dialog-title *ngIf="(userType == 'claimofficer') &&
+        ((policyInformation.ClaimStatus == 'Claim Intimated') &&  policyInformation.Status != 'A')">
+            Claim Status Information
+        </h2>
+        <ng-container *ngIf="(policyInformation.ClaimStatus != 'Claim Intimated')">
+            <mat-card class="my-2 p-0">
+                <div class="row mt-3 mr-3 ">
+                    <div class="col-md-6 col-lg-6 offset-md-3 offset-lg-3 text-center text-dark bg-warning rounded p-2">
+                        <h3 class="p-0">Claim Intimation Process Not Yet Complete {{policyInformation.ClaimStatus}}</h3>
+                    </div>
+                </div>
+                <div class="row mt-2 mr-3 ">
+                    <div class="col-md-2 col-lg-2 offset-md-4 offset-lg-4 mt-3">
+                        <span class="p-0 text-center"><b>Current Status :</b></span>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <h2>{{policyInformation.ClaimStatus}}</h2>
+                    </div>
+                </div>
+            </mat-card>
+
+        </ng-container>
+        <ng-container *ngIf="(userType == 'claimofficer') &&
+     ((policyInformation.ClaimStatus == 'Claim Intimated') &&  policyInformation.Status != 'A')">
+            <mat-card>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Fault Category</mat-label>
+                            <mat-select [(ngModel)]="FaultCategory" name="FaultCategory" required>
+                                <mat-option *ngFor="let fault of FaultCategoryList" [value]="fault.Code">
+                                    {{fault.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Party Type</mat-label>
+                            <mat-select [(ngModel)]="PartyType" name="PartyType" required>
+                                <mat-option *ngFor="let party of ClaimPartyTypeList" [value]="party.Code">
+                                    {{party.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-5">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Claim Status</mat-label>
+                            <mat-select [(ngModel)]="claimStatusValue" name="claimStatusValue" required>
+                                <mat-option *ngFor="let status of claimStatusList" [value]="status.Code">
+                                    {{status.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput required [(ngModel)]="claimRemarks"></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Garage Status</mat-label>
+                            <mat-select [(ngModel)]="OfficerApproveGarageYn" name="claimStatusValue" required>
+                                <mat-option value="Y"> Garage Approved </mat-option>
+                                <mat-option value="R"> Garage Reject </mat-option>
+                                <mat-option value="P"> Garage Pending </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput required [(ngModel)]="OfficerGarageRemarks"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-7">
+                        <mat-card class="font-weight-bolder"> <i class="far fa-folder-open mx-2"></i>Customer Choosed Garage</mat-card>
+                        <ng-container *ngIf="tableData">
+                            <app-data-table-one [cols]="columnHeader" [data]="tableData"></app-data-table-one>
+                        </ng-container>
+                        <ng-container *ngIf="!tableData">
+                            <app-loader></app-loader>
+                        </ng-container>
+                    </div>
+                </div>
+            </mat-card>
+        </ng-container>
+
+        <ng-container>
+            <mat-card>
+                <div class="row" *ngIf="((userType == 'user') && (policyInformation.ClaimStatus == 'Claim Intimated')) || ((userType == 'claimofficer') && policyInformation.Status == 'A')">
+                    <div class="col-md-4 offset-md-1">
+                        <label><b>Claim Status : </b></label>&nbsp;
+                        <span *ngIf="policyInformation.Status == 'Y'">
+                            <h4>Notified</h4>
+                        </span>
+                        <span *ngIf="policyInformation.Status == 'A'">
+                            <h4>Approved</h4>
+                        </span>
+                        <span *ngIf="policyInformation.Status == 'R'">
+                                <h4>Rejected</h4>
+                        </span>
+                        <span *ngIf="policyInformation.Status == 'C'">
+                                <h4>Clarification Required</h4>
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                        <label><b>Claim Remarks : </b></label>&nbsp;
+                        <span>
+              <h4>{{policyInformation?.Remarks == ''
+                ?'N/A':policyInformation?.Remarks}}</h4>
+            </span>
+                    </div>
+                </div>
+            </mat-card>
+
+
+        </ng-container>
+
+    </div>
+
+    <mat-card *ngIf="data?.ViewClaimData?.OfficerApproveGarageYn == 'Y'">
+        <div class="row mt-3 p-2">
+            <div class="col-md-4 offset-md-1">
+                <label><b>Garage Status : </b></label>&nbsp;
+                <span *ngIf="data?.ViewClaimData?.OfficerApproveGarageYn == 'Y'">
+          <h4>Approved</h4>
+        </span>
+                <span *ngIf="data?.ViewClaimData?.OfficerApproveGarageYn == 'R'">
+          <h4>Rejected</h4>
+        </span>
+                <span *ngIf="data?.ViewClaimData?.OfficerApproveGarageYn == 'P'">
+          <h4>Pending</h4>
+        </span>
+            </div>
+            <div class="col-md-4">
+                <label><b>Garage Remarks : </b></label>&nbsp;
+                <span>
+          <h4>{{data?.ViewClaimData?.OfficerGarageRemarks == ''
+            ?'N/A':data?.ViewClaimData?.OfficerGarageRemarks}}</h4>
+        </span>
+            </div>
+        </div>
+    </mat-card>
+
+
+    <div class="text-center p-2">
+        <button mat-raised-button mat-dialog-close class="mx-2" color="warn">Close</button>&nbsp;&nbsp;
+        <button mat-raised-button class="btn btn-success" *ngIf="userType == 'claimofficer' && (policyInformation?.ClaimStatus == 'Claim Intimated') &&  policyInformation.Status != 'A'" (click)="onClaimConversion()">Submit</button>
+    </div>
+
+
+</mat-dialog-actions>

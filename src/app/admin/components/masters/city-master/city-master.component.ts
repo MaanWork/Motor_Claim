@@ -1,0 +1,351 @@
+import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/admin/admin.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ErrorService } from 'src/app/shared/services/errors/error.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
+import { startWith, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import {NgbModule, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+declare var $:any;
+export interface DataTableElement {
+  City: any,
+  InsuranceId: any,
+  Region: any,
+  Remarks: any,
+  Sno: any,
+  Status: any,
+}
+@Component({
+  selector: 'app-city-master',
+  templateUrl: './city-master.component.html',
+  styleUrls: ['./city-master.component.css']
+})
+export class CityMasterComponent implements OnInit {
+
+  public FormGroupData:FormGroup;
+  public InsertMode: any = 'Insert';
+  public panelOpen: boolean = true;
+  CityListForm:FormGroup;
+  InsuranceCmpyList: any=[];
+  filteredInsurance: Observable<any[]>;
+  filteredInsuranceComp: Observable<any[]>;
+  filteredRegion: Observable<any[]>;
+  InsuCode: any;effectiveValue:any="";
+  occupationListGrid: any;public tableData: DataTableElement[];
+  columnHeader: any;
+  InsCompCode: any;
+  logindata: any;
+  regionList:  any[]=[];
+  minDate: Date;
+  closeResult: string;
+  constructor(
+    private adminService: AdminService,
+    private spinner: NgxSpinnerService,
+    private errorService: ErrorService,
+    private formBuilder: FormBuilder,
+    private datePipe:DatePipe,
+    private modalService: NgbModal,
+  ) {
+    this.minDate = new Date();
+  }
+
+  ngOnInit(): void {
+    this.logindata = JSON.parse(sessionStorage.getItem("Userdetails"))?.LoginResponse;
+    this.onCreateFormControl();
+    this.onFetechInitialData();
+    this.CityListForm = this.formBuilder.group({
+      InsuranceId: [{ value: '', disabled: false }, [Validators.required, Validators.maxLength(50)]]
+    });
+  }
+
+
+  onCreateFormControl() {
+    this.FormGroupData = this.formBuilder.group({
+        "Sno" :['',Validators.required],
+        "City" :['',Validators.required],
+        "Region" :['',Validators.required],
+        "Status" :['Y',Validators.required],
+        "Remarks" :['',Validators.required],
+        "InsuranceId" : ['',Validators.required]
+    })
+  }
+  async onChangeCompanyList(insuranceCode) {
+    let Code = this.InsuranceCmpyList.find((ele: any) => ele.Code == insuranceCode);
+    if (Code) {
+      this.InsuCode = insuranceCode;
+
+      this.CityListForm.controls['InsuranceId'].setValue(Code.CodeDesc);
+      this.onLoadCityListGrid();
+    }
+  }
+  async onLoadCityListGrid(){
+    this.tableData = null;
+    let ReqObj = {
+      "Status": "Y",
+      "InsuranceId": this.InsuCode
+    }
+    let UrlLink = `api/getallcitymasterdetails`;
+    return this.adminService.onPostMethod(UrlLink, ReqObj).subscribe(async (data: any) => {
+
+      this.occupationListGrid = data;
+      this.columnHeader = [
+        
+        { key: "City", display: "CITY NAME" },
+        { key: "Region", display: "REGION NAME" },
+        { key: "Effectivedate", display: "Effective Date" },
+
+        {
+          key: "action",
+          display: "ACTION",
+          config: {
+            isAction: true,
+            actions: ["EDIT"]
+          }
+        },
+        {
+          key: "Status",
+          display: "STATUS",
+          config: {
+            isStatus: 'Y',
+            values: { Y: "Active", N: "Inactive", R: "Referral" }
+          }
+        }
+      ];
+      this.tableData = this.occupationListGrid;
+      console.log(data);
+       this.onGetRegionList(this.InsuCode);
+    }, (err) => {
+      this.handleError(err);
+    })
+  }
+  async onGetRegionList(Code) {
+    let UrlLink = `api/regions/${Code}`;
+    let response = (await this.adminService.onGetMethodAsync(UrlLink)).toPromise()
+      .then(res => {
+        this.regionList = res;
+        console.log("Region Listttttt",res);
+        this.filteredRegion = this.FormGroupData.controls['Region'].valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filter(value,"region")),
+        );
+      })
+      .catch((err) => {
+        this.handleError(err)
+      });
+    return response;
+  }
+  async onFetechInitialData(){
+    this.InsuranceCmpyList = await this.onInsuranceCompanyList();
+    this.onChangeCompanyList(this.logindata.InsuranceId);
+    this.filteredInsurance = this.CityListForm.controls['InsuranceId'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value,"insurance")),
+    );
+    this.filteredInsuranceComp = this.FormGroupData.controls['InsuranceId'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value,"insurance2")),
+    );
+  }
+  onAddNew(modal) {
+    this.open(modal);
+    this.InsertMode = 'Insert';
+    this.onCreateFormControl();
+    this.effectiveValue="";
+    /*if(this.InsertMode == 'Insert'){
+      this.onCreateFormControl();
+    }*/
+    this.onChangeCompanyValue(String(this.logindata.InsuranceId))
+    this.panelOpen = false;
+  }
+  onCloseForm(){
+    this.onCreateFormControl();
+    this.panelOpen = true;
+  }
+  onEditOccupationData(userData){
+    if(userData){
+      console.log("Edit Values",userData);
+      this.FormGroupData.controls['City'].setValue(userData.City);
+      this.FormGroupData.controls['Remarks'].setValue(userData.Remarks);
+      this.onChangeCompanyValue(userData.InsuranceId);
+      this.effectiveValue = this.onDateFormatInEdit(userData.Effectivedate);
+      this.FormGroupData.controls['Region'].setValue(userData.Region);
+      this.FormGroupData.controls['Sno'].setValue(userData.Sno);
+      this.FormGroupData.controls['Status'].setValue(userData.Status);
+      this.panelOpen = false;
+    }
+  }
+  onDateFormatInEdit(date) {
+    console.log(date);
+    if (date) {
+      let format = date.split('-');
+      if(format.length >1){
+        var NewDate = new Date(new Date(format[0], format[1], format[2]));
+        NewDate.setMonth(NewDate.getMonth() - 1);
+        return NewDate;
+      }
+      else{
+        format = date.split('/');
+        if(format.length >1){
+          var NewDate = new Date(new Date(format[2], format[1], format[0]));
+          NewDate.setMonth(NewDate.getMonth() - 1);
+          return NewDate;
+        }
+      }
+
+    }
+  }
+  onSaveCityDetials(modal) {
+
+    let UrlLink = `api/insertcitymasterdetails`;
+    let effectiveDate:any;
+    if (this.effectiveValue != '' && this.effectiveValue != null && this.effectiveValue != undefined) {
+      effectiveDate =  this.datePipe.transform(this.effectiveValue, "dd/MM/yyyy")
+    }
+    else{
+      effectiveDate = "";
+    }
+    let ReqObj = {
+      "Sno" : this.FormGroupData.controls['Sno'].value,
+      "City" : this.FormGroupData.controls['City'].value,
+      "Region" : this.FormGroupData.controls['Region'].value,
+      "Status" : this.FormGroupData.controls['Status'].value,
+      "Remarks" : this.FormGroupData.controls['Remarks'].value,
+      "InsuranceId" : this.InsCompCode,
+      "Effectivedate": effectiveDate
+    };
+    console.log(ReqObj);
+    return this.adminService.onPostMethod(UrlLink, ReqObj).subscribe(async (data: any) => {
+      if (data.Errors) {
+        this.errorService.showValidateError(data.Errors);
+        // for (let index = 0; index < data.Errors.length; index++) {
+        //   const element: any = data.Errors[index];
+        //   this.FormGroupData.controls[element.Field].setErrors({ message: element.Message });
+
+        // }
+      }
+      else{
+        await this.onLoadCityListGrid();
+        this.panelOpen = true;
+        Swal.fire(
+          `City Details Created/Updated Successfully`,
+          'success',
+          'success'
+        );
+        modal.dismiss('Cross click');
+        $("#citymodal").hide();
+      }
+
+    }, (err) => {
+      this.handleError(err);
+    })
+  }
+  onstatus(event){
+    console.log('EEEEEEEE',event);
+    let UrlLink = `api/citychangestatus`;
+    let ReqObj = {
+      Status:event.data.Status,
+      InsuranceId: this.InsuCode,
+      Effectivedate:event.data.EffectiveDate,
+      City: event.element.City,
+    
+    };
+    return this.adminService.onPostMethod(UrlLink, ReqObj).subscribe(async (data: any) => {
+      if (data.Errors) {
+        this.errorService.showValidateError(data.Errors);
+      }
+      else{
+        await this.onLoadCityListGrid();
+        this.panelOpen = true;
+        Swal.fire(
+          `Change Status Updated Successfully`,
+          'success',
+          'success'
+        );
+      }
+
+    }, (err) => {
+      this.handleError(err);
+    })
+  }
+  open(content) {
+    this.modalService.open(content, { size: 'lg', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  async onActionHandler(row,modal) {
+    console.log(row);
+     this.open(modal)
+    let UrlLink = "api/getcitymasterdetails";
+    let ReqObj = {
+      "Sno": row.Sno,
+      "InsuranceId": row.InsuranceId
+    }
+    return this.adminService.onPostMethod(UrlLink, ReqObj).subscribe(async (data: any) => {
+
+      this.onEditOccupationData(data);
+      }, (err) => {
+        this.handleError(err);
+      })
+  }
+  async onChangeCompanyValue(insuranceCode) {
+    let Code = this.InsuranceCmpyList.find((ele: any) => ele.Code == insuranceCode);
+    if (Code) {
+      this.InsCompCode = insuranceCode;
+      this.FormGroupData.controls['InsuranceId'].setValue(Code.CodeDesc);
+    }
+  }
+  async onInsuranceCompanyList() {
+    let UrlLink = `api/insurancecompanies`;
+    let response = (await this.adminService.onGetMethodAsync(UrlLink)).toPromise()
+      .then(res => {
+        return res;
+      })
+      .catch((err) => {
+        this.handleError(err)
+      });
+    return response;
+  }
+
+  private _filter(value: string, dropname: string): string[] {
+    if (value == null) {
+      value = '';
+    }
+    const filterValue = value.toLowerCase();
+    if (dropname == 'insurance') {
+      return this.InsuranceCmpyList.filter((option) => option?.CodeDesc?.toLowerCase().includes(filterValue));
+    }
+    if (dropname == 'region') {
+      return this.regionList.filter((option) => option?.CodeDesc?.toLowerCase().includes(filterValue));
+    }
+    if (dropname == 'insurance2') {
+      return this.InsuranceCmpyList.filter((option) => option?.CodeDesc?.toLowerCase().includes(filterValue));
+    }
+  }
+  handleError(error) {
+    let errorMessage: any = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = { 'ErrorCode': error.status, 'Message': error.message };
+      this.errorService.showError(error, errorMessage);
+
+    }
+
+  }
+
+}

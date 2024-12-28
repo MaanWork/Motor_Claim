@@ -1,0 +1,70 @@
+<div class="card my-1">
+    <div class="card-header">
+        Customer Information
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-2 col-lg-2">
+                    <label><b>Assured Name</b></label>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <span>
+                        {{ClaimInfo?.Assuredname ==null
+                        ?'N/A':ClaimInfo?.Assuredname}}
+                    </span>
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <label><b>Contact No</b></label>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <span>
+                        {{ClaimInfo?.CustMobCode ==null
+                            ?'N/A':ClaimInfo?.CustMobCode}} &nbsp;&nbsp; {{ClaimInfo?.Contactno ==null
+                        ?'N/A':ClaimInfo?.Contactno}}
+                    </span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-2 col-lg-2">
+                    <label><b>Occupation</b></label>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <span>
+                        {{ClaimInfo?.Occupation ==null
+                        ?'N/A':ClaimInfo?.Occupation}}
+                    </span>
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <label><b>Email Id</b></label>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <span>
+                        {{ClaimInfo?.Email ==null
+                        ?'N/A':ClaimInfo?.Email}}
+                    </span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-2 col-lg-2">
+                    <label><b>Fax No</b></label>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <span>{{ClaimInfo?.Faxno ==null
+                    ?'N/A':ClaimInfo?.Faxno}}</span>
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <label><b>Address</b></label>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <span>{{ClaimInfo?.Assuredaddress ==null
+                    ?'N/A':ClaimInfo?.Assuredaddress}}</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

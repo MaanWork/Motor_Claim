@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+table{
+    width: 100% !important;
+}
+.make-gold {
+    background-color: gold !important
+}
+.table-header {
+  background-color: #D3E9FB !important;
+  color: #362C82 !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+
+  ::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+    color: ghostwhite !important;
+  }
+.selectcustombtn{
+  cursor: pointer !important;
+  padding:8px 6px !important;
+  margin: 0px 2px !important;
+  border-radius: 4px !important;
+}
+.custombtncontainer .selectcustombtn.active {
+  background-color: dodgerblue !important;
+  color: white !important;
+}

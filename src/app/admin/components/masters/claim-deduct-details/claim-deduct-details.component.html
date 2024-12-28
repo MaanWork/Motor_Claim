@@ -1,0 +1,160 @@
+
+<mat-card>
+  <mat-expansion-panel hideToggle [expanded]="panelOpen">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> CLAIM DEDUCT MASTER</h6>
+      </mat-panel-title>
+      <mat-panel-description class="admin-grid-header">
+        <button mat-raised-button color="warn" (click)="onAddNew()">
+          ADD NEW
+        </button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Body Type</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Deduct Id</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Driver Age From</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Driver Age To</mat-label>
+            <input matInput [matDatepicker]="picker1">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Driver-License Expreince Form</mat-label>
+            <input matInput [matDatepicker]="picker5">
+            <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+            <mat-datepicker #picker5></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Driver-License Expreince To</mat-label>
+            <input matInput [matDatepicker]="picker2">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>End Limit</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Excess Limit</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="py-1">Inside East Africa</div>
+          <mat-radio-group aria-label="Select an option">
+              <mat-radio-button value="Y">Yes</mat-radio-button>
+              <mat-radio-button value="N">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Insurance Company</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Loss Type</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Policy Type</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Product Name</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Start Limit</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Year From</mat-label>
+            <input matInput [matDatepicker]="picker3">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Year To</mat-label>
+            <input matInput [matDatepicker]="picker4">
+            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+            <mat-datepicker #picker4></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Remarks</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row my-2">
+
+
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="py-1">Status</div>
+          <mat-radio-group aria-label="Select an option">
+              <mat-radio-button value="Y">Active</mat-radio-button>
+              <mat-radio-button value="N">De-Active</mat-radio-button>
+              <mat-radio-button value="R">Referral</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <mat-action-row class="justify-content-center">
+        <button mat-raised-button color="primary">Submit</button>
+      </mat-action-row>
+    </form>
+  </mat-expansion-panel>
+</mat-card>

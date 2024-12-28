@@ -1,0 +1,164 @@
+<h2 mat-dialog-title>Reserved Transaction Details</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="card-header d-flex justify-content-between">
+        <div>
+            Party Name - {{partyName}} &nbsp;&nbsp; | &nbsp;&nbsp; Party Id - {{partyNo}}
+        </div>
+        <div>
+            Claim No - {{claimNo}}
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-3 col-lg-3 offset-9">
+            <button class="mx-2" mat-raised-button color="accent" (click)="addTransaction()">Add New Transaction</button>
+        </div>
+    </div>
+    <ng-container *ngIf="addNewTransaction">
+        <div class="row mt-2">
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Reserved Type</mat-label>
+                    <mat-select name="Reservetype" required>
+                        <mat-option *ngFor="let reserved of reservedTypeList" [value]="reserved.Code">
+                            {{reserved.CodeDesc}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Currency Type</mat-label>
+                    <mat-select name="CurrencyId" required>
+                        <mat-option *ngFor="let currency of currencyTypeList" [value]="currency.Code">
+                            {{currency.CodeDesc}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Share ( % )</mat-label>
+                    <input matInput maxlength="3" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <label><b>Reserved Claim Amount</b></label><br> 450000
+            </div>
+        </div>
+        <app-data-table-one [data]="tableData" [cols]="columnHeader" [innercols]="innerColumnHeader" (onLossEdit)="onLossEdit($event)" (onLossDelete)="onLossDelete($event)" (onLossAllote)="onLossAllote($event)" (onLossTrack)="onLossTrack($event)" (onSurveyorLossPdf)="onSurveyorLossPdf($event)"
+            (onLossGarageAllot)="onLossGarageAllot($event)" (onOpenPayment)="onOpenPayment($event)" (onLossReservedTransactions)="onLossReservedTransactions($event)" (onLossClaimAllot)="onLossClaimAllot($event)" (onSurveyorApproved)="onSurveyorApproved($event)"
+            (onInvoiceLossPdf)="onInvoiceLossPdf($event)">
+
+        </app-data-table-one>
+        <div class="col-md-4 col-lg-4 col-xl-4 offset-8"><b>Total Reserved Amount : &nbsp;</b> 0</div>
+        <div class="my-2 text-center p-1">
+            <button class="mx-2" mat-raised-button color="warn" (click)="addNewTransaction = !addNewTransaction">Back</button>
+            <button class="mx-2" mat-raised-button color="primary">Submit</button>
+        </div>
+    </ng-container>
+    <!-- <ng-container *ngIf="tableData && !addNewTransaction">
+        <app-data-table-one [data]="tableData" [cols]="columnHeader" [innercols]="innerColumnHeader" (onLossEdit)="onLossEdit($event)" (onLossDelete)="onLossDelete($event)" (onLossAllote)="onLossAllote($event)" (onLossTrack)="onLossTrack($event)" (onSurveyorLossPdf)="onSurveyorLossPdf($event)"
+            (onLossGarageAllot)="onLossGarageAllot($event)" (onOpenPayment)="onOpenPayment($event)" (onLossReservedTransactions)="onLossReservedTransactions($event)" (onLossClaimAllot)="onLossClaimAllot($event)" (onSurveyorApproved)="onSurveyorApproved($event)"
+            (onInvoiceLossPdf)="onInvoiceLossPdf($event)">
+
+        </app-data-table-one>
+        <div class="my-2 text-center p-1">
+            <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+        </div>
+        
+    </ng-container>
+    <ng-container *ngIf="addNewTransaction">
+        <form [formGroup]="transactionForm">
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Reserved Type</mat-label>
+                        <mat-select formControlName="Reservetype" name="Reservetype" required>
+                            <mat-option *ngFor="let reserved of reservedTypeList" [value]="reserved.Code">
+                                {{reserved.CodeDesc}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Type</mat-label>
+                        <mat-select formControlName="CurrencyId" name="CurrencyId" required>
+                            <mat-option *ngFor="let currency of currencyTypeList" [value]="currency.Code">
+                                {{currency.CodeDesc}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>OutStanding Reserve Amount - 100% - OC</mat-label>
+                        <input matInput maxlength="15" formControlName="OutstFullAmt" name="OutstFullAmt" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>OutStanding Reserve Amount - Our Share - OC</mat-label>
+                        <input matInput maxlength="15" formControlName="OutstOurAmt" name="OutstOurAmt" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Total OutStanding Loss Reserves - Our Share - OC</mat-label>
+                        <input matInput maxlength="15" formControlName="TotalOutstLossAmt" name="TotalOutstLossAmt" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Share ( % )</mat-label>
+                        <input matInput maxlength="3" formControlName="SharePercent" name="SharePercent" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Reserve Position Date</mat-label>
+                        <input matInput [matDatepicker]="dobpicker" formControlName="ResPosdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dobpicker [startAt]="startDate"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Reserve Updation Date</mat-label>
+                        <input matInput [matDatepicker]="dobpicker1" formControlName="ResUpddate" required>
+                        <mat-datepicker-toggle matSuffix [for]="dobpicker1"></mat-datepicker-toggle>
+                        <mat-datepicker #dobpicker1 [startAt]="startDate"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Update Reference</mat-label>
+                        <input matInput formControlName="UpdateRef" name="UpdateRef" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <textarea matInput type="text" cols="120" rows="3" formControlName="Remarks" maxlength="500"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+        <div class="my-2 text-center p-1">
+            <button class="mx-2" mat-raised-button color="warn" (click)="addNewTransaction = !addNewTransaction">Back</button>
+            <button class="mx-2" mat-raised-button color="primary" (click)="onSaveTransactions()">Submit</button>
+        </div>
+
+    </ng-container> -->
+
+</mat-dialog-content>

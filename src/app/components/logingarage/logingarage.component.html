@@ -1,0 +1,88 @@
+
+
+
+
+<section id="header" class="">
+  <app-login-menu></app-login-menu>
+</section>
+<section id="hero" style="padding-top: 0px !important; height: 89svh">
+  <div class="p-3 h-100">
+    <div class="d-sm-flex flex-sm-row justify-content-sm-between h-100">
+        <div class="hero-content flex-md-grow-1 rounded-3 overflow-hidden h-100">
+          <div
+            class="hero-shadow h-100 d-flex items-center flex-column justify-content-end"
+            style="padding: 14px"
+          >
+            <h5
+              class="d-flex align-items-center fw-bold motor-get-started-content__Heading motor-get-started-content__Heading--mobile-large motor-get-started-content__Heading--main-heading"
+            >
+            Garage Login
+            </h5>
+          </div>
+        </div>
+      <div class="p-2 h-100" style="width: 40%;">
+        <div class="login-card">
+          <div class="login-card-title">
+            <div class="d-md-flex flex-md-row justify-content-between">
+                <div class="flex-item">
+                    <h4 class="heading bg-white">GARAGE</h4>
+                </div>
+            </div>
+            <hr>
+        </div>
+          <div class="login-card-body">
+            <form [formGroup]="garageForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+              <div class="row">
+                <div class="col-12">
+                  <mat-form-field class="mat-form-width" appearance="outline">
+                    <mat-label>Username:</mat-label>
+                    <div class="inputTextBar">
+                      <span class="mr-2"><i class="fas fa-user"></i></span>
+                      <input
+                        type="text"
+                        formControlName="userName"
+                        matInput
+                        placeholder="Username"
+                        required
+                      />
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col-12">
+                  <mat-form-field class="mat-form-width" appearance="outline">
+                    <mat-label>Password:</mat-label>
+                    <div class="inputTextBar">
+                      <span class="mr-2"><i class="fas fa-lock"></i></span>
+                      <input
+                        type="password"
+                        matInput
+                        formControlName="password"
+                        placeholder="Password"
+                      />
+                    </div>
+                  </mat-form-field>
+                </div>
+                  <div class="col-md-12">
+                      <div class="loginbtn text-center">
+                          <button mat-raised-button color="primary" type="submit" style="padding: 24px 48px">Login</button>
+                      </div>
+                      <div class="d-sm-flex justify-content-between">
+                        <button [routerLink]="['/Login/Forgot-Password']" routerLinkActive="router-link-active" mat-button color="primary">
+                          Forgot Password
+                          <i class="fas fa-question"></i>
+                        </button>
+                        <button [routerLink]="['/Login/Change-Password']" routerLinkActive="router-link-active" mat-button color="primary">
+                          Change Password
+                          <i class="fas fa-question"></i>
+                        </button>
+                    </div>
+                  </div>
+              </div>
+          </form>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,399 @@
+<!-- <div class="bg-container">
+  <div class="container">
+    <div class="container-fluid">
+      <br>
+    </div>
+  </div>
+</div>
+<div class="home-conatiner">
+  <div class="home-card home-card-bg-1 mt-4">
+    <div class="my-2" *ngIf="searchSection">
+      <h2 class="text-primary">Start Claim Intimate</h2>
+
+      <mat-tab-group>
+        <mat-tab class="customOverflow">
+          <ng-template mat-tab-label>
+            <i class="fas fa-clipboard-list mx-2"></i>
+            <span matBadgeOverlap="false">Policy Number</span>
+          </ng-template>
+          <ng-container>
+            <form [formGroup]="PolicySearchForm" class="my-4">
+              <div class="row m-0 p-0">
+                <div class="col-md-6">
+
+                  <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Policy Number</mat-label>
+                    <input matInput formControlName="PolicyNumber" required />
+                  </mat-form-field>
+
+                  <mat-form-field class="mat-form-width" appearance="fill">
+                    <mat-label>Insurance Company</mat-label>
+                    <input type="text" placeholder="Select Company" matInput formControlName="InsuranceId"
+                      [matAutocomplete]="auto" required>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="insuranceCompyText"
+                      (optionSelected)="onChangeCompany($event.option.value)">
+                      <mat-option *ngFor="let option of filteredCompany | async" [value]="option.Code">
+                        {{option.CodeDesc}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+                  <div class="row">
+                    <div class="col-md-3">
+                      <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Code</mat-label>
+                        <mat-select formControlName="MobileCode" name="MobileCode">
+                          <mat-option *ngFor="let mobile of MobileCodeList" [value]="mobile.Code">
+                            {{ mobile.CodeDesc }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-9">
+                      <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput maxlength="10" type="text" formControlName="MobileNo" appNumbersOnly />
+                        <mat-error class="error-message invalid-feedback" *ngIf="
+                       PlateSearchForm.controls.MobileNo.hasError('maxlength')
+                     ">
+                          required!
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="my-2 text-center p-1">
+                    <button class="mx-2" mat-raised-button color="primary" (click)="submitPolicySearch()"
+                      [disabled]="!PolicySearchForm.valid">
+                      Submit
+                    </button>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <img src="../../../assets/Images/man.png" width="130px">
+                </div>
+              </div>
+            </form>
+          </ng-container>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="fas fa-clipboard-list mx-2"></i>
+            <span matBadgeOverlap="false">Registration Number</span>
+          </ng-template>
+          <ng-container>
+            <form [formGroup]="PlateSearchForm" class="my-4">
+
+
+              <div class="row m-0 p-0">
+                <div class="col-md-6">
+                  <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Registration Number</mat-label>
+                    <input matInput formControlName="PlateNumber" required />
+                  </mat-form-field>
+                  <mat-form-field class="mat-form-width" appearance="fill">
+                    <mat-label>Insurance Company</mat-label>
+                    <input type="text" placeholder="Select Company" matInput formControlName="InsuranceId"
+                      [matAutocomplete]="auto1" required>
+                    <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                      (optionSelected)="onChangeCompany($event.option.value)">
+                      <mat-option *ngFor="let option of filteredCompanyPlate | async" [value]="option.Code">
+                        {{option.CodeDesc}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Code</mat-label>
+                        <mat-select formControlName="MobileCode" name="MobileCode">
+                          <mat-option *ngFor="let mobile of MobileCodeList" [value]="mobile.Code">
+                            {{ mobile.CodeDesc }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-9">
+                      <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput formControlName="MobileNo" maxlength="10" appNumbersOnly />
+                        <mat-error class="error-message invalid-feedback" *ngIf="
+                     PlateSearchForm.controls.MobileNo.hasError('maxlength')
+                   ">
+                          required!
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="my-2 text-center p-1">
+                    <button class="mx-2" mat-raised-button color="primary" (click)="submitPlateSearch()"
+                      [disabled]="!PlateSearchForm.valid">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <img src="../../../assets/Images/man.png" width="130px">
+                </div>
+              </div>
+
+            </form>
+          </ng-container>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div class="my-2" *ngIf="otpSection">
+      <ng-container>
+        <div class="row mt-2">
+          <div class="col-md-3 offset-md-7">
+            <h5>Generated OTP ~ &nbsp;&nbsp; {{otpGenerated}}</h5>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-7 offset-md-3">
+            <mat-form-field appearance="fill" class="mat-form-width">
+              <mat-label>Otp Number</mat-label>
+              <input matInput type="text" maxlength="10" [(ngModel)]="otpValue" name="otpValue" required
+                appNumbersOnly />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="text-center">
+          Not Received OTP?
+          <button class="btn btn-primary" (click)="regenerateOtp()" [disabled]="OtpBtnEnable">
+            Resend OTP
+            <span *ngIf="OtpBtnEnable">in ( {{ OtpBtnTime }} seconds)</span>
+          </button>
+        </div>
+        <div class="my-2 text-center p-1">
+          <button class="mx-2" mat-raised-button color="primary" [disabled]="otpValue == ''" (click)="onOtpValidate()">
+            Submit
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div> -->
+
+
+<section id="header" class="">
+  <nav class="navbar navbar-expand-sm bg-motor navbar-motor">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="./assets/Images/logo-2.png" width="170" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/Login/Home']" routerLinkActive="router-link-active"> <i
+                class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/Login/Officer']" routerLinkActive="router-link-active"> <i
+                class="fas fa-user-tie"></i> Officer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/Login/Assessor']" routerLinkActive="router-link-active"> <i
+                class="fas fa-user-tie"></i> Assessor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/Login/Garage']" routerLinkActive="router-link-active"> <i
+                class="fas fa-car"></i> Garage</a>
+          </li>
+          <!-- <li class="nav-item">
+              <a class="nav-link" (click)="onRedirectClaim('check')"> <i class="fas fa-car"></i> Check Claim Status</a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+</section>
+<section id="hero">
+  <div class="p-3">
+    <div class="col-12 d-sm-flex flex-sm-row justify-content-sm-between">
+      <div class="col-12 p-2 hero-content">
+
+      </div>
+      <div class="col-12 p-2 hero-bg">
+        <div class="login-card">
+          <div class="login-card-title">
+            <div class="d-md-flex flex-md-row justify-content-between">
+              <div class="flex-item">
+                <h4 class="heading bg-white">Start Claim Intimate</h4>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="login-card-body">
+            <ng-container *ngIf="searchSection">
+              <mat-tab-group>
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <i class="fas fa-clipboard-list mx-2"></i>
+                    <span matBadgeOverlap="false">Registration Number</span>
+                  </ng-template>
+                  <ng-container>
+                    <form [formGroup]="PlateSearchForm" class="my-4">
+                      <div class="row m-0 p-0">
+                        <div class="col-md-12">
+                          <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Registration Number</mat-label>
+                            <input matInput formControlName="PlateNumber" required />
+                          </mat-form-field>
+                          <mat-form-field class="mat-form-width" appearance="fill">
+                            <mat-label>Insurance Company</mat-label>
+                            <input type="text" placeholder="Select Company" matInput formControlName="InsuranceId"
+                              [matAutocomplete]="auto1" required>
+                            <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                              [displayWith]="insuranceCompyText"
+                              (optionSelected)="onChangeCompany($event.option.value)">
+                              <mat-option *ngFor="let option of filteredCompanyPlate | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                          <div class="row">
+                            <div class="col-md-3">
+                              <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Code</mat-label>
+                                <mat-select formControlName="MobileCode" name="MobileCode">
+                                  <mat-option *ngFor="let mobile of MobileCodeList" [value]="mobile.Code">
+                                    {{ mobile.CodeDesc }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-md-9">
+                              <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Mobile</mat-label>
+                                <input matInput formControlName="MobileNo" required maxlength="10" appNumbersOnly />
+                                <mat-error class="error-message invalid-feedback" *ngIf="PlateSearchForm.controls.MobileNo.hasError('maxlength')">
+                                  required!
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                          <div class="my-2 text-center p-1">
+                            <button class="mx-2" mat-raised-button color="primary" (click)="submitPlateSearch()"
+                              [disabled]="!PlateSearchForm.valid">
+                              Submit
+                            </button>
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                    <img src="../../../assets/Images/man.png" width="130px">
+                  </div> -->
+                      </div>
+                    </form>
+                  </ng-container>
+                </mat-tab>
+                <mat-tab class="customOverflow">
+                  <ng-template mat-tab-label>
+                    <i class="fas fa-clipboard-list mx-2"></i>
+                    <span matBadgeOverlap="false">Policy Number</span>
+                  </ng-template>
+                  <ng-container>
+                    <form [formGroup]="PolicySearchForm" class="my-4">
+                      <div class="row m-0 p-0">
+                        <div class="col-md-12">
+
+                          <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Policy Number</mat-label>
+                            <input matInput formControlName="PolicyNumber" required />
+                          </mat-form-field>
+
+                          <mat-form-field class="mat-form-width" appearance="fill">
+                            <mat-label>Insurance Company</mat-label>
+                            <input type="text" placeholder="Select Company" matInput formControlName="InsuranceId"
+                              [matAutocomplete]="auto" required>
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                              [displayWith]="insuranceCompyText"
+                              (optionSelected)="onChangeCompany($event.option.value)">
+                              <mat-option *ngFor="let option of filteredCompany | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+
+                          <div class="row">
+                            <div class="col-md-3">
+                              <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Code</mat-label>
+                                <mat-select formControlName="MobileCode" name="MobileCode">
+                                  <mat-option *ngFor="let mobile of MobileCodeList" [value]="mobile.Code">
+                                    {{ mobile.CodeDesc }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-md-9">
+                              <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Mobile</mat-label>
+                                <input matInput maxlength="10" type="text" required formControlName="MobileNo"
+                                  appNumbersOnly />
+                                <mat-error class="error-message invalid-feedback" *ngIf="
+                             PlateSearchForm.controls.MobileNo.hasError('maxlength')
+                           ">
+                                  required!
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                          </div>
+
+                          <div class="my-2 text-center p-1">
+                            <button class="mx-2" mat-raised-button color="primary" (click)="submitPolicySearch()"
+                              [disabled]="!PolicySearchForm.valid">
+                              Submit
+                            </button>
+                          </div>
+
+                        </div>
+                        <!-- <div class="col-md-6">
+                        <img src="../../../assets/Images/man.png" width="130px">
+                      </div> -->
+                      </div>
+                    </form>
+                  </ng-container>
+                </mat-tab>
+
+              </mat-tab-group>
+            </ng-container>
+            <div class="my-2" *ngIf="otpSection">
+              <ng-container>
+                <div class="text-center" >
+                  <!-- <h5>Generated OTP ~ &nbsp;&nbsp; {{otpGenerated}}</h5> -->
+                </div>
+                <div class="row mt-5">
+                  <div class="col-md-7 offset-md-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                      <mat-label>Otp Number</mat-label>
+                      <input matInput type="text" maxlength="10" [(ngModel)]="otpValue" name="otpValue" required
+                        appNumbersOnly />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="text-center">
+                  Not Received OTP?
+                  <button class="btn btn-primary" (click)="regenerateOtp()" [disabled]="OtpBtnEnable">
+                    Resend OTP
+                    <span *ngIf="OtpBtnEnable">in ( {{ OtpBtnTime }} seconds)</span>
+                  </button>
+                </div>
+                <div class="my-2 text-center p-1">
+                  <button class="mx-2" mat-raised-button color="primary" [disabled]="otpValue == ''"
+                    (click)="onOtpValidate()">
+                    Submit
+                  </button>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

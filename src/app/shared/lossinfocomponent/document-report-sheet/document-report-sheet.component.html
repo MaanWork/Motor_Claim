@@ -1,0 +1,32 @@
+<div class="p-2">
+        <div class="my-4" *ngIf="logindata.UserType != 'claimofficer'">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="waveOffYN">
+                <mat-radio-button value="Y">Accept</mat-radio-button>
+                <mat-radio-button value="N">Reject</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+            <mat-form-field appearance="fill" class="mat-form-width">
+                <mat-label>Document Name</mat-label>
+                <input matInput [(ngModel)]="documentName" />
+            </mat-form-field>
+            <ng-container>
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Surveyor Reason</mat-label>
+                    <textarea matInput [(ngModel)]="surveyDocumentReason"
+                        [disabled]="logindata.UserType != 'surveyor'"></textarea>
+                </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngIf="logindata.UserType == 'claimofficer'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Claim Officer Remarks</mat-label>
+                    <textarea matInput [(ngModel)]="claimDocumentReason"
+                        [disabled]="logindata.UserType != 'claimofficer'"></textarea>
+                </mat-form-field>
+            </ng-container>
+
+    <button mat-raised-button color="primary" (click)="onSubmitDocumentReports()">
+        Submit
+    </button>
+</div>

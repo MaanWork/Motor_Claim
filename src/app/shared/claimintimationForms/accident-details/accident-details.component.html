@@ -1,0 +1,223 @@
+<div class="card material-shadow border-0">
+    <div class="card-header">
+        <div class="d-flex justify-content-between p-0">
+            <div class="flex-item">
+                <h5 class="card-title mb-0 p-0"><b>Accident Details</b></h5>
+            </div>
+            <div class="flex-item">
+                <h5 class="p-0"><b>Claim Ref No ~ {{claimRefNo}}</b></h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="p-3">
+            <form [formGroup]="createAccidentDetails">
+
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1" data-provider="datepicker">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Accident Date</mat-label>
+                            <input matInput [max]="accidentMaxDate" [matDatepicker]="dobpicker" formControlName="AccidentDate" required>
+                            <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                            <mat-datepicker #dobpicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Accident Time</mat-label>
+                            <input matInput type="text" atp-time-picker value="12:00" formControlName="AccidentTime" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Accident Place</mat-label>
+                            <input matInput type="text" name="AccidentPlace" formControlName="AccidentPlace" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <ng-container>
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Loss Type</mat-label>
+                                <mat-select formControlName="Losstypeid" name="Losstypeid" required multiple>
+                                    <mat-select-trigger>
+                                        {{(createAccidentDetails.controls.Losstypeid.value? createAccidentDetails.controls.Losstypeid.value[0] : '')|losstypename|async}}
+                                        <span *ngIf="createAccidentDetails.controls.Losstypeid.value?.length > 1" class="example-additional-selection">
+                                (+{{createAccidentDetails.controls.Losstypeid.value.length - 1}} {{createAccidentDetails.controls.Losstypeid.value?.length === 2 ? 'other' : 'others'}})
+                              </span>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let loss of lossTypeList" [value]="loss.Code"> {{loss.CodeDesc}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Type of road surface</mat-label>
+                            <mat-select formControlName="RoadSurface" name="RoadSurface" required>
+                                <mat-option *ngFor="let surface of typesOfSurfaceList" [value]="surface.Code">
+                                    {{surface.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Cause Of Loss</mat-label>
+                            <mat-select formControlName="CauseOfLoss" name="CauseOfLoss" required>
+                                <mat-option *ngFor="let caus of productList" [value]="caus.CclCauseLossCode">
+                                    {{caus.CclCauseLossDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>choose product type</mat-label>
+                            <mat-select formControlName="chooseproducttype" name="chooseproducttype" (selectionChange)="productcauseofloss()" required>
+                                <mat-option *ngFor="let cause of causeOfLossList" [value]="cause.CodeDesc">
+                                    {{cause.TypeId}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>-->
+                </div> 
+
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Visiblity</mat-label>
+                            <mat-select formControlName="Visibility" name="Visibility" required>
+                                <mat-option *ngFor="let visibility of visibilityList" [value]="visibility.Code">
+                                    {{visibility.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Road Condition</label>&nbsp;<strong class="text-danger">*</strong><br>
+                        <mat-radio-group aria-label="Select an option" formControlName="WetOrDry">
+                            <mat-radio-button value="Wet">Wet</mat-radio-button>
+                            <mat-radio-button value="Dry">Dry</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>What warning did you/your driver give</mat-label>
+                            <input matInput type="text" name="WarningDriverGiven" formControlName="WarningDriverGiven">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Weather Conditions</mat-label>
+                            <mat-select formControlName="WeatherCondition" name="WeatherCondition" required>
+                                <mat-option *ngFor="let weather of weatherList" [value]="weather.Code">
+                                    {{weather.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Estimate speed before accident (Km/h)</mat-label>
+                            <input matInput type="text" maxlength="3" formControlName="SpeedofAccident" name="SpeedofAccident" appNumbersOnly>
+                        </mat-form-field>
+                        <!-- <div class="input-group mb-3">
+                            <input type="text"  maxlength="3"
+                                formControlName="SpeedofAccident" name="SpeedofAccident" appNumbersOnly>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Km/h</span>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Did the police take particulars?</mat-label>
+                            <mat-select formControlName="PoliceTakeParticular" name="PoliceTakeParticular" required>
+                                <mat-option *ngFor="let particular of policeParticularList" [value]="particular.Code">
+                                    {{particular.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <input type="text"  formControlName="PoliceTakeParticular"> -->
+                    </div>
+
+                </div>
+                <div class="row my-2" *ngIf="createAccidentDetails.controls.PoliceTakeParticular.value == '1'">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>If so of given Constable's numbers and station</mat-label>
+                            <input matInput type="text" formControlName="ConstableNumberandStation" name="ConstableNumberandStation">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>To Which Station was the accident Report</mat-label>
+                            <input matInput type="text" formControlName="StationAccidentReport" name="StationAccidentReport">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Use Of Vehicle</mat-label>
+                            <textarea matInput formControlName="useOfVehicle" name="useOfVehicle" required></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Accident Location Inside Africa?</label>&nbsp;<strong class="text-danger">*</strong><br>
+                        <mat-radio-group aria-label="Select an option" formControlName="InsideafricaYn">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Do You Want Allocate To Garage</label>&nbsp;<strong class="text-danger">*</strong><br>
+                        <mat-radio-group aria-label="Select an option" formControlName="allocateGarage">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">NO</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    
+
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <mat-card *ngIf="createAccidentDetails.controls['allocateGarage'].value == 'Y'">
+                            <mat-card class="font-weight-bolder"> <i class="far fa-folder-open mx-2"></i>Alloting To Garage</mat-card>
+
+                            <ng-container *ngIf="tableData">
+                                <app-data-table-one [form]="createAccidentDetails" [cols]="columnHeader" (onGetChoosedId)="onGetChoosedId($event)" [data]="tableData"></app-data-table-one>
+                            </ng-container>
+                            <ng-container *ngIf="!tableData">
+                                <app-loader></app-loader>
+                            </ng-container>
+                        </mat-card>
+                    </div>
+                </div>
+
+
+                <mat-card class="my-2 p-0">
+                    <ng-container>
+                        <app-loss-map [form]="createAccidentDetails"></app-loss-map>
+                    </ng-container>
+                </mat-card>
+            </form>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onAccidentInfoSubmit()">Next</button>
+
+    </div>
+</div>

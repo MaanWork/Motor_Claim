@@ -1,0 +1,48 @@
+<div class="card">
+     <div class="card-body">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2 mt-3">
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Bank Name</mat-label>
+                        <input matInput type="text" formControlName="Bankname" name="Bankname" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4  offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Bank Short Code</mat-label>
+                        <input matInput type="text" formControlName="BankShortCode" name="BankShortCode"/>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4  offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-md-1 offset-lg-1">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" style="margin-left:10px;" (click)="onSaveCityDetials()">Submit</button>
+            </div>
+        </form>
+    </div>
+
+</div>

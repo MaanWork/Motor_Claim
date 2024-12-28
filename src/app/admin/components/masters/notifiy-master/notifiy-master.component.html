@@ -1,0 +1,254 @@
+<div class="card">
+  
+        <div class="card-header">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i>NOTIFICATIONS MASTER</h6>
+            </div>
+            <div class="admin-grid-header">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-3 offset-9 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNew(notifymodal)">
+                ADD NEW 
+              </button>
+            </div>
+        </div>
+        <div class="card-body">
+        <div *ngIf="nationalityListGrid?.length > 0">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,notifymodal)" (onChangeCheckBox)="onChangeCheckBox($event)"
+            changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+        </div>
+        <div class="text-center" *ngIf="nationalityListGrid?.length == 0 && InsuCode!=''">
+            <h3>No Data Available</h3>
+        </div>
+        </div>
+    
+</div>
+
+
+
+<!--
+      <ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+            <div class="row mt-3 ">
+                <div class="col-md-4 col-lg-4">
+                    <mat-checkbox class="example-margin" (change)="addNotifySetup($event.checked,'sms')" [checked]="checkNotifySetup('sms')">SMS Notification</mat-checkbox>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <mat-checkbox class="example-margin" (change)="addNotifySetup($event.checked,'mail')" [checked]="checkNotifySetup('mail')">Mail Notification</mat-checkbox>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <mat-checkbox class="example-margin" (change)="addNotifySetup($event.checked,'whatsapp')" [checked]="checkNotifySetup('whatsapp')">Whatsapp Notification</mat-checkbox>
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-12 col-md-4 col-lg-4 mt-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Primary Key</mat-label>
+                        <input matInput type="text" required maxlength="250" formControlName="Querykey" name="Querykey" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" required maxlength="250" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <mat-card class="font-weight-bolder card-heading-strip" *ngIf="FormGroupData.controls['Smsrequired'].value=='Y'">SMS INFORMATION</mat-card>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Smsrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMS Subject</mat-label>
+                    <input matInput type="text" required maxlength="250" formControlName="Smssubject" name="Smssubject" />
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Smsrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMS Content</mat-label>
+                    <textarea matInput required formControlName="Smsbodyen" name="Smsbodyen"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Smsrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMS Regards</mat-label>
+                    <input matInput type="text" required maxlength="200" formControlName="Smsregards" name="Smsregards" />
+                </mat-form-field>
+            </div>
+            <mat-card class="font-weight-bolder card-heading-strip" *ngIf="FormGroupData.controls['Mailrequired'].value=='Y'">Mail INFORMATION</mat-card>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Mailrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Mail Subject</mat-label>
+                    <input matInput type="text" required maxlength="250" formControlName="Mailsubject" name="Mailsubject" />
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Mailrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Mail Content</mat-label>
+                    <textarea matInput required formControlName="Mailbody" name="Mailbody"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Mailrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Mail Regards</mat-label>
+                    <input matInput type="text" required maxlength="200" formControlName="Mailregards" name="Mailregards" />
+                </mat-form-field>
+            </div>
+            <mat-card class="font-weight-bolder card-heading-strip" *ngIf="FormGroupData.controls['Whatsapprequired'].value=='Y'">Whatsapp INFORMATION</mat-card>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Whatsapprequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Whatsapp Subject</mat-label>
+                    <input matInput type="text" required maxlength="250" formControlName="Whatsappsubject" name="Whatsappsubject" />
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Whatsapprequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Whatsapp Content</mat-label>
+                    <textarea matInput required formControlName="Whatsappbodyen" name="Whatsappbodyen"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Whatsapprequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Whatsapp Regards</mat-label>
+                    <input matInput type="text" required maxlength="200" formControlName="Whatsappregards" name="Whatsappregards" />
+                </mat-form-field>
+            </div>
+        </form>
+        <mat-action-row class="justify-content-center">
+            <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+            <button mat-raised-button color="primary" (click)="onFormSubmit()">Submit</button>
+        </mat-action-row>
+    </ng-container>
+-->
+
+<ng-template #notifymodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Notification Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="FormGroupData">
+            <div class="row mt-3 ">
+                <div class="col-md-4 col-lg-4">
+                    <mat-checkbox class="example-margin" (change)="addNotifySetup($event.checked,'sms')" [checked]="checkNotifySetup('sms')">SMS Notification</mat-checkbox>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <mat-checkbox class="example-margin" (change)="addNotifySetup($event.checked,'mail')" [checked]="checkNotifySetup('mail')">Mail Notification</mat-checkbox>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <mat-checkbox class="example-margin" (change)="addNotifySetup($event.checked,'whatsapp')" [checked]="checkNotifySetup('whatsapp')">Whatsapp Notification</mat-checkbox>
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-12 col-md-4 col-lg-4 mt-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Primary Key</mat-label>
+                        <input matInput type="text" required maxlength="250" formControlName="Querykey" name="Querykey" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" required maxlength="250" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                    </mat-radio-group>
+                </div>
+            </div>
+            <mat-card class="font-weight-bolder card-heading-strip" *ngIf="FormGroupData.controls['Smsrequired'].value=='Y'">SMS INFORMATION</mat-card>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Smsrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMS Subject</mat-label>
+                    <input matInput type="text" required maxlength="250" formControlName="Smssubject" name="Smssubject" />
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Smsrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMS Content</mat-label>
+                    <textarea matInput required formControlName="Smsbodyen" name="Smsbodyen"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Smsrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMS Regards</mat-label>
+                    <input matInput type="text" required maxlength="200" formControlName="Smsregards" name="Smsregards" />
+                </mat-form-field>
+            </div>
+            <mat-card class="font-weight-bolder card-heading-strip" *ngIf="FormGroupData.controls['Mailrequired'].value=='Y'">Mail INFORMATION</mat-card>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Mailrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Mail Subject</mat-label>
+                    <input matInput type="text" required maxlength="250" formControlName="Mailsubject" name="Mailsubject" />
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Mailrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Mail Content</mat-label>
+                    <textarea matInput required formControlName="Mailbody" name="Mailbody"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Mailrequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Mail Regards</mat-label>
+                    <input matInput type="text" required maxlength="200" formControlName="Mailregards" name="Mailregards" />
+                </mat-form-field>
+            </div>
+            <mat-card class="font-weight-bolder card-heading-strip" *ngIf="FormGroupData.controls['Whatsapprequired'].value=='Y'">Whatsapp INFORMATION</mat-card>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Whatsapprequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Whatsapp Subject</mat-label>
+                    <input matInput type="text" required maxlength="250" formControlName="Whatsappsubject" name="Whatsappsubject" />
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Whatsapprequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Whatsapp Content</mat-label>
+                    <textarea matInput required formControlName="Whatsappbodyen" name="Whatsappbodyen"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="row mt-2" *ngIf="FormGroupData.controls['Whatsapprequired'].value=='Y'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Whatsapp Regards</mat-label>
+                    <input matInput type="text" required maxlength="200" formControlName="Whatsappregards" name="Whatsappregards" />
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onFormSubmit(modal)">Submit</button>
+    </div>
+  </ng-template>

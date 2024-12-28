@@ -1,0 +1,230 @@
+<h2 mat-dialog-title>Damage Information</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field
+    appearance="outline"
+    class="mat-form-width"
+    style="width: 50% !important"
+  >
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Search Parts"
+      #input
+    />
+  </mat-form-field>
+  <div class="mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      style="width: 100% !important"
+    >
+      <ng-container matColumnDef="select">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="headerCell"
+        >
+          SELECT
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <section class="example-section">
+            <mat-checkbox
+              class="example-margin"
+              [(ngModel)]="partyId['partyId' + row.Partid]"
+              (change)="damageCheck($event, row.Partid)"
+              [disabled]="damageListDisabled()"
+            ></mat-checkbox>
+          </section>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="repairdescription">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="headerCell"
+        >
+          REPAIR DESCRIPTION
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.Partdescription }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="repairtype">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="headerCell"
+        >
+          REPAIR TYPE
+        </th>
+        <td mat-cell *matCellDef="let row" class="tableCell">
+          <mat-form-field appearance="outline" class="fieldInCell">
+            <mat-label>Select</mat-label>
+            <mat-select
+              [(ngModel)]="repairType['repairType' + row.Partid]"
+              name="search"
+              [disabled]="damageListDisabled()"
+              (selectionChange)="onRepairTypeChange($event.value, row.Partid)"
+            >
+              <mat-option
+                *ngFor="let repair of RepairTypeLis"
+                [value]="repair.Code"
+              >
+                {{ repair.CodeDesc }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rate">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="headerCell"
+        >
+          RATE
+        </th>
+        <td mat-cell *matCellDef="let row" class="tableCell">
+          <mat-form-field appearance="outline" class="fieldInCell">
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="rate['rate' + row.Partid]"
+              [disabled]="damageListDisabled()"
+            />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="salvage">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> SALVAGE </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-form-field appearance="outline">
+                        <input matInput type="number" [(ngModel)]="salvage['salvage'+row.Partid]" [disabled]="damageListDisabled() || repairType['repairType'+row.Partid] !=2 ">
+                    </mat-form-field>
+                </td>
+            </ng-container> -->
+
+      <!-- <ng-container matColumnDef="excess">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> EXCESS </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-form-field appearance="outline">
+                        <input matInput type="number" [(ngModel)]="excess['excess'+row.Partid]" [disabled]="damageListDisabled()">
+                    </mat-form-field>
+                </td>
+            </ng-container> -->
+
+      <ng-container matColumnDef="noofhours">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="headerCell"
+        >
+          NO.OF.HOURS
+        </th>
+        <td mat-cell *matCellDef="let row" class="tableCell">
+          <mat-form-field appearance="outline" class="fieldInCell">
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="noOfHours['noofhours' + row.Partid]"
+              [disabled]="damageListDisabled()"
+            />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="discount">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="headerCell"
+        >
+          DISCOUNT(%)
+        </th>
+        <td mat-cell *matCellDef="let row" class="tableCell">
+          <mat-form-field appearance="outline" class="fieldInCell">
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="discount['dsicount' + row.Partid]"
+              [disabled]="damageListDisabled()"
+            />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deprecitation">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="headerCell"
+        >
+          LESS BETTERMENT(%)
+        </th>
+        <td mat-cell *matCellDef="let row" class="tableCell">
+          <mat-form-field appearance="outline" class="fieldInCell">
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="depreciation['depreciation' + row.Partid]"
+              [disabled]="damageListDisabled()"
+            />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          No data matching the filter "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of users"
+    ></mat-paginator>
+  </div>
+  <div class="text-center mb-1 mt-1">
+    <button
+      class="mx-2"
+      mat-raised-button
+      color="warn"
+      (click)="onClosingDamage()"
+    >
+      Close
+    </button>
+    <button
+      class="mx-2"
+      mat-raised-button
+      color="accent"
+      [disabled]="damageListDisabled()"
+      (click)="onSubmitDamageLoss('Save')"
+    >
+      Save
+    </button>
+    <button
+      class="mx-2"
+      mat-raised-button
+      color="primary"
+      [disabled]="damageListDisabled()"
+      (click)="onSubmitDamageLoss('Submit')"
+    >
+      Submit
+    </button>
+  </div>
+</mat-dialog-content>

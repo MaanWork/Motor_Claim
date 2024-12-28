@@ -1,0 +1,202 @@
+<div class="card my-1">
+    <div class="card-header">
+        Reasons Information
+    </div>
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel [expanded]="panelOpen" *ngIf="ClaimInfo?.DamgVehYn == 'Y'">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Damage To Insured Vehicle
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="ClaimInfo?.DamgVehYn == 'Y'; else DamgVehYn">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>State briefly apparents damage</b></label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <span>{{ClaimInfo?.Vehicledamagedescription ==null
+                                    ?'N/A':ClaimInfo?.Vehicledamagedescription}}</span>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Repair's name and address</b></label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <span>{{ClaimInfo?.Garagenameaddress ==null
+                                    ?'N/A':ClaimInfo?.Garagenameaddress}}</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Is the vehicle still in use?</b></label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <span>{{ClaimInfo?.Vehicleinuseyn ==null
+                                    ?'N/A':ClaimInfo?.Vehicleinuseyn}}</span>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>When & Where</b></label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <span>{{ClaimInfo?.Accidentplace ==null
+                                    ?'N/A':ClaimInfo?.Accidentplace}}</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </ng-container>
+            <ng-template #DamgVehYn>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light text-center">
+                        Data Not Available
+                    </li>
+                </ul>
+            </ng-template>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="panelOpen" *ngIf="ClaimInfo?.DamgPropYn == 'Y'">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Other Vehicle Involved And Property Damaged
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="ClaimInfo?.DamgPropYn == 'Y'; else DamgPropYn">
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name and Address of the Insured</th>
+                            <th>Registration No of Vehicle</th>
+                            <th>Name of Driver</th>
+                            <th>Address of the Driver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of otherVehiclePropertyDamage;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{item.Nameofinsured}}</td>
+                            <td>{{item.Vehregno}}</td>
+                            <td>{{item.Nameofdriver}}</td>
+                            <td>{{item.Addrofdriver}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+            <ng-template #DamgPropYn>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light text-center">
+                        Data Not Available
+                    </li>
+                </ul>
+            </ng-template>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="panelOpen" *ngIf="ClaimInfo?.DamgPersYn == 'Y'">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Persons Injured
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="ClaimInfo?.DamgPersYn == 'Y'; else DamgPersYn">
+                <table class="table table-bordered">
+                    <thead class="table-success">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Whether Driver or Passenger & Reg Number of Vehicle</th>
+                            <th>Apparent Injuries</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of personInjured;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{item.Name}}</td>
+                            <td>{{item.Address}}</td>
+                            <td>{{item.Persontype}}</td>
+                            <td>{{item.Apparentinjuries}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+            <ng-template #DamgPersYn>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light text-center">
+                        Data Not Available
+                    </li>
+                </ul>
+            </ng-template>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="panelOpen" *ngIf="ClaimInfo?.DamIndiYn == 'Y'">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Independent Witnesses
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="ClaimInfo?.DamIndiYn == 'Y'; else DamIndiYn">
+                <table class="table table-bordered table-sm">
+                    <thead class="table-success">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of independentWitness;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{item.IndenWit_Name}}</td>
+                            <td>{{item.IndenWit_Address}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+            <ng-template #DamIndiYn>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light text-center">
+                        Data Not Available
+                    </li>
+                </ul>
+            </ng-template>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="panelOpen" *ngIf="ClaimInfo?.DamIndiYn == 'Y'">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Passengers In Your Vehicle
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="ClaimInfo?.DamPassenYn == 'Y'; else DamPassenYn">
+                <table class="table table-bordered table-sm">
+                    <thead class="table-success">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of passengerInVehicle;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{item.Name}}</td>
+                            <td>{{item.Address}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+            <ng-template #DamPassenYn>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light text-center">
+                        Data Not Available
+                    </li>
+                </ul>
+            </ng-template>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

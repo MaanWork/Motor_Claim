@@ -1,0 +1,128 @@
+<h2 mat-dialog-title>Create New Party</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-card class="my-2">
+        <form [formGroup]="createPartyForm">
+            <div class="row">
+                <div class="col-md-8 offset-2">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>Fault Category</mat-label>
+                                <mat-select formControlName="FaultCategory" name="FaultCategory" required>
+                                    <mat-option *ngFor="let fault of FaultCategoryList" [value]="fault.Code">
+                                        {{fault.CodeDesc}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>Party Type</mat-label>
+                                <mat-select formControlName="PartyType" name="PartyType" required>
+                                    <mat-option *ngFor="let party of ClaimPartyTypeList" [value]="party.Code">
+                                        {{party.CodeDesc}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>Name</mat-label>
+                                <input matInput formControlName="Name" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>DOB</mat-label>
+                                <input matInput [max]="driverMaxDOB" [matDatepicker]="dobpicker" formControlName="Dob"
+                                    required>
+                                <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                                <mat-datepicker #dobpicker [startAt]="startDate"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>Email</mat-label>
+                                <input matInput formControlName="Email">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline" class="mat-form-width">
+                                        <mat-label>Code</mat-label>
+                                        <mat-select formControlName="MobileCode" name="MobileCode">
+                                            <mat-option *ngFor="let mobile of MobileCodeList" [value]="mobile.Code">
+                                                {{mobile.CodeDesc}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-8">
+                                    <mat-form-field appearance="outline" class="mat-form-width">
+                                        <mat-label>Mobile</mat-label>
+                                        <input matInput formControlName="MobileNo" appNumbersOnly>
+                                        <!-- <mat-error *ngIf="createPartyForm.controls['MobileNo'].hasError('maxlength')">Mobile Number Must be 10 numbers</mat-error> -->
+                                        <mat-error class="error-message invalid-feedback"
+                                            *ngIf="createPartyForm.controls.MobileNo.hasError('maxlength')">
+                                            required!
+                                        </mat-error>
+
+                                    </mat-form-field>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>Remarks</mat-label>
+                                <input matInput formControlName="Remarks">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>Address</mat-label>
+                                <input matInput formControlName="Address">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>InsuranceParty Id</mat-label>
+                                <mat-select formControlName="InsurancePartyId" name="InsurancePartyId">
+                                    <mat-option *ngFor="let insur of AllInsurancePart" [value]="insur.Code">
+                                        {{insur.CodeDesc}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="mat-form-width">
+                                <mat-label>Nationality</mat-label>
+                                <mat-select formControlName="Nationality" name="Nationality">
+                                    <mat-option *ngFor="let nat of Nationality" [value]="nat.Code">
+                                        {{nat.CodeDesc}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="my-2 text-center p-1">
+                <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+                <button class="mx-2" mat-raised-button color="primary"
+                    (click)="onCreateNewParty('submit')">Submit</button>
+            </div>
+        </form>
+
+    </mat-card>
+</mat-dialog-content>

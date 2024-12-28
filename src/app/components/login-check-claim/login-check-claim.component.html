@@ -1,0 +1,76 @@
+
+
+
+
+<section id="header" class="">
+  <app-login-menu></app-login-menu>
+</section>
+<section id="hero">
+  <div class="p-3">
+    <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+      <div class="p-2 hero-content">
+
+      </div>
+      <div class="p-2 hero-bg">
+        <div class="login-card">
+          <div class="login-card-title">
+              <div class="d-md-flex flex-md-row justify-content-between">
+                  <div class="flex-item">
+                      <h4 class="heading bg-white">LOGIN</h4>
+                  </div>
+              </div>
+              <hr>
+          </div>
+          <div class="login-card-body">
+            <form [formGroup]="checkClaimForm" autocomplete="off">
+
+              <div class="row">
+                <div class="col-md-12">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Code</mat-label>
+                        <mat-select formControlName="MobileCode" name="MobileCode">
+                            <mat-option *ngFor="let mobile of MobileCodeList"
+                                [value]="mobile.Code">
+                                {{ mobile.CodeDesc }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput formControlName="MobileNo" required
+                            maxlength="10" appNumbersOnly />
+                        <mat-error class="error-message invalid-feedback" *ngIf="checkClaimForm.controls.MobileNo.hasError('maxlength')">
+                            required!
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                  <mat-form-field class="mat-form-width" appearance="fill">
+                    <mat-label>Insurance Company</mat-label>
+                    <input type="text" placeholder="Select Company" matInput formControlName="InsuranceId"
+                      [matAutocomplete]="auto" required>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                      [displayWith]="insuranceCompyText"
+                      (optionSelected)="onChangeCompany($event.option.value)">
+                      <mat-option *ngFor="let option of filteredCompany | async" [value]="option.Code">
+                        {{option.CodeDesc}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="my-2 text-center p-1">
+                <button class="mx-2" mat-raised-button color="primary"
+                    (click)="onSubmit()">
+                    Submit
+                </button>
+            </div>
+          </form>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>

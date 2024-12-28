@@ -1,0 +1,59 @@
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .flex-item-left {
+    flex: 60%;
+  }
+  
+  .flex-item-right {
+    flex: 40%;
+  }
+  
+  /* Responsive layout - makes a one column-layout instead of two-column layout */
+  @media (max-width: 800px) {
+    .flex-container {
+      flex-direction: column;
+    }
+  }
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  th, td {
+    overflow: hidden;
+    width:110px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bg-Primary{
+    background-color: #f7ce5c;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  button.button {
+    border-radius: 100rem;
+    padding: 1rem;
+    padding: .5rem 3rem;
+    color: black;
+    box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
+    border: solid 3px transparent;
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #f7ce5c, #ff48fa);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-shadow: 2px 1000px 1px #fff inset;
+  }
+  
+  button.button:hover {
+    box-shadow: none;
+    color: black;
+  }
+  .bg-Primary2{
+    background-color: rgb(238, 82, 9);
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 600;
+  }

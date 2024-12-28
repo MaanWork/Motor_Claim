@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>Create New Loss</h2>
+<mat-dialog-content class="mat-typography" >
+  <mat-card class="my-2">
+        <form [formGroup]="LossTypeForm">
+          <div class="row">
+            <div class="col-4 col-md-4 col-lg-4 offset-md-2 offset-lg-2">
+              <mat-form-field appearance="fill" class="mat-form-width">
+                <mat-label>Loss Type</mat-label>
+                <input type="text"
+                       matInput
+                       formControlName="LossType"
+                       required
+                       [matAutocomplete]="autoGroup">
+                  <mat-autocomplete #autoGroup="matAutocomplete">
+                    <mat-optgroup *ngFor="let group of lossGroupOptions | async" [label]="group.letter">
+                      <mat-option *ngFor="let name of group.names" [value]="name.CodeDesc">
+                        {{name.CodeDesc}}
+                      </mat-option>
+                  </mat-optgroup>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4">
+              <mat-form-field appearance="fill" class="mat-form-width">
+                  <mat-label>Cover</mat-label>
+                  <!-- [(ngModel)]="ReserveType" -->
+                  <mat-select name="search" formControlName="CoverName">
+                      <ng-container *ngFor="let entry of coverData">
+                          <mat-option  [value]="entry.CoverId"> {{entry.CoverName}} </mat-option>
+                      </ng-container>
+                    </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="row" *ngIf="coverData.length!=0">
+            <div class="col-6 offset-md-3">
+              <mat-form-field appearance="fill" class="mat-form-width">
+                <mat-label>Cover</mat-label>
+                <input type="text"  matInput formControlName="CoverName" required [matAutocomplete]="autoGroup2" >
+                  <mat-autocomplete #autoGroup2="matAutocomplete" (optionSelected)="onSelectValue()">
+                      <mat-option *ngFor="let name of coverGroupOptions  | async" [value]="name.CoverName">
+                        {{name.CoverName}}
+                      </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              </div>
+          </div> -->
+        </form>
+        <!-- <div class="row" *ngIf="sumInsured">
+          <div class="col-3 offset-md-2">
+            <label><b>Excess (%)</b></label><br>
+            <p>{{excessPercent}}</p>
+          </div>
+          <div class="col-3">
+            <label><b>Excess Amount</b></label><br>
+            <p>{{excessValue}}</p>
+          </div>
+          <div class="col-3">
+                  <label><b>SumInsured</b></label><br>
+                  <p>{{sumInsured}}</p>
+          </div>
+        </div> -->
+    <div class="my-2 text-center p-1">
+      <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+      <button class="mx-2" mat-raised-button color="primary" (click)="onCreateNewLoss('submit')">Submit</button>
+    </div>
+  </mat-card>
+</mat-dialog-content>

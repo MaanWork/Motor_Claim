@@ -1,0 +1,89 @@
+<div class="card">
+   
+        <div class="card-header">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> ADMIN MASTER</h6>
+            </div>
+            <!--<mat-panel-description class="admin-grid-header">
+
+            </mat-panel-description>-->
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <label><b>Inurance Company</b></label><br> {{insuranceName}}
+                </div>
+                <div class="col-2 offset-6 mr-5">
+                    <button mat-raised-button color="warn" (click)="onAddNewAdmin()">
+                    ADD NEW ADMIN
+                  </button>
+                </div>
+
+                <ng-container *ngIf="tableData && AdminList.length!=0">
+                    <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)"></app-admin-table>
+                </ng-container>
+                <ng-container *ngIf="tableData && AdminList.length==0">
+                    <div class="row text-center">
+                        <h3>No Data Available</h3>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!tableData && InsuGridCode!=''">
+                    <app-loader></app-loader>
+                </ng-container>
+           
+            </div>
+        </div>
+       
+        <!-- <form [formGroup]="AdminInsForm">
+
+            <div class="row my-3">
+                <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto3">
+                        <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete" (optionSelected)="onChangeCompanyGridList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="AdminInsForm.get('InsuranceId').errors">
+                            {{AdminInsForm.controls['InsuranceId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </form> -->
+ <!-- <div class="col-4">
+                <mat-form-field class="mat-form-width" appearance="fill">
+                    <mat-label>Insurance Company</mat-label>
+                    <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto" required>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyList($event.option.value)">
+                        <mat-option *ngFor="let option of filteredInsuranceComp | async" [value]="option.Code">
+                            {{option.CodeDesc}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="AdminForm.get('InsuranceId').errors">
+                        {{AdminForm.controls['InsuranceId'].errors.message}}
+                    </mat-error>
+                </mat-form-field>
+            </div> -->
+            <!-- <div class="col-4">
+                <mat-form-field class="mat-form-width" appearance="fill">
+                    <mat-label>Region</mat-label>
+                    <input type="text" placeholder="Select Region" matInput formControlName="RegionCode" [matAutocomplete]="auto1" required>
+                    <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                        <mat-option *ngFor="let option of filteredRegionList | async" [value]="option.Code">
+                            {{option.CodeDesc}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="AdminForm.get('RegionCode').errors">
+                        {{AdminForm.controls['RegionCode'].errors.message}}
+                    </mat-error>
+                </mat-form-field>
+
+            </div> -->
+       
+   
+
+        </div>

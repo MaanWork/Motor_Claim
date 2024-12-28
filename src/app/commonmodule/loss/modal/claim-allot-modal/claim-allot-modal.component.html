@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Allot Claim Officer</h2>
+
+<mat-dialog-content class="mat-typography">
+  <div class="card-header d-flex justify-content-between">
+    <div>
+      Loss Name - {{LossTypeDes}} &nbsp;&nbsp; | &nbsp;&nbsp; Loss Id - {{subLossTypeId}}
+    </div>
+    <div (click)="onViewInfo()">
+     <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <ul class="list-group list-group-flush mx-2" *ngIf="panelOpen">
+    <li class="list-group-item">
+        <div class="row">
+          <div class="infopadding col-lg-3 col-md-3 bg-label">Claim No</div>
+          <div class="infopadding col-lg-3 col-md-3 bg-value">{{data?.ClaimNo == null ? 'N/A':
+            data?.ClaimNo}}
+          </div>
+          <div class="infopadding col-lg-3 col-md-3 bg-label">Claim Ref No</div>
+          <div class="infopadding col-lg-3 col-md-3 bg-value">{{data?.ClaimRefNo == null ? 'N/A':
+            data?.ClaimRefNo}}
+          </div>
+
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="infopadding col-lg-3 col-md-3 bg-label">Party Name</div>
+          <div class="infopadding col-lg-3 col-md-3 bg-value"> {{data?.PartyName == null ? 'N/A':
+            data?.PartyName}}
+          </div>
+          <div class="infopadding col-lg-3 col-md-3 bg-label">Party Id</div>
+          <div class="infopadding col-lg-3 col-md-3 bg-value">{{data?.PartyNo == null ? 'N/A':
+            data?.PartyNo}}
+          </div>
+
+        </div>
+      </li>
+  </ul>
+  <ng-container *ngIf="tableData">
+    <app-data-info-table [cols]="columnHeader" [data]="tableData" (onChangeCheck)="onActionHandler($event)"></app-data-info-table>
+  </ng-container>
+  <ng-container *ngIf="!tableData">
+    <app-loader></app-loader>
+  </ng-container>
+</mat-dialog-content>

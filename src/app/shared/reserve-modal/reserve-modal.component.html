@@ -1,0 +1,52 @@
+
+<mat-dialog-content class="mat-typography p-2">
+    <div class="card-header d-flex justify-content-between">
+        <div class="ml-2">
+            <h2>&nbsp;Reserve Amount Details</h2>
+        </div>
+        <div class="mt-2 mr-2">
+            Claim No - {{claimDetails?.ClaimNo == null ? 'N/A': claimDetails?.ClaimNo}}&nbsp;
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mt-2">
+            <div class="col-md-10 col-lg-10 offset-1">
+                <mat-form-field appearance="outline" class="mat-form-width">
+                    <mat-label>Reserve Type</mat-label>
+                    <!-- [(ngModel)]="ReserveType" -->
+                    <mat-select name="search">
+                        <mat-option  value="Payment"> Payment </mat-option>
+                        <mat-option value="Recovery">Recovery</mat-option>
+                        <mat-option value="RefundPayment">Refund Payment</mat-option>
+                        <mat-option value="RecoveryPayment">Recovery Payment</mat-option>
+                      </mat-select>
+                      
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-10 col-lg-10 offset-1">
+                <mat-form-field appearance="outline" class="mat-form-width">
+                    <mat-label>Amount ({{currencyCode}})</mat-label>
+                    <input matInput digitOnly [(ngModel)]="reserveAmount" (keydown)="onReserveAmountChange($event)" (keyup)="CommaFormatted()" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-lg-10 offset-1">
+                <mat-form-field appearance="outline" class="mat-form-width">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput [max]="maxDate" [matDatepicker]="dobpicker" [(ngModel)]="effectiveDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dobpicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<div class="my-2 text-center p-1">
+    <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button  class="mx-2" type="submit" mat-raised-button color="primary" (click)="onSaveReserve()">Submit</button>
+    <!-- <button *ngIf="logindata.UserType == 'claimofficer'" class="mx-2" type="submit" mat-raised-button color="primary" (click)="onClarifyingStatus()"
+    >Clarify</button> -->
+</div>

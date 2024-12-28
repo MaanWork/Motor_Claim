@@ -1,0 +1,188 @@
+
+<mat-card>
+
+  <mat-expansion-panel  hideToggle [expanded]="panelOpen">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> USER MASTER</h6>
+      </mat-panel-title>
+      <mat-panel-description class="admin-grid-header">
+        <button mat-raised-button color="warn" (click)="onAddNewClaim()">
+          ADD NEW
+        </button >
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="UserForm">
+      <div class="row my-2">
+        <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>User Type</mat-label>
+            <input matInput type="text" formControlName="UserType" required />
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="Username" required />
+            <mat-error *ngIf="UserForm.get('Username').errors">
+              {{UserForm.controls['Username'].errors.message}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Login Id</mat-label>
+            <input matInput type="text" formControlName="LoginId" required />
+            <mat-error *ngIf="UserForm.get('LoginId').errors">
+              {{UserForm.controls['LoginId'].errors.message}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-4">
+          <mat-form-field class="mat-form-width" appearance="fill">
+            <mat-label>Insurance Company</mat-label>
+            <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId"
+              [matAutocomplete]="auto" required>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+              (optionSelected)="onChangeCompanyList($event.option.value)">
+              <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                {{option.CodeDesc}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="UserForm.get('InsuranceId').errors">
+              {{UserForm.controls['InsuranceId'].errors.message}}
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-4">
+          <mat-form-field class="mat-form-width" appearance="fill">
+            <mat-label>Region</mat-label>
+            <input type="text" placeholder="Select Region" matInput formControlName="RegionCode"
+              [matAutocomplete]="auto1" required>
+            <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+              (optionSelected)="onChangeRegionList($event.option.value)">
+              <mat-option *ngFor="let option of filteredRegionList | async" [value]="option.Code">
+                {{option.CodeDesc}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="UserForm.get('RegionCode').errors">
+              {{UserForm.controls['RegionCode'].errors.message}}
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-4">
+          <mat-form-field class="mat-form-width" appearance="fill">
+            <mat-label>Branch</mat-label>
+            <input type="text" placeholder="Select Branch" matInput formControlName="BranchCode"
+              [matAutocomplete]="auto2" required>
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+              (optionSelected)="onChangeBranchList($event.option.value)">
+              <mat-option *ngFor="let option of filteredBranchList | async" [value]="option.Code">
+                {{option.CodeDesc}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="UserForm.get('BranchCode').errors">
+             {{UserForm.controls['BranchCode'].errors.message}}
+           </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Product</mat-label>
+            <input matInput type="text" formControlName="Product" required />
+             <mat-error *ngIf="UserForm.get('BranchCode').errors">
+             {{UserForm.controls['BranchCode'].errors.message}}
+           </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Email Id</mat-label>
+            <input matInput type="text" formControlName="UserMail" required />
+             <mat-error *ngIf="UserForm.get('UserMail').errors">
+             {{UserForm.controls['UserMail'].errors.message}}
+           </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Mobile No</mat-label>
+            <input matInput type="text" formControlName="MobileNumber" required />
+             <mat-error *ngIf="UserForm.get('MobileNumber').errors">
+             {{UserForm.controls['MobileNumber'].errors.message}}
+           </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-4">
+          <div class="py-1">Status</div>
+          <mat-radio-group aria-label="Select an option" formControlName="Status">
+            <mat-radio-button value="Y">Active</mat-radio-button>
+            <mat-radio-button value="N">De-Active</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="InsertMode == 'Insert'">
+        <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="text" formControlName="Password" required />
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Re-Password</mat-label>
+            <input matInput type="text" formControlName="RePassword" required />
+          </mat-form-field>
+        </div>
+      </ng-container>
+      </div>
+      <ng-container *ngIf="InsertMode == 'Update'">
+      <div class="row my-2">
+        <div class="col-4">
+          <div class="py-2 text-primary">Do You Want Change Password ?</div>
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="ChangePassword" [ngModelOptions]="{standalone: true}">
+            <mat-radio-button value="Y">Yes</mat-radio-button>
+            <mat-radio-button value="N">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <ng-container *ngIf="ChangePassword == 'Y'">
+        <div class="col-3">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>New Password</mat-label>
+            <input matInput type="text" [(ngModel)]="NewPassword" required  [ngModelOptions]="{standalone: true}"/>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Re-New Password</mat-label>
+            <input matInput type="text" [(ngModel)]="ReNewPassword" required  [ngModelOptions]="{standalone: true}"/>
+          </mat-form-field>
+        </div>
+        <div class="col-2 py-2">
+             <button mat-raised-button color="warn" (click)="onChangePassword()">Change</button>
+        </div>
+      </ng-container>
+      </div>
+    </ng-container>
+    <mat-action-row class="justify-content-center">
+      <button mat-raised-button color="primary" (click)="onSaveUserDetials()">Submit</button>
+    </mat-action-row>
+    </form>
+
+  </mat-expansion-panel>
+
+
+  <ng-container *ngIf="tableData">
+    <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)"></app-admin-table>
+  </ng-container>
+  <ng-container *ngIf="!tableData">
+    <app-loader></app-loader>
+  </ng-container>
+</mat-card>

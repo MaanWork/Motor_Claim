@@ -1,0 +1,77 @@
+
+<mat-card>
+
+  <mat-expansion-panel hideToggle [expanded]="panelOpen">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h6 class="admin-title-header"><i class="fas fa-user-tie"></i>SURVEYOR MASTER</h6>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <form [formGroup]="SurveyorForm">
+
+    <div class="row my-3">
+      <div class="col-4">
+        <mat-form-field class="mat-form-width" appearance="fill">
+          <mat-label>Insurance Company</mat-label>
+          <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId"
+            [matAutocomplete]="auto" required>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+            (optionSelected)="onChangeCompanyList($event.option.value)">
+            <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+              {{option.CodeDesc}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="SurveyorForm.get('InsuranceId').errors">
+            {{SurveyorForm.controls['InsuranceId'].errors.message}}
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col-4">
+        <mat-form-field class="mat-form-width" appearance="fill">
+          <mat-label>Region</mat-label>
+          <input type="text" placeholder="Select Region" matInput formControlName="RegionCode"
+            [matAutocomplete]="auto1" required>
+          <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+            (optionSelected)="onChangeRegionList($event.option.value)">
+            <mat-option *ngFor="let option of filteredRegionList | async" [value]="option.Code">
+              {{option.CodeDesc}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="SurveyorForm.get('RegionCode').errors">
+            {{SurveyorForm.controls['RegionCode'].errors.message}}
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col-4">
+        <mat-form-field class="mat-form-width" appearance="fill">
+          <mat-label>Branch</mat-label>
+          <input type="text" placeholder="Select Branch" matInput formControlName="BranchCode"
+            [matAutocomplete]="auto2" required>
+          <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+            (optionSelected)="onChangeBranchList($event.option.value)">
+            <mat-option *ngFor="let option of filteredBranchList | async" [value]="option.Code">
+              {{option.CodeDesc}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="SurveyorForm.get('BranchCode').errors">
+            {{SurveyorForm.controls['BranchCode'].errors.message}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+
+
+    <mat-action-row class="justify-content-center">
+      <button mat-raised-button color="primary" (click)="onLoadSurveyor()">Submit</button>
+    </mat-action-row>
+  </form>
+  <div *ngIf="SurveyorList?.length > 0">
+    <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)" (onChangeCheckBox)="onChangeCheckBox($event)"></app-admin-table>
+  </div>
+
+</mat-card>

@@ -1,0 +1,46 @@
+<div class="flex-container">
+  <mat-card class="flex-item-left m-1 p-0">
+    <ng-container *ngIf="PolicyInformation">
+      <app-policy-information [PolicyInformation]="PolicyInformation" [panelOpen]="panelOpen"></app-policy-information>
+    </ng-container>
+  </mat-card>
+  <mat-card class="flex-item-right m-1 p-0">
+    <ng-container *ngIf="PolicyInformation">
+      <app-customer-information [CustomerInformation]="PolicyInformation" [panelOpen]="panelOpen">
+      </app-customer-information>
+    </ng-container>
+  </mat-card>
+</div>
+<div class="flex-container">
+  <mat-card class="flex-item-left m-1 p-0">
+    <ng-container *ngIf="PolicyInformation">
+      <app-vehicle-information [VehicleInformation]="PolicyInformation"></app-vehicle-information>
+    </ng-container>
+  </mat-card>
+</div>
+<mat-card class="m-1">
+  <mat-tab-group  #tabGroup [(selectedIndex)]="demo1TabIndex">
+    <mat-tab label="TOTAL CLAIMS" disabled>
+      <mat-card class="font-weight-bolder"> <i class="far fa-folder-open mx-2"></i>Claim History</mat-card>
+      <ng-container *ngIf="tableData">
+        <app-data-table-one [data]="tableData" [cols]="columnHeader" (onClaimLossEdit)="onClaimLossEdit($event)">
+        </app-data-table-one>
+      </ng-container>
+      <ng-container *ngIf="!tableData">
+        <app-loader></app-loader>
+      </ng-container>
+    </mat-tab>
+    <mat-tab label="TOTAL PARTY" disabled>
+      <mat-card class="m-1">
+        <mat-card class="font-weight-bolder"> <i class="far fa-folder-open mx-2"></i>Party Details</mat-card>
+        <app-info-about-claim></app-info-about-claim>
+      </mat-card>
+      <div class="text-center">
+        <button mat-raised-button color="warn" (click)="onTabBack()">
+          Back
+        </button>
+      </div>
+
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>

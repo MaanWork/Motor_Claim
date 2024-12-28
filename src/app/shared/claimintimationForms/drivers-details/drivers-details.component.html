@@ -1,0 +1,293 @@
+<div class="card material-shadow border-0">
+    <div class="card-header">
+        <div class="d-flex justify-content-between p-0">
+            <div class="flex-item">
+                <h5 class="card-title mb-0 p-0"><b>Driver Details</b></h5>
+            </div>
+            <div class="flex-item" *ngIf="claimRefNo">
+                <h5 class="p-0"><b>Claim Ref No ~ {{claimRefNo}}</b></h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="p-3">
+            <form [formGroup]="createDriverForm">
+
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Name</mat-label>
+                            <input matInput type="text" maxlength="50" formControlName="DriverName" name="DriverName">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2 offset-md-1 text-right">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Code</mat-label>
+                            <mat-select matInput formControlName="MobileCode" name="MobileCode">
+                                <mat-option *ngFor="let status of mobileCodeList" [value]="status.Code">
+                                    {{status.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Mobile Number</mat-label>
+                            <input matInput maxlength="10" formControlName="MobileNo" name="MobileNo">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Gender</mat-label>
+                            <mat-select formControlName="Gender" name="Gender">
+                                <mat-option *ngFor="let gender of GenderTypeList" [value]="gender.Code">
+                                    {{gender.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1" data-provider="datepicker">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>DOB</mat-label>
+                            <input matInput [max]="driverMaxDOB" [matDatepicker]="dobpicker" formControlName="Dob">
+                            <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                            <mat-datepicker #dobpicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Email</mat-label>
+                            <input matInput type="text" maxlength="100" formControlName="Email" name="Email">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Address</mat-label>
+                            <input matInput type="text" maxlength="100" formControlName="Address" name="Address">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>License No</mat-label>
+                            <input matInput type="text" maxlength="20" formControlName="LicenseNo" name="LicenseNo">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Driving Licence valid upto</mat-label>
+                            <input matInput [min]="driverPassedMinDate" [matDatepicker]="dobpicker1" formControlName="LicenseExpiryDate">
+                            <mat-datepicker-toggle matSuffix [for]="dobpicker1"></mat-datepicker-toggle>
+                            <mat-datepicker #dobpicker1 [startAt]="startDate"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Renewal Number</mat-label>
+                            <input matInput type="text" formControlName="RenewalNumber" name="RenewalNumber" maxlength="20">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Is he employed by you? </label>
+                        <mat-radio-group aria-label="Select an option" formControlName="IsEmpyByYou">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Was he driving with your permission? </label>
+                        <mat-radio-group aria-label="Select an option" formControlName="HeDrvgWthYorPrem">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1" *ngIf="createDriverForm.controls.IsEmpyByYou.value == 'Y'">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>If so,How Long he has been in Service?</mat-label>
+                            <input matInput type="text" formControlName="HowLngBeenService" name="HowLngBeenService">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1" *ngIf="createDriverForm.controls.HeDrvgWthYorPrem.value == 'Y'">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>How long has he been driving motor vehicles?</mat-label>
+                            <input matInput type="text" formControlName="HowLngBeenMtrDrvng" name="HowLngBeenMtrDrvng">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Has he had any previous accident? </label>
+                        <mat-radio-group aria-label="Select an option" formControlName="HehadAnyPreAccdnt">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Has he any convition for any offence with any motor vehicle or any
+                                    charges pending? </label>
+                        <mat-radio-group aria-label="Select an option" formControlName="HeAnyChargesPendng">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1" *ngIf="createDriverForm.controls.HehadAnyPreAccdnt.value == 'Y'">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>If so, how many Accident?</mat-label>
+                            <input matInput type="text" formControlName="ApproximateDate" name="ApproximateDate">
+                        </mat-form-field>
+                        <!-- <input  type="text" maxlength="10" autocomplete="off"
+                                    #dp6="bsDatepicker" bsDatepicker
+                                    [bsConfig]="{ isAnimated: true,dateInputFormat: 'DD/MM/YYYY',adaptivePosition: true }"
+                                    placeholder="DD/MM/YYYY" formControlName="ApproximateDate" /> -->
+                    </div>
+
+                    <!-- <div class="col-md-2 col-lg-2 text-right"
+                                *ngIf="createDriverForm.controls.HeAnyChargesPendng.value == 'Y'">
+                                <label>If so, give details including dates</label>&nbsp;<strong class="text-danger">*</strong>
+                            </div> -->
+                    <!-- <div class="col-md-4 col-lg-4"
+                                *ngIf="createDriverForm.controls.HeAnyChargesPendng.value == 'Y'">
+                                <input  type="text" maxlength="20" autocomplete="off"
+                                    placeholder="Enter Details With Date" formControlName="IncludingDates" />
+                            </div> -->
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>If full, state date when driving test first passed</mat-label>
+                            <input matInput [max]="driverPassedMinDate" [matDatepicker]="dobpicker2" formControlName="DriverFristPassed">
+                            <mat-datepicker-toggle matSuffix [for]="dobpicker2"></mat-datepicker-toggle>
+                            <mat-datepicker #dobpicker2></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Does he own a Motor Vehicle? </label>
+                        <mat-radio-group aria-label="Select an option" formControlName="HeOwnMotorVehicle">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1" *ngIf="createDriverForm.controls.HeOwnMotorVehicle.value == 'Y'">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>If so give name and Address of insurer</mat-label>
+                            <input matInput type="text" formControlName="AddressOfInsurer" name="AddressOfInsurer">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                        <label>Does he Have any Police Reports? </label><br>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="policeReportsYN" [ngModelOptions]="{standalone: true}">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="card my-1">
+                    <div class="card-header">
+                        Person Driven Vehicle
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-2">
+                            <div class="col-md-3 col-lg-3 offset-md-1 offset-lg-1">
+                                <label>Was he in anyway to blame for the accident? </label>
+                                <mat-radio-group aria-label="Select an option" formControlName="BlameForAccdnt">
+                                    <mat-radio-button value="Y">Yes</mat-radio-button>
+                                    <mat-radio-button value="N">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md-3 col-lg-3 offset-md-1 offset-lg-1">
+                                <label>Does he have a full/provisional license to drive the vehicle? </label>
+                                <mat-radio-group aria-label="Select an option" formControlName="HeHveFulLicnseProvison">
+                                    <mat-radio-button value="Y">Yes</mat-radio-button>
+                                    <mat-radio-button value="N">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md-3 col-lg-3 offset-md-1 offset-lg-1">
+                                <label>Did he admit liability? </label>
+                                <mat-radio-group aria-label="Select an option" formControlName="HeAdmitLibility">
+                                    <mat-radio-button value="Y">Yes</mat-radio-button>
+                                    <mat-radio-button value="N">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-1" *ngIf="policeReportsYN == 'Y'">
+                    <div class="card-header">
+                        Police Report Details
+                    </div>
+                    <div class="card-body">
+                        <div class="row my-2">
+                            <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Police Report No</mat-label>
+                                    <input matInput type="text" maxlength="20" formControlName="PoliceReportNo" name="PoliceReportNo">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Police Report Source</mat-label>
+                                    <input matInput type="text" maxlength="50" formControlName="PoliceReportSource" name="PoliceReportSource">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Claim Channel</mat-label>
+                                    <mat-select formControlName="ClaimChannel" name="ClaimChannel">
+                                        <mat-option *ngFor="let channel of claimchannelList" [value]="channel.Code">
+                                            {{channel.CodeDesc}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Cause of Loss</mat-label>
+                                    <mat-select formControlName="CausesLoss" name="CausesLoss">
+                                        <mat-option *ngFor="let loss of causesOfLossList" [value]="loss.Code">
+                                            {{loss.CodeDesc}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> -->
+                            <div class="col-md-5 col-lg-5 offset-md-1 offset-lg-1">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Accident Description</mat-label>
+                                    <input matInput type="text" maxlength="100" formControlName="AccidentDescription" name="AccidentDescription">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row my-2">
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onDriverInfoSubmit()">Next</button>
+    </div>
+</div>

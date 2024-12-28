@@ -1,0 +1,256 @@
+<div class="card">
+    <div class="card-header">
+        ClaimOfficer
+    </div>
+    <div class="card-body">
+        <form [formGroup]="ClaimForm">
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SubUserType</mat-label>
+                        <input type="text" placeholder="Select SubUserType" matInput formControlName="Subusertype" [matAutocomplete]="auto3" required>
+                        <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
+                            <mat-option value="Manager"> Manager </mat-option>
+                            <mat-option value="Approver">  Approver </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="ClaimForm.get('Subusertype').errors">
+                            {{ClaimForm.controls['Subusertype'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>User Type</mat-label>
+            <input matInput type="text" formControlName="UserType" required />
+          </mat-form-field>
+        </div> -->
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" formControlName="Username" maxlength="50" required />
+                        <mat-error *ngIf="ClaimForm.get('Username').errors">
+                            {{ClaimForm.controls['Username'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Login Id</mat-label>
+                        <input matInput type="text" formControlName="LoginId" maxlength="50" required />
+                        <mat-error *ngIf="ClaimForm.get('LoginId').errors">
+                            {{ClaimForm.controls['LoginId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+    
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core Login Id</mat-label>
+                        <input matInput type="text" formControlName="CoreLoginId" maxlength="12" appNumbersOnly required />
+                        <mat-error *ngIf="ClaimForm.get('CoreLoginId').errors">
+                            {{ClaimForm.controls['CoreLoginId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <ng-container>
+                        <div class="row">
+                            <div class="col-10">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Loss Type</mat-label>
+                                    <fieldset disabled>
+                                        <textarea matInput required [(ngModel)]="lossValue" [ngModelOptions]="{standalone: true}" name="Losstypeidlist"></textarea>
+                                    </fieldset>
+    
+                                    <!-- <mat-select formControlName="Losstypeidlist" name="Losstypeidlist" required multiple>
+                    <mat-select-trigger>
+                      {{(ClaimForm.controls.Losstypeidlist.value? ClaimForm.controls.Losstypeidlist.value[0] : '')|losstypename|async}}
+                      <span *ngIf="ClaimForm.controls.Losstypeidlist.value?.length > 1" class="example-additional-selection">
+                        (+{{ClaimForm.controls.Losstypeidlist.value.length - 1}} {{ClaimForm.controls.Losstypeidlist.value?.length === 2 ? 'other' : 'others'}})
+                      </span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let loss of lossTypeList" [value]="loss.Code"> {{loss.CodeDesc}}</mat-option>
+                  </mat-select> -->
+                                </mat-form-field>
+                            </div>
+                            <div class="col-2">
+                                <button color="primary" (click)="onLossListEdit()">::</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput type="text" formControlName="UserMail" maxlength="50" required />
+                        <mat-error *ngIf="ClaimForm.get('UserMail').errors">
+                            {{ClaimForm.controls['UserMail'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+               
+                <div class="col-4">
+                    <label><b>Inurance Company</b></label><br> {{insuranceName}}
+                </div>
+                <!-- <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsuranceComp | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="ClaimForm.get('InsuranceId').errors">
+                            {{ClaimForm.controls['InsuranceId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+    
+                </div> -->
+                <!-- <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Region</mat-label>
+                        <input type="text" placeholder="Select Region" matInput formControlName="RegionCode" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredRegionList | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="ClaimForm.get('RegionCode').errors">
+                            {{ClaimForm.controls['RegionCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div> -->
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Branch</mat-label>
+                        <mat-select formControlName="BranchCode" name="BranchCode" required multiple>
+                            <mat-select-trigger>
+                                {{(ClaimForm.controls.BranchCode.value?.length === 0 ? '' : ClaimForm.controls.BranchCode.value[0])| branchbyname |async}}
+                                <span *ngIf="ClaimForm.controls.BranchCode.value?.length > 1" class="example-additional-selection">
+                                    (+{{ClaimForm.controls.BranchCode.value.length - 1}}
+                                    {{ClaimForm.controls.BranchCode.value?.length === 2 ? 'other' : 'others'}})
+                                </span>
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let option of filteredBranchList | async" [value]="option.Code">
+                                {{option.CodeDesc}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput type="text" formControlName="MobileNumber" maxlength="10" required appNumbersOnly />
+                        <mat-error *ngIf="ClaimForm.get('MobileNumber').errors">
+                            {{ClaimForm.controls['MobileNumber'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Claim Amount Start Limit</mat-label>
+                        <input matInput type="text" formControlName="Suminsuredstart" maxlength="15" required appNumbersOnly />
+                        <mat-error *ngIf="ClaimForm.get('Suminsuredstart').errors">
+                            {{ClaimForm.controls['Suminsuredstart'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Claim Amount End Limit</mat-label>
+                        <input matInput type="text" formControlName="Suminsuredend" maxlength="15" required appNumbersOnly />
+                        <mat-error *ngIf="ClaimForm.get('Suminsuredend').errors">
+                            {{ClaimForm.controls['Suminsuredend'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+             
+                <div class="col-4">
+                       <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Effective Date</mat-label>
+                            <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                   
+                    <!--<mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective End Date</mat-label>
+                        <input matInput type="text" formControlName="UserMail" maxlength="50" required />
+                        <mat-error *ngIf="ClaimForm.get('UserMail').errors">
+                            {{ClaimForm.controls['UserMail'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>-->
+                </div>
+                <div class="col-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+    
+            </div>
+            <div class="row my-2">
+    
+                <ng-container *ngIf="InsertMode == 'Insert'">
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" formControlName="Password" maxlength="20" required />
+                            <mat-error *ngIf="ClaimForm.get('Password').errors">
+                                Please Enter the Password
+                             </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Re-Password</mat-label>
+                            <input matInput type="password" formControlName="RePassword" maxlength="20" required />
+                            <mat-error *ngIf="ClaimForm.get('RePassword').errors">
+                                Please Enter the RePassword
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+            </div>
+            <ng-container *ngIf="InsertMode == 'Update'">
+                <div class="row my-2">
+                    <div class="col-4">
+                        <div class="py-2 text-primary">Do You Want Change Password ?</div>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="ChangePassword" [ngModelOptions]="{standalone: true}">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <ng-container *ngIf="ChangePassword == 'Y'">
+                        <div class="col-3">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>New Password</mat-label>
+                                <input matInput type="password" [(ngModel)]="NewPassword" required [ngModelOptions]="{standalone: true}" />
+                              
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Re-New Password</mat-label>
+                                <input matInput type="password" [(ngModel)]="ReNewPassword" required [ngModelOptions]="{standalone: true}" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 py-2">
+                            <button mat-raised-button color="warn" (click)="onChangePassword()">Change</button>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <div style="text-align:center;">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onsave()" style="margin-left:5px;">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+</div>

@@ -1,0 +1,235 @@
+<mat-card>
+    <mat-expansion-panel hideToggle [expanded]="panelOpen">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> GARAGE MASTER</h6>
+            </mat-panel-title>
+            <mat-panel-description class="admin-grid-header">
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row">
+            <div class="col-4">
+                <label><b>Inurance Company</b></label><br> {{insuranceName}}
+            </div>
+            <div class="col-2 offset-6 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNewGarage()">
+                    ADD NEW GARAGE
+                  </button>
+            </div>
+        </div>
+        <!-- <form [formGroup]="GarageInsForm">
+
+            <div class="row my-3">
+                <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto4">
+                        <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete" (optionSelected)="onChangeCompanyGridList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="GarageInsForm.get('InsuranceId').errors">
+                            {{GarageInsForm.controls['InsuranceId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </form> -->
+
+        <ng-container *ngIf="tableData && GarageList.length!=0">
+            <app-data-table-two [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)" (onSurveyEmit)="onEditLoginDetails($event)"></app-data-table-two>
+        </ng-container>
+        <ng-container *ngIf="tableData && GarageList.length==0">
+            <div class="row text-center">
+                <h3>No Data Available</h3>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!tableData && InsuGridCode!=''">
+            <app-loader></app-loader>
+        </ng-container>
+
+    </mat-expansion-panel>
+    <ng-container *ngIf="!panelOpen">
+        <form [formGroup]="GarageForm">
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" formControlName="Username" required />
+                        <mat-error *ngIf="GarageForm.get('Username').errors">
+                            {{GarageForm.controls['Username'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput type="text" formControlName="UserMail" required />
+                        <mat-error *ngIf="GarageForm.get('UserMail').errors">
+                            {{GarageForm.controls['UserMail'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Login Id</mat-label>
+                        <input matInput type="text" formControlName="LoginId" required />
+                        <mat-error *ngIf="GarageForm.get('LoginId').errors">
+                            {{GarageForm.controls['LoginId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <label><b>Inurance Company</b></label><br> {{insuranceName}}
+                </div>
+                <!-- <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsuranceComp | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="GarageForm.get('InsuranceId').errors">
+                            {{GarageForm.controls['InsuranceId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+
+                </div> -->
+                <!-- <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Region</mat-label>
+                        <input type="text" placeholder="Select Region" matInput formControlName="RegionCode" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredRegionList | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="GarageForm.get('RegionCode').errors">
+                            {{GarageForm.controls['RegionCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+
+                </div> -->
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Branch</mat-label>
+                        <mat-select formControlName="BranchCode" name="BranchCode" required multiple>
+                            <mat-select-trigger>
+                                {{(GarageForm.controls.BranchCode.value?.length === 0 ? '' : GarageForm.controls.BranchCode.value[0]) | branchbyname |async}}
+                                <span *ngIf="GarageForm.controls.BranchCode.value?.length > 1" class="example-additional-selection">
+                                    (+{{GarageForm.controls.BranchCode.value.length - 1}}
+                                    {{GarageForm.controls.BranchCode.value?.length === 2 ? 'other' : 'others'}})
+                                </span>
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let option of filteredBranchList | async" [value]="option.Code">
+                                {{option.CodeDesc}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Branch</mat-label>
+                        <input type="text" placeholder="Select Branch" matInput formControlName="BranchCode" [matAutocomplete]="auto2" required>
+                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onChangeBranchList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredBranchList | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="GarageForm.get('BranchCode').errors">
+                            {{GarageForm.controls['BranchCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field> -->
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core Login Id</mat-label>
+                        <input matInput type="text" formControlName="CoreLoginId" maxlength="12" appNumbersOnly required/>
+                        <mat-error *ngIf="GarageForm.get('CoreLoginId').errors">
+                            {{GarageForm.controls['CoreLoginId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput type="text" formControlName="MobileNumber" required />
+                        <mat-error *ngIf="GarageForm.get('MobileNumber').errors">
+                            {{GarageForm.controls['MobileNumber'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput type="text" formControlName="GarageAddress" />
+                        <mat-error *ngIf="GarageForm.get('GarageAddress').errors">
+                            {{GarageForm.controls['GarageAddress'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <ng-container *ngIf="InsertMode == 'Insert'">
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="text" formControlName="Password" required />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Re-Password</mat-label>
+                            <input matInput type="text" formControlName="RePassword" required />
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+            </div>
+            <ng-container *ngIf="InsertMode == 'Update'">
+                <div class="row my-2">
+                    <div class="col-4">
+                        <div class="py-2 text-primary">Do You Want Change Password ?</div>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="ChangePassword" [ngModelOptions]="{standalone: true}">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <ng-container *ngIf="ChangePassword == 'Y'">
+                        <div class="col-3">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>New Password</mat-label>
+                                <input matInput type="text" [(ngModel)]="NewPassword" required [ngModelOptions]="{standalone: true}" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Re-New Password</mat-label>
+                                <input matInput type="text" [(ngModel)]="ReNewPassword" required [ngModelOptions]="{standalone: true}" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 py-2">
+                            <button mat-raised-button color="warn" (click)="onChangePassword()">Change</button>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onSaveGarageDetails()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>
+
+</mat-card>

@@ -1,0 +1,36 @@
+<div *ngIf="LossStatus == 'CI' || LossStatus == 'Y' || LossStatus == 'AS' || LossStatus == 'PPC' || LossStatus == 'PLC' || LossStatus == 'CL' ||  LossStatus == 'PFSS'">
+    <mat-card>
+        <mat-card class="font-weight-bolder cardTitles"> <i class="far fa-folder-open mx-2"></i>Alloting To Surveyor</mat-card>
+
+        <ng-container *ngIf="tableData">
+            <app-data-table (GetSurveyorListById)="onGetSurveyorId($event)" [tableData]="tableData" [columnHeader]="columnHeader"></app-data-table>
+        </ng-container>
+        <ng-container *ngIf="!tableData">
+            <app-loader></app-loader>
+        </ng-container>
+    </mat-card>
+    <div class="my-2">
+        <div class="text-center">
+            <button class="mx-2" mat-raised-button color="warn" (click)="back()">Back</button>
+            <button class="mx-2" mat-raised-button color="primary" (click)="onAssignSurveyor()">Submit</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="LossStatus != 'CI' && LossStatus != 'Y' && LossStatus != 'AS' && LossStatus != 'PLC' && LossStatus != 'PPC' && LossStatus != 'CL' &&  LossStatus != 'PFSS'">
+    <mat-card>
+        <mat-card class="font-weight-bolder"> <i class="far fa-folder-open mx-2"></i>Alloting To Garage</mat-card>
+        <ng-container *ngIf="tableData1">
+            <app-data-table (onGetGarageIDs)="onGetGarageIDs($event)" (SurveyorSubmitYn)="onChooseSurveyorSubmit($event)" [garageAllotedList]="garageAllotedList" [tableData]="tableData1" [columnHeader]="columnHeader1"></app-data-table>
+        </ng-container>
+        <ng-container *ngIf="!tableData1">
+            <app-loader></app-loader>
+        </ng-container>
+    </mat-card>
+    <div class="my-2">
+        <div class="text-center">
+            <button class="mx-2" mat-raised-button color="warn" (click)="back()">Back</button>
+            <button class="mx-2" mat-raised-button color="primary" (click)="onAllotedToGarages()">Submit</button>
+        </div>
+    </div>
+</div>

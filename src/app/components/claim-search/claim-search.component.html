@@ -1,0 +1,333 @@
+<mat-card>
+            <mat-panel-title>
+                <h6 class="admin-title-header"><i class="fab fa-accusoft"></i> &nbsp;CLAIM SEARCH</h6>
+            </mat-panel-title>
+            <!-- <mat-panel-description class="admin-grid-header">
+                <button mat-raised-button color="warn" (click)="clearChassisSection()">
+          INTIMATE NEW CLAIM
+        </button>
+            </mat-panel-description> -->
+        <div class="row text-center">
+            <div class="col-md-4 col-12 offset-md-4 col-lg-4 col-xl-4 offset-lg-4 offset-xl-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Reference Number</mat-label>
+                    <input matInput type="text" [(ngModel)]="RefNumber"  required>
+                </mat-form-field>
+                <div class="text-center">
+                  <button mat-raised-button  color="primary" (click)="setCommonValues(RefNumber)" >Search</button>
+                </div>
+            </div>
+        </div>
+        <mat-card *ngIf="PolicyInformation">
+            <div class="mt-2">
+                <mat-panel-title>
+                    <h6 class="admin-title-header"><i class="fab fa-accusoft"></i> &nbsp;CLAIM INFO</h6>
+                </mat-panel-title>
+                <div class="flex-container">
+                    <mat-card class="flex-item-left m-1 p-0">
+                        <ng-container *ngIf="PolicyInformation">
+                            <app-policy-information [PolicyInformation]="PolicyInformation" [panelOpen]="panelOpen"></app-policy-information>
+                        </ng-container>
+                    </mat-card>
+                    <mat-card class="flex-item-right m-1 p-0">
+                        <ng-container *ngIf="PolicyInformation">
+                            <app-customer-information [CustomerInformation]="PolicyInformation" [panelOpen]="panelOpen"></app-customer-information>
+                        </ng-container>
+                
+                    </mat-card>
+                    <mat-card class="flex-item-left m-1 p-0">
+                        <ng-container *ngIf="PolicyInformation">
+                            <app-vehicle-information [VehicleInformation]="PolicyInformation"></app-vehicle-information>
+                        </ng-container>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="example-action-buttons">
+                <mat-accordion class="example-headers-align" multi>
+                    <ng-container *ngFor="let item of partyList;let i= index;">
+                        <mat-expansion-panel [expanded]="true" (opened)="setStep(i)">
+                            <mat-expansion-panel-header (click)="onGetLossList(item)">
+                                <mat-panel-title>
+                                    {{item.PartyName}}
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    {{item.PartyInsDes}}
+    
+                                    <button mat-mini-fab color="primary">
+                                      {{item.LossCount}}
+                                    </button>
+                                </mat-panel-description>
+    
+                            </mat-expansion-panel-header>
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div style="line-height: 30px;">
+                                        Party Details
+                                    </div>
+                                  
+                                    <div class="" *ngIf="logindata.UserType != 'surveyor'">
+                                        <button class="mx-2" mat-mini-fab color="warn" (click)="onEditPartyDetials(item)">
+                                          <i class="fas fa-marker"></i></button>
+                                        <button class="mx-2" mat-mini-fab color="primary" (click)="onDeletePartyDetials(item)"> <i class="far fa-trash-alt"></i></button>
+    
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 bg-label">Email</div>
+                                            <div class="col-lg-3 col-md-3 bg-value">
+                                                {{ item?.Email == null ? "N/A" : item?.Email }}
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 bg-label">
+                                                DOB
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 bg-value">
+                                                {{ item?.Dob == null ? "N/A" : item?.Dob }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 bg-label">Nationality</div>
+                                            <div class="col-lg-3 col-md-3 bg-value">
+                                                {{ item?.NationalityName == null ? "N/A" : item?.NationalityName }}
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 bg-label">
+                                                Mobile
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 bg-value">
+                                                {{ item?.Mobile == null ? "N/A" : item?.Mobile }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 bg-label">Address</div>
+                                            <div class="col-lg-3 col-md-3 bg-value">
+                                                {{ item?.Address == null ? "N/A" : item?.Address }}
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 bg-label">
+                                                Remarks
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 bg-value">
+                                                {{ item?.Remarks == null ? "N/A" : item?.Remarks }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ng-container *ngIf="tableData">
+                                <app-data-table-one [cols]="columnHeader" [data]="tableData"  (onCSView)="onClaimLossStatusTrack($event)">
+                                </app-data-table-one>
+                                
+                            </ng-container>
+                            <ng-container *ngIf="!tableData">
+                                <app-loader></app-loader>
+                            </ng-container>
+                           
+                        </mat-expansion-panel>
+                    </ng-container>
+                </mat-accordion>
+            </div> 
+            <div *ngIf="CSData" class="mt-3">
+                <!-- <h2 mat-dialog-title>Status tracking</h2>
+<mat-dialog-content class="mat-typography">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 bg-label">Claim No</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                    {{ claimNo == null ? "N/A" : claimNo }}
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label">Policy No</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                    {{ policyNo == null ? "N/A" : policyNo }}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 bg-label" *ngIf="losstypeId">Loss ID</div>
+                <div class="col-lg-3 col-md-3 bg-value" *ngIf="losstypeId">
+                    {{ losstypeId == null ? "N/A" : losstypeId }}
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label" *ngIf="partyId">Party ID</div>
+                <div class="col-lg-3 col-md-3 bg-value" *ngIf="partyId">
+                    {{ partyId == null ? "N/A" : partyId }}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 bg-label">Current Status</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                    {{ currentStatus == null ? "N/A" : currentStatus }}
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label">Last Updated Date</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                    {{ currentStatusUpdatedTime == null ? "N/A" : currentStatusUpdatedTime }}
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="row p-0 mt-5">
+        <div class="col-1 offset-7">
+            <div class="success">
+
+            </div>
+        </div>
+        <div class="col-4">
+            <span>- Completed</span>
+        </div>
+    </div>
+    <div class="row p-0">
+        <div class="col-1  offset-7">
+            <div class="pending">
+
+            </div>
+        </div>
+        <div class="col-4">
+            <span>- Pending</span>
+        </div>
+    </div> -->
+    <!-- <div class="row mt-2" *ngIf="totalTrackList.length!=0">
+        <div class="col-md-12 col-lg-12">
+            <p-timeline [value]="totalTrackList">
+                <ng-template pTemplate="content" let-event>
+                    <span class="text-primary"><b>{{event.UserType}}</b></span> <br>
+                    <small class="p-text-secondary">&#123;&#123;event.Entrydate&#125;&#125;</small>
+                </ng-template>
+                <ng-template pTemplate="opposite" let-event>
+                    <h5 class="text-success p-0" *ngIf="event.CompletedYn=='Y'"><b>{{event.Substatusdescription}}</b></h5>
+                    <h5 class="text-secondary p-0" *ngIf="event.CompletedYn!='Y'"><b>{{event.Substatusdescription}}</b></h5>
+                    <small class="text-dark" *ngIf="event.Remarks!=null">Remarks :&nbsp;<small class="p-text-secondary p-0">&#123;&#123;event.Remarks&#125;&#125;</small></small>
+                </ng-template>
+            </p-timeline>
+        </div>
+    </div> -->
+    <ng-container *ngIf="totalTrackList.length!=0">
+        <div class="d-flex justify-content-between">
+            <div><h2 mat-dialog-title>Status tracking</h2></div>
+            <div><h2 mat-dialog-title>{{getLossName()}}</h2></div>
+        </div>
+        
+        <section class="section-timeline">
+            <div class="container">
+                <ul class="timeline">
+                    <ng-container *ngFor="let track of completedTrackList;let i=index;">
+                        <li class="customList" *ngIf="completedTrackList.length!=0">
+                            <div class="content">
+                                <h3 class="success-timeline">{{track.description}}</h3>
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item" *ngIf="track.UserType">
+                                        <div class="row">
+                                            <div class="text-center bg-value">
+                                                <span class="row text-primary text-center p-0" *ngIf="track.UserType=='claimofficer'"><b>Approver</b></span>
+                                                <span class="row text-primary text-center p-0" *ngIf="track.UserType=='user'"><b>User</b></span>
+                                                <span class="row text-primary text-center p-0" *ngIf="track.UserType=='surveyor'"><b>Assessor</b></span>
+                                                <span class="row text-primary text-center p-0" *ngIf="track.UserType=='garage'"><b>Garage</b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item" *ngIf="track.entry_date">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="">Updated date</div>
+                                            <div class="ml-auto">
+                                                <span class="row text-secondary text-center p-0"><b>{{track.entry_date}}</b></span>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="row">
+                                            <div class="col-lg-3 col-md-3 bg-label">
+                                                Updated date
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 bg-value float-right">
+                                                <span class="row text-secondary text-center p-0"><b>{{track.Entrydate}}</b></span>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="">
+                                                Days
+                                            </div>
+                                            <div class="bg-value">
+                                                <span class="row text-secondary text-center p-0" *ngIf="track.thresholddays==null "><b>N/A</b></span>
+                                                <span class="row text-secondary text-center p-0" *ngIf=" track.thresholddays == '0'"><b>Same Day</b></span>
+                                                <span class="row text-secondary text-center p-0" *ngIf=" track.thresholddays == '1'"><b>{{track.thresholddays}} Day</b></span>
+                                                <span class="row text-secondary text-center p-0" *ngIf=" track.thresholddays !=null && track.Days != '0' && track.Days != '1'"><b>{{track.thresholddays}} Days</b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="">
+                                                Remarks
+                                            </div>
+                                            <div class="bg-value">
+                                                <span class="row text-secondary text-center p-0"><b>{{ track.Remarks == null ? "N/A" : track.Remarks }}</b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        </ng-container>
+                         <ng-container *ngFor="let track of pendingTrackList;let i=index;">
+                        <li class="" *ngIf="pendingTrackList.length!=0">
+                            <div class="content">
+                                <h3 class="pending-timeline">{{track.description}}</h3>
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item" >
+                                        <div class="row">
+                                            <div class="text-center bg-value">
+                                                <span class="row text-primary text-center p-0" *ngIf="track.UserType=='claimofficer'"><b>ClaimOfficer</b></span>
+                                                <span class="row text-primary text-center p-0" *ngIf="track.UserType=='user'"><b>User</b></span>
+                                                <span class="row text-primary text-center p-0" *ngIf="track.UserType=='surveyor'"><b>Assessor</b></span>
+                                                <span class="row text-primary text-center p-0" *ngIf="track.UserType=='garage'"><b>Garage</b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item" *ngIf="track.entry_date">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 bg-label">
+                                                Updated date
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 bg-value">
+                                                <span class="row text-secondary text-center p-0"><b>{{track.entry_date}}</b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item" >
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 bg-label">
+                                                Remarks
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 bg-value">
+                                                <span class="row text-secondary text-center p-0"><b>{{track.Remarks}}</b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+    
+                            </div>
+                        </li>
+                    </ng-container>
+    
+    
+                </ul>
+            </div>
+        </section>
+        </ng-container>
+        </div>
+        </mat-card>
+        
+        <!-- <ng-container *ngIf="!tableData">
+            <app-loader> </app-loader>
+        </ng-container> -->
+
+
+
+        
+</mat-card>

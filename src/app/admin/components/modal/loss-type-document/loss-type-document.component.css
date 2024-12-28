@@ -1,0 +1,126 @@
+.girdbox {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.girdbox .row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.defaulthide {
+    display: none !important;
+}
+
+.girdbox .col-md-2,
+.col-md-3,
+.col-md-1,
+.col-md-4,
+.col-md-5,
+.col-md-7,
+.col-md-8 {
+    font-size: 13px;
+    font-weight: 700px !important;
+    padding: 3px
+}
+
+.girdbox .btn {
+    font-size: 11px !important;
+    text-align: center !important;
+}
+
+.girdbox .tablecellpadding .col-md-2,
+.col-md-3,
+.col-md-1,
+.col-md-4,
+.col-md-5,
+.col-md-7,
+.col-md-8 {
+    padding-left: 20px;
+}
+
+.girdbox .tableHeader {
+    background-color: #362c82 !important;
+    font-weight: 500;
+    color: #fff;
+}
+
+.girdbox .tableBody {
+    background-color: #fff !important;
+    border-bottom: 1px solid grey;
+}
+
+.hidebutton {
+    cursor: pointer;
+}
+
+@media (min-width:320px) {
+    /* smartphones, iPhone, portrait 480x320 phones */
+    .hidemobileview {
+        display: none;
+    }
+}
+
+@media (min-width:760px) {
+    /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+    .hidemobileview {
+        display: none;
+    }
+}
+
+@media (min-width:772px) {
+    /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+    .girdbox .hidebutton {
+        display: none;
+    }
+    .hidemobileview {
+        display: block;
+    }
+    .showcollapseformobile {
+        display: none;
+    }
+}
+
+@media (min-width:961px) {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    .girdbox .hidebutton {
+        display: none;
+    }
+    .hidemobileview {
+        display: block;
+    }
+    .showcollapseformobile {
+        display: none;
+    }
+}
+
+@media (min-width:1025px) {
+    /* big landscape tablets, laptops, and desktops */
+    .girdbox .hidebutton {
+        display: none;
+    }
+    .hidemobileview {
+        display: block;
+    }
+    .showcollapseformobile {
+        display: none;
+    }
+}
+
+@media (min-width:1281px) {
+    /* hi-res laptops and desktops */
+    .girdbox .hidebutton {
+        display: none;
+    }
+    .hidemobileview {
+        display: block;
+    }
+    .showcollapseformobile {
+        display: none;
+    }
+}
+
+.modal-header {
+    display: block !important;
+    padding: 10px;
+    margin: 5px;
+}

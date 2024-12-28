@@ -1,0 +1,92 @@
+<div class="card">
+    <div class="card-header">
+      Driver Details
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form">
+
+        <div class="row my-2">
+            <div class="col-4 offset-md-2">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="DriverName" required>
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>DOB</mat-label>
+                    <input matInput [max]="driverMaxDOB" [matDatepicker]="dobpicker" formControlName="Dob" required>
+                    <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dobpicker [startAt]="startDate"></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-4 offset-md-2">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="Gender" name="Gender" required>
+                            <mat-option *ngFor="let Gender of GenderTypeList" [value]="Gender.Code">
+                                {{Gender.CodeDesc}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            </div>
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Code</mat-label>
+                            <mat-select formControlName="MobileCode" name="MobileCode">
+                                <mat-option *ngFor="let mobile of MobileCodeList" [value]="mobile.Code">
+                                    {{mobile.CodeDesc}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-8">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Moblie No</mat-label>
+                            <input maxlength="10" matInput formControlName="MobileNo" required appNumbersOnly>
+                        </mat-form-field>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-4 offset-md-2">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="Email">
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>License No</mat-label>
+                    <input matInput formControlName="LicenseNo" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-4 offset-md-2">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>License Expiry Date</mat-label>
+                    <input matInput  [matDatepicker]="accidentpicker" formControlName="LicenseExpiryDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="accidentpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #accidentpicker ></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="Address" required>
+                </mat-form-field>
+            </div>
+        </div>
+ 
+           
+    </form>
+
+    </div>
+  </div>

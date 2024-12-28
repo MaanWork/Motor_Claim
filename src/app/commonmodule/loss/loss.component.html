@@ -1,0 +1,172 @@
+<div class="card-header d-flex justify-content-between customised-header">
+    <div style="line-height: 30px;">
+        Claim Number:{{claimDetails?.ClaimNo}}
+    </div>
+    <div style="line-height: 30px;">
+        Claim Ref No - {{claimDetails?.Claimrefno}}
+    </div>
+</div>
+<mat-tab-group class="mt-2">
+    <mat-tab label="Policy Details">
+        <div class="flex-container">
+            <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;">
+                <ng-container *ngIf="PolicyInformation">
+                    <app-policy-information [PolicyInformation]="PolicyInformation" [panelOpen]="panelOpen"></app-policy-information>
+                </ng-container>
+            </mat-card>
+            <mat-card class="flex-item-right m-1 p-0" style="box-shadow: none;">
+                <ng-container *ngIf="PolicyInformation">
+                    <app-customer-information [CustomerInformation]="PolicyInformation" [panelOpen]="panelOpen"></app-customer-information>
+                </ng-container>
+        
+            </mat-card>
+        
+        </div>
+        <div class="flex-container">
+            <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;">
+                <ng-container *ngIf="PolicyInformation">
+                    <app-vehicle-information [VehicleInformation]="PolicyInformation"></app-vehicle-information>
+                </ng-container>
+            </mat-card>
+            <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;">
+        
+                <ng-container *ngIf="ClaimSummary">
+                    <app-claim-summary></app-claim-summary>
+                </ng-container>
+            </mat-card>
+        </div>
+    </mat-tab>
+    <mat-tab label="Cover Details">
+        <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div style="line-height: 30px;">
+                        Cover Details
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ng-container  *ngIf="coverList.length==0">
+                        <div class="text-center">
+                            No Cover Available
+                        </div>   
+                    </ng-container>
+                    <ng-container  *ngIf="coverList.length!=0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-Primary">
+                                <div class="row ">
+                                    <div class="col-lg-3 col-md-3 bg-label text-center">Cover Name</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Sum Insured&nbsp;({{currencyCode}})</div>
+                                    <div class="col-lg-2 col-md-2 bg-label">Excess Rate &nbsp; (%)</div>
+                                    <div class="col-lg-2 col-md-2 bg-label">Excess Amount&nbsp;({{currencyCode}})</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Effective Date</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item" *ngFor="let entry of coverList ;">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 bg-value" >{{entry.CoverName}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">{{entry.Suminsured}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-label">
+                                        <ng-container *ngIf="entry.ExcessPercent">{{entry.ExcessPercent}}</ng-container>
+                                        <ng-container *ngIf="entry.ExcessPercent==null">N/A</ng-container>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 bg-value" >
+                                        <ng-container *ngIf="entry.ExcessAmount">{{entry.ExcessAmount}}</ng-container>
+                                        <ng-container *ngIf="entry.ExcessAmount==null">N/A</ng-container>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.EffectiveDate}}</div>
+                                    <!-- <div class="col-lg-3 col-md-3 bg-value text-center">{{entry.EffectiveDate}}</div> -->
+                                </div>
+                            </li>
+                        </ul>
+                    </ng-container>
+                </div>
+            </div>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Reserve Amount">
+            <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div style="line-height: 30px;">
+                            Reserve Amount Details
+                        </div>
+                        <div>
+                            <button class="button" (click)="addReserveAmount()" *ngIf="logindata.UserType=='claimofficer' && logindata.UserType != 'surveyor'  && logindata.SubUserType != 'Approver'"><i class="fa fa-plus"></i>&nbsp;Reserve Amount</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ng-container  *ngIf="reserveData.length==0">
+                            <div class="text-center">
+                                No Reserve Amount Added
+                            </div>   
+                        </ng-container>
+                        <ng-container  *ngIf="reserveData.length!=0">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-Primary">
+                                    <div class="row ">
+                                        <div class="col-lg-2 col-md-2 bg-label">Reserve Type</div>
+                                        <div class="col-lg-2 col-md-2 bg-label">Payment Type</div>
+                                        <div class="col-lg-2 col-md-2 bg-label text-center">Reserve<br> ({{currencyCode}})</div>
+                                        <div class="col-lg-2 col-md-2 bg-label text-center">Paid <br>({{currencyCode}})</div>
+                                        <div class="col-lg-1 col-md-1 bg-label">Exchange Rate</div>
+                                        <div class="col-lg-1 col-md-1 bg-label text-center">Reserve FC <br>(USD)</div>
+                                        <div class="col-lg-2 col-md-2 bg-label text-center">Paid FC<br> (USD)</div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" *ngFor="let entry of reserveData|paginate:{itemsPerPage: 3, currentPage:p,id: 'p'} ;">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 bg-value" >{{entry.ReserveCodeDesc}}</div>
+                                        <div class="col-lg-2 col-md-2 bg-value">{{entry.PaymentCodeDesc}}</div>
+                                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.ReserveAmount}}</div>
+                                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmount}}</div>
+                                        <div class="col-lg-1 col-md-1 bg-value" >{{entry.ExchangeRate}}</div>
+                                        <div class="col-lg-1 col-md-1 bg-value text-center">{{entry.ReserveAmountFc}}</div>
+                                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmountFc}}</div>
+                                        <!-- <div class="col-lg-3 col-md-3 bg-value text-center">{{entry.EffectiveDate}}</div> -->
+                                    </div>
+                                </li>
+                            </ul>
+        
+                            <div class="d-flex justify-content-end">
+                                <pagination-controls (pageChange)="p=$event" id="p"></pagination-controls>
+                              </div>
+                            <div class="text-center" *ngIf="logindata.UserType != 'surveyor' && logindata.SubUserType != 'Approver'">
+                                <button class="mx-2" type="submit" mat-raised-button color="warn" (click)="onMakePayment()"><i class="fa fa-credit-card"></i>&nbsp;Make Payment</button>
+                            </div>
+                        </ng-container>
+                        
+                    </div>
+                </div>
+            </mat-card>
+            <!-- <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div style="line-height: 30px;">
+                            Excess Details
+                        </div>
+                        <div>
+                            <button class="button" (click)="addExcessAmount()" *ngIf="logindata.UserType=='claimofficer' && logindata.UserType != 'surveyor'  && logindata.SubUserType != 'Approver'"><i class="fa fa-plus"></i>&nbsp;Excess Amount</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </mat-card> -->
+    </mat-tab>
+</mat-tab-group>
+
+
+
+
+<mat-card class="m-1 p-0" style="background-color: transparent;">
+
+    <app-party-detail>
+
+    </app-party-detail>
+
+</mat-card>
+
+<app-btn-footer></app-btn-footer>

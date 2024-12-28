@@ -1,0 +1,314 @@
+<div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> INSURANCE COMPANY MASTER</h6>
+            </div>
+            <div class="admin-grid-header">
+                <!-- <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{InsuranceListForm.value.InsuranceId}}</b> -->
+            </div>
+
+        </div>
+        <div class="row mt-4">
+            <div class="col-1 offset-10 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNew(insumodal)">
+                  ADD NEW COMPANY
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,insumodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+        </ng-container>
+        </div>
+  
+    <!--<ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2 mt-3">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Insurance Company Name</mat-label>
+                        <input matInput type="text" formControlName="InsName" name="InsName" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" formControlName="InsCoreAppcode" name="InsCoreAppcode" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Company Email</mat-label>
+                        <input matInput type="text" formControlName="InsEmail" name="InsEmail" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput type="text" formControlName="InsPhone" name="InsPhone" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Country</mat-label>
+                        <input type="text" placeholder="Select Country" matInput formControlName="InsCountry" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeCountryValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCountry | async" [value]="option.Countryname">
+                                {{option.Countryname}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="FormGroupData.get('InsCountry').errors">
+                            {{FormGroupData.controls['InsCountry'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input type="text" placeholder="Select City" matInput formControlName="InsCity" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCityValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCity | async" [value]="option.City">
+                                {{option.City}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="FormGroupData.get('InsCity').errors">
+                            {{FormGroupData.controls['InsCity'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Website Name</mat-label>
+                        <input matInput type="text" formControlName="InsWebsite" name="InsWebsite" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Zip Code</mat-label>
+                        <input matInput type="text" formControlName="InsZipcode" name="InsZipcode" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker2" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="card border-0">
+                <div class="card-header">Company Location Information</div>
+                <div class="card-body">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Search Places</mat-label>
+                        <input matInput #search>
+                    </mat-form-field>
+                    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
+                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                    </agm-map>
+                    <div class="row my-2">
+                        <div class="col-4">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Latitude</mat-label>
+                                <input matInput formControlName="Lattitude">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Longitude</mat-label>
+                                <input matInput formControlName="Longitude">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center">
+                    Mark Your Company Place
+                </div>
+
+            </div>
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onSaveCompanyDetials()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>-->
+
+</div>
+
+
+<ng-template #insumodal let-modal>
+    <ng-contanier>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">INSURANCE COMPANY MASTER</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2 mt-3">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Insurance Company Name</mat-label>
+                        <input matInput type="text" formControlName="InsName" name="InsName" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Company Email</mat-label>
+                        <input matInput type="text" formControlName="InsEmail" name="InsEmail" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput type="text" formControlName="InsPhone" name="InsPhone" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Country</mat-label>
+                        <input type="text" placeholder="Select Country" matInput formControlName="InsCountry" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeCountryValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCountry | async" [value]="option.Countryid">
+                                {{option.Countryname}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="FormGroupData.get('InsCountry').errors">
+                            {{FormGroupData.controls['InsCountry'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input type="text" placeholder="Select City" matInput formControlName="InsCity" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCityValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCity | async" [value]="option.Sno">
+                                {{option.City}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="FormGroupData.get('InsCity').errors">
+                            {{FormGroupData.controls['InsCity'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput type="text" formControlName="InsAddress" name="InsAddress"/>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Zip Code</mat-label>
+                        <input matInput type="text" formControlName="InsZipcode" name="InsZipcode" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Website Name</mat-label>
+                        <input matInput type="text" formControlName="InsWebsite" name="InsWebsite" />
+                    </mat-form-field>
+                </div>
+         
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" formControlName="InsCoreAppcode" name="InsCoreAppcode" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mb-2">
+
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker2" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                    </mat-radio-group>
+                </div>
+              
+            </div>
+            <div class="card border-0">
+                <div class="card-header">Company Location Information</div>
+                <div class="card-body">
+                    <!--<mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Search Places</mat-label>
+                        <input matInput #search>
+                    </mat-form-field>-->
+                    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
+                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                    </agm-map>
+                    <div class="row my-2">
+                        <div class="col-4">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Latitude</mat-label>
+                                <input matInput formControlName="Lattitude">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Longitude</mat-label>
+                                <input matInput formControlName="Longitude">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center">
+                    Mark Your Company Place
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSaveCompanyDetials(modal)">Submit</button>
+    </div>
+</ng-contanier>
+  </ng-template>

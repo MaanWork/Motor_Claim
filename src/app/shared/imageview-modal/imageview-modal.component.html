@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Full View Image</h2>
+<mat-dialog-content class="mat-typography">
+  <h3 class="text-center">{{ImageObj.name}}</h3>
+  <img [src]="ImageObj.url" width="100%">
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Next Information</button> -->
+</mat-dialog-actions>

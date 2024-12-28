@@ -1,0 +1,76 @@
+
+<div class="card border-0">
+    <div class="card-header d-flex justify-content-between">
+      <div>
+        Claim Summary
+      </div>
+      <div (click)="onViewInfo()">
+       <i class="fas fa-chevron-down"></i>
+      </div>
+      </div>
+    <div class="flex-container p-1">
+        <mat-card class="flex-item-left m-1 p-1">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Party(s)
+                  <span class="badge bg-primary rounded-pill">{{claimSummary?.PartyCount}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Amount
+                  <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+              </ul>
+        </mat-card>
+        <mat-card class="flex-item-left m-1 p-1">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Loss(s)
+                  <span class="badge bg-primary rounded-pill">{{claimSummary?.LossCount}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Amount
+                  <span class="badge bg-primary rounded-pill">{{claimSummary?.LossAmount}}</span>
+                </li>
+
+              </ul>
+        </mat-card>
+
+    </div>
+    <ng-container>
+      <mat-expansion-panel [expanded]="panelOpen" class="noshadow">
+        <div class="flex-container p-1">
+          <mat-card class="flex-item-left m-1 p-1">
+              <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Recovery(s)
+                    <span class="badge bg-primary rounded-pill">{{claimSummary?.RecoveryCount}}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Amount
+                    <span class="badge bg-primary rounded-pill">{{claimSummary?.RecoveryAmount}}</span>
+                  </li>
+
+                </ul>
+          </mat-card>
+          <mat-card class="flex-item-left m-1 p-1">
+              <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Settled(s)
+                    <span class="badge bg-primary rounded-pill">{{claimSummary?.SettledCount}}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Amount
+                    <span class="badge bg-primary rounded-pill">{{claimSummary?.SettledAmount}}</span>
+                  </li>
+
+                </ul>
+          </mat-card>
+      </div>
+      </mat-expansion-panel>
+    </ng-container>
+
+    <div class="my-2 text-center p-1">
+      <button mat-raised-button color="primary" (click)="onViewClaimModal()"> <i class="fas fa-eye"></i> Claim Details</button>
+      &nbsp;<button mat-raised-button color="accent" (click)="onGeneratePdf()"> <i class="fas fa-download"></i> Claim Details</button>
+    </div>
+</div>

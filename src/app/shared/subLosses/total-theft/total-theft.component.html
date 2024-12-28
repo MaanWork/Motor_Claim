@@ -1,0 +1,115 @@
+<div class="card my-1">
+    <div class="card-header">
+        {{LossTypeDes}}
+    </div>
+    <div class="card-body">
+        <form [formGroup]="createSecondaryForm">
+            <ul class="list-group list-group-flush Informationbox">
+                <li class="list-group-item">
+                    <div class="row tableheadingbg">
+                        <div class="col-md-6 p-2">
+                            Theft Details
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+            <div class="p-2">
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Theft Date</mat-label>
+                            <input matInput [max]="startDate" [matDatepicker]="dobpicker" formControlName="TheftDate" required>
+                            <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                            <mat-datepicker #dobpicker [startAt]="startDate"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Theft Time</mat-label>
+                            <input matInput atp-time-picker type="text" formControlName="TheftTime" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Theft Place</mat-label>
+                            <input matInput type="text" formControlName="TheftPlace" maxlength="150" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Stolen Material</mat-label>
+                            <textarea matInput type="text" formControlName="TheftStolen" maxlength="500" required cols="60" rows="2"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Estimated Replace Amount</mat-label>
+                            <input matInput type="text" formControlName="TheftEstReplace" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Discovered By</mat-label>
+                            <input matInput type="text" formControlName="TheftDiscovredBy" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Reported To</mat-label>
+                            <input matInput type="text" formControlName="TheftReportedTo" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Reported On</mat-label>
+                            <input matInput [max]="startDate" [matDatepicker]="dobpicker2" formControlName="TheftReportedWhen" required>
+                            <mat-datepicker-toggle matSuffix [for]="dobpicker2"></mat-datepicker-toggle>
+                            <mat-datepicker #dobpicker2 [startAt]="startDate"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Reported Location</mat-label>
+                            <input matInput type="text" formControlName="TheftReportedWhich" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Crime Diary No</mat-label>
+                            <input matInput type="text" formControlName="TheftCrDairyno" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4 offset-md-1">
+                        <div class="py-1">VAT Required?</div>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="VatYN" [ngModelOptions]="{standalone: true}" name="VatYN">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row my-2" *ngIf="totalAmount">
+                    <div class="text-center ">
+                        <div class="py-1">Total Amount</div>
+                        <span><b>{{totalAmount}}</b></span>
+                    </div>
+                </div>
+            </div>
+            <div class="my-2 text-center p-1">
+                <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+                <button class="mx-2" *ngIf="!hidebtn" mat-raised-button color="accent" (click)="saveLossDetails('save')">Save</button>
+                <button class="mx-2" *ngIf="!hidebtn" type="submit" mat-raised-button color="primary" (click)="saveLossDetails('submit')">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

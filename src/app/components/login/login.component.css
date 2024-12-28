@@ -1,0 +1,67 @@
+section {
+    font-family: 'Muli', 'Roboto', sans-serif !important;
+}
+
+#hero {
+    /* background: #00305b url(../../../assets/Images/claim_banner_img.png) no-repeat left bottom;
+    padding-top: 5rem; */
+    min-height: 600px;
+}
+
+.hero-content{
+    background: url(../../../assets/Images/heroBg.jpg);
+    background-size: cover;
+}
+
+.hero-shadow {
+    background: #0000002c;
+    backdrop-filter: blur(4px);
+    height: 100%;
+}
+
+.motor-get-started-content__Heading--mobile-large {
+    font-size: 50px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    font-family: "Lato", sans-serif;
+}
+
+#hero .hero-content,
+#hero .hero-bg {
+    width: 40%;
+}
+
+.hero-actions button:first-child {
+    overflow: hidden;
+    color: #fff;
+    background: #ec6608;
+    padding: 1.3rem 2rem;
+}
+
+.hero-actions button:last-child {
+    overflow: hidden;
+    color: #ec6608;
+    background: transparent;
+    border: #ec6608 2px solid;
+    padding: 1.2rem 2rem;
+}
+
+.hero-actions button {
+    border-radius: 30px;
+    border: 0;
+}
+
+.hero-title {
+    font-size: 30px;
+    color: white;
+    font-weight: 500;
+}
+
+.inputTextBar{
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}

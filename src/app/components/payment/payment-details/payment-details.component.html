@@ -1,0 +1,316 @@
+<div class="card-header d-flex justify-content-between customised-header p-1">
+    <div style="line-height: 30px;">
+        Claim Number:{{claimDetails?.ClaimNo}} &nbsp;| &nbsp; Policy No: {{ PolicyInformation?.PolicyInfo?.PolicyNo == null ? "N/A"
+            : PolicyInformation?.PolicyInfo?.PolicyNo
+            }}
+    </div>
+    <div style="line-height: 30px;">
+        Claim Ref No - {{claimDetails?.Claimrefno}}
+    </div>
+</div>
+<!-- <div class="flex-container">
+    <mat-card class="flex-item-left m-1 p-0">
+        <ng-container *ngIf="PolicyInformation">
+            <app-policy-information [PolicyInformation]="PolicyInformation" [panelOpen]="panelOpen"></app-policy-information>
+        </ng-container>
+    </mat-card>
+    <mat-card class="flex-item-right m-1 p-0">
+        <ng-container *ngIf="PolicyInformation">
+            <app-customer-information [CustomerInformation]="PolicyInformation" [panelOpen]="panelOpen"></app-customer-information>
+        </ng-container>
+
+    </mat-card>
+
+</div> -->
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <div style="line-height: 30px;">
+            Reserve Amount Details
+        </div>
+        <div>
+            <button class="button" (click)="addReserveAmount()" *ngIf="logindata.UserType=='claimofficer'"><i class="fa fa-plus"></i>&nbsp;Reserve Amount</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <ng-container  *ngIf="reserveData.length==0">
+            <div class="text-center">
+                No Reserve Amount Added
+            </div>   
+        </ng-container>
+        <ng-container  *ngIf="reserveData.length!=0">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-Primary">
+                    <div class="row ">
+                        <div class="col-lg-1 col-md-1 bg-label">ReserveId</div>
+                        <div class="col-lg-2 col-md-2 bg-label text-center">Reserve Amount<br> ({{currencyCode}})</div>
+                        <div class="col-lg-2 col-md-2 bg-label text-center">Paid Amount <br>({{currencyCode}})</div>
+                        <div class="col-lg-2 col-md-2 bg-label">Exchange Rate</div>
+                        <div class="col-lg-2 col-md-2 bg-label text-center">Reserve Amount FC<br> ({{currencyCode}})</div>
+                        <div class="col-lg-2 col-md-2 bg-label text-center">Paid Amount FC<br> ({{currencyCode}})</div>
+                        <div class="col-lg-1 col-md-1 bg-label">Entry Date</div>
+                    </div>
+                </li>
+                <li class="list-group-item" *ngFor="let entry of reserveData|paginate:{itemsPerPage: 3, currentPage:p,id: 'p'} ;">
+                    <div class="row">
+                        <div class="col-lg-1 col-md-1 bg-value" >{{entry.ReserveId}}</div>
+                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.ReserveAmount}}</div>
+                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmount}}</div>
+                        <div class="col-lg-2 col-md-2 bg-value" >{{entry.ExchangeRate}}</div>
+                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.ReserveAmountFc}}</div>
+                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmountFc}}</div>
+                        <div class="col-lg-1 col-md-1 bg-value text-center">{{entry.EffectiveDate}}</div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="d-flex justify-content-end">
+                <pagination-controls (pageChange)="p=$event" id="p"></pagination-controls>
+              </div>
+            <!-- <div class="text-center" *ngIf="!paySection">
+                <button class="mx-2" type="submit" mat-raised-button color="warn" (click)="onMakePayment()"><i class="fa fa-credit-card"></i>&nbsp;Make Payment</button>
+            </div> -->
+        </ng-container>
+        
+    </div>
+</div>
+<div class="card" *ngIf="paySection">
+    <div class="card-header d-flex justify-content-between">
+        <div style="line-height: 30px;">
+           New Payment Details
+        </div>
+        <div>
+            <h4>Pending Amount ~ {{payRowDetails?.LossPendingAmount}} &nbsp;({{currencyCode}})</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 bg-label"><b>Party Name</b></div>
+                    <div class="col-lg-3 col-md-3 bg-value">
+                        {{payRowDetails?.PartyName}}
+                    </div>
+                    <div class="col-lg-3 col-md-3 bg-label"><b>Loss Name</b></div>
+                    <div class="col-lg-3 col-md-3 bg-value">
+                       {{payRowDetails?.LossTypeDesc}}
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="row">
+           
+            <div class="col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Payment Type</mat-label>
+                    <mat-select [(ngModel)]="payType" name="RoadSurface" required>
+                        <mat-option *ngFor="let pay of payTypeList" [value]="pay.Code">
+                            {{pay.CodeDesc}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Paid Date</mat-label>
+                    <input matInput [max]="minDate" [matDatepicker]="dobpicker" [(ngModel)]="payDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dobpicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>
+                        Amount
+                    </mat-label>
+                    <input matInput type="text" (keypress)="omit_special_char($event)" [(ngModel)]="payAmount" (keydown)="onPayAmountChange($event)" (keyup)="CommaFormatted()" maxlength="20" name="WarningDriverGiven">
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Payment To</mat-label>
+                    <mat-select [(ngModel)]="payToType" name="RoadSurface" required>
+                        <mat-option *ngFor="let pay of payToTypeList" [value]="pay.Code">
+                            {{pay.CodeDesc}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Receiver Role</mat-label>
+                    <mat-select [(ngModel)]="receiverType" name="RoadSurface" required>
+                        <mat-option *ngFor="let pay of receiverTypeList" [value]="pay.Code">
+                            {{pay.CodeDesc}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>
+                        Receiver Name
+                    </mat-label>
+                    <input matInput type="text"  [(ngModel)]="receiverName" maxlength="100" name="receiverName" required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4" *ngIf="payType=='3'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>
+                        Account Number
+                    </mat-label>
+                    <input matInput type="text"  (keypress)="omit_special_char($event)" [(ngModel)]="AccNo" maxlength="50" name="AccNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4" *ngIf="payType=='3'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>
+                        Account Holder Name
+                    </mat-label>
+                    <input matInput type="text" (keypress)="omit_special_char($event)" [(ngModel)]="AccHolderName" maxlength="100" name="AccHolderName">
+                </mat-form-field>
+            </div>
+            
+            <div class="col-md-4 col-lg-4" *ngIf="payType=='3'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>
+                        Bank Name
+                    </mat-label>
+                    <mat-select [(ngModel)]="BankName" name="BankName" required>
+                        <mat-option *ngFor="let pay of bankList" [value]="pay.BankShortCode">
+                            {{pay.CodeDesc}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4" *ngIf="payType=='2'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>
+                        Cheque Number
+                    </mat-label>
+                    <input matInput type="text" (keypress)="omit_special_char($event)" [(ngModel)]="ChequeNo" maxlength="100" name="ChequeNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4" *ngIf="payType=='2'">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Cheque Date</mat-label>
+                    <input matInput [max]="minDate" [(ngModel)]="ChequeDate" [matDatepicker]="dobpicker1" required>
+                    <mat-datepicker-toggle matSuffix [for]="dobpicker1"></mat-datepicker-toggle>
+                    <mat-datepicker #dobpicker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <label>Payment Mode</label>&nbsp;<strong class="text-danger">*</strong><br>
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="payMode">
+                    <mat-radio-button value="C">Charge</mat-radio-button>
+                    <mat-radio-button value="R">Refund</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>
+                        Remarks
+                    </mat-label>
+                    <textarea matInput cols="60" rows="2" (keypress)="omit_special_char($event)" [(ngModel)]="payRemarks" type="text" name="WarningDriverGiven"></textarea>
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>
+                        Receiver Name
+                    </mat-label>
+                    <input matInput type="text" name="WarningDriverGiven">
+                </mat-form-field>
+            </div> -->
+            
+        </div>
+        <div class="text-center">
+            <button mat-raised-button color="warn" (click)="paySection=!paySection"> Cancel </button>&nbsp;
+            <button mat-raised-button color="accent" (click)="onProceedPayment()"> Pay Now </button>
+        </div>
+    </div>
+</div>
+<div class="card" *ngIf="recordsSection">
+    <div class="card-header d-flex justify-content-between">
+        <div style="line-height: 30px;">
+            Payment Details
+        </div>
+        <div>
+            <!-- <button class="mx-2" type="submit" mat-raised-button color="warn" (click)="onMakePayment()"><i class="fa fa-credit-card"></i>&nbsp;New Payment</button> -->
+        </div>
+    </div>
+    <div class="card-body">
+        <ng-container *ngFor="let party of historyData">
+            <div class="row bg-Primary2 p-2">
+                <div class="col-md-13 col-lg-13 col-xl-13">
+                        <b>{{party.PartyName}}</b>
+                </div>
+            </div>
+                <div class="row" *ngIf="party.LossPaymentDetails">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <app-data-table-two
+                        [data]="party.LossPaymentDetails"
+                        [cols]="innerHeader"
+                        (onPartyPayAction)="onMakePayment($event)"
+                        (onPartyPayView)="getLossBasedPaymentList($event)"
+                        (GetLossList)="onGetLossList($event)">
+                        </app-data-table-two>
+                     </div>
+                </div>
+            <hr>
+        </ng-container>
+        <div class="row" >
+
+             <!-- <div class="col-md-12 col-lg-12 col-xl-12">
+                <app-data-table-two *ngIf="historyData"
+                [data]="historyData"
+                [cols]="historyHeader"
+                [innerData]="innerTableData"
+                [innerCols]="innerHeader"
+                (GetLossList)="onGetLossList($event)">
+                </app-data-table-two>
+             </div> -->
+        </div>
+    </div>
+</div>
+<div class="card" *ngIf="lossRecordsSection">
+    <div class="card-header d-flex justify-content-between">
+        <div style="line-height: 30px;">
+                Loss Based Payment Details
+        </div>
+        <div>
+            PartyName ~ {{payRowDetails?.PartyName}} &nbsp; | &nbsp; LossName ~ {{payRowDetails?.LossTypeDesc}}
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row" *ngIf="lossHistoryData">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <app-data-table-two 
+                [data]="lossHistoryData"
+                [cols]="lossHeader">
+                </app-data-table-two>
+            </div>
+        </div>
+            <hr>
+        <div class="text-center mt-2" *ngIf="lossRecordsSection">
+            <button mat-raised-button color="accent" (click)="lossRecordsSection=false;recordsSection=true;"> Back </button>
+        </div>
+        <div class="row" >
+
+             <!-- <div class="col-md-12 col-lg-12 col-xl-12">
+                <app-data-table-two *ngIf="historyData"
+                [data]="historyData"
+                [cols]="historyHeader"
+                [innerData]="innerTableData"
+                [innerCols]="innerHeader"
+                (GetLossList)="onGetLossList($event)">
+                </app-data-table-two>
+             </div> -->
+        </div>
+    </div>
+</div>
+<div class="text-center mt-2" *ngIf="!lossRecordsSection">
+    <button mat-raised-button color="accent" (click)="getBack()"> Back </button>
+</div> 

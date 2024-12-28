@@ -1,0 +1,33 @@
+<div class="card border-0">
+    <div class="card-header">Accident Location Information</div>
+    <div class="card-body">
+        <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Search Places</mat-label>
+            <input matInput #search>
+        </mat-form-field>
+        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapReady)="mapReadyHandler($event)">
+            <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+        </agm-map>
+        <form [formGroup]="form">
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Latitude</mat-label>
+                        <input matInput formControlName="Latitude">
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Longitude</mat-label>
+                        <input matInput formControlName="Longitude">
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="card-footer text-center">
+        Mark Your Accident Place
+    </div>
+
+</div>

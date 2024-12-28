@@ -1,0 +1,144 @@
+<div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> PARTY TYPE MASTER</h6>
+            </div>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-2 offset-10 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNewPartyType(patmodal)">
+              ADD NEW PARTY
+            </button>
+            </div>
+        </div>
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,patmodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+        </ng-container>
+        <ng-container *ngIf="!tableData">
+            <app-loader></app-loader>
+        </ng-container>
+        </div>
+    
+    </div>
+
+<ng-template #patmodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Party Type Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="PartyTypeForm">
+            <div class="row my-2 mt-3">
+                <div class="col-4 offset-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Party Type Name</mat-label>
+                        <input matInput type="text" formControlName="Partytypedesc" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-4 offset-2">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Policy Type</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="Policytypeid" [matAutocomplete]="auto2" required>
+                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onChangePolicyTypes($event.option.value)">
+                            <mat-option *ngFor="let option of filteredPolicyTypes | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="PartyTypeForm.get('Policytypeid').errors">
+                            {{PartyTypeForm.controls['Policytypeid'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4 offset-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 offset-2">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker2" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="my-2">
+                <div class="col-4 offset-1">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSavePartyTypeDetials(modal)">Submit</button>
+    </div>
+  </ng-template>
+
+<!--<ng-container *ngIf="!panelOpen">
+    <form [formGroup]="PartyTypeForm">
+        <div class="row my-2 mt-3">
+            <div class="col-4 offset-1">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Party Type Name</mat-label>
+                    <input matInput type="text" formControlName="Partytypedesc" required />
+                </mat-form-field>
+            </div>
+            <div class="col-4 offset-2">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Policy Type</mat-label>
+                    <input type="text" placeholder="Select Insurance" matInput formControlName="Policytypeid" [matAutocomplete]="auto2" required>
+                    <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onChangePolicyTypes($event.option.value)">
+                        <mat-option *ngFor="let option of filteredPolicyTypes | async" [value]="option.Code">
+                            {{option.CodeDesc}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="PartyTypeForm.get('Policytypeid').errors">
+                        {{PartyTypeForm.controls['Policytypeid'].errors.message}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-4 offset-1">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput type="text" formControlName="Remarks" />
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 offset-2">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput [min]="minDate" [matDatepicker]="picker2" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="my-2">
+            <div class="col-4 offset-1">
+                <div class="py-1">Status</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Status">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <mat-action-row class="justify-content-center">
+            <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+            <button mat-raised-button color="primary" (click)="onSavePartyTypeDetials()">Submit</button>
+        </mat-action-row>
+    </form>
+</ng-container>-->

@@ -1,0 +1,252 @@
+<mat-accordion class="example-headers-align" multi>
+
+    <mat-expansion-panel [expanded]="panelOpen">
+        <mat-expansion-panel-header>
+            <mat-panel-title> <i class='bx bx-grid-alt'></i> Quick Summary </mat-panel-title>
+            <mat-divider></mat-divider>
+        </mat-expansion-panel-header>
+        <!--Date Picker Section-->
+        <div class="row g-2">
+            <!--Start Date Section-->
+            <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>Start date</mat-label>
+                    <input matInput [matDatepicker]="picker" [max]="maxDate" [(ngModel)]="EntryDate == '' ? EmptyentryDate : EntryDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <!--End Date Section-->
+            <div class="col-12 col-md-3">
+                <div class="input-control-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>End date</mat-label>
+                        <input matInput [matDatepicker]="picker1" [max]="maxDate" [(ngModel)]="EndDate == '' ? Emptyenddate : EndDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <!--Submit Section-->
+            <div class="col-12 col-md-1">
+                <button mat-raised-button color="primary" [disabled]="!EntryDate || !EndDate" style="position: relative; 
+                top: 1rem;" (click)="IntimationCount()">Search</button>
+            </div>
+        </div>
+        <!--Claim Section-->
+        <div class="card">
+            <mat-card class="font-weight-bolder card-heading-strip"
+                style="position: relative;bottom: 1.2rem;">CLAIMS</mat-card>
+            <div *ngIf="ClaimIntimatedcount.length ==  0" style="text-align: center !important;">
+                <span style="font-weight: 500;font-size: 1.2rem;">No Records Available!.....</span>
+            </div>
+            <div class="row datapieone" style="visibility:hidden">
+                <div class="DatesShow">
+                    <h4><span>Start-Date</span> : <span class="date">{{StartDate}}</span></h4>
+                    <h4 class="EndDate"><span>End-Date</span> : <span class="date">{{EndedDate}}</span></h4>
+                </div>
+                <div class="col-12  col-md-6">
+                    <figure class="highcharts-figure">
+                        <div id="PieChart"></div>
+                    </figure>
+                </div>
+                <div class="col-12 col-md-6 Intitmated" style="display:none">
+                    <div>
+                        <figure class="highcharts-figure">
+                            <div id="PieChart1"></div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--Table Section Grid-->
+                <div class="col-12 col-md-12 GridIntitmated" style="display:none">
+                    <div class="fullltable">
+                        <h4 class="tableHeading">{{StatusDescData}}</h4>
+                        <p-table  #dt [value]="ClaimIntimateGrid" [tableStyle]="{ 'min-width': '50rem' } " [rows]="5"
+                            [paginator]="true" [globalFilterFields]="['PolicyNo', 'ClaimRefNo', 'ChassisNo', 'AssuredName','ClaimIntimatedDate'
+                            ,'ClaimStatus']">
+                            <ng-template pTemplate="caption">
+                                <div style="text-align: right">
+                                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                                     <input type="text" pInputText size="50" placeholder="Search Filter"
+                                       style="width:auto" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                              </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="headervalue" pSortableColumn="ClaimRefNo">CLAIM REF.NO <p-sortIcon
+                                            field="ClaimRefNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="PolicyNo">POLICY NO <p-sortIcon
+                                        field="PolicyNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ChassisNo">CHASSIS NO <p-sortIcon
+                                        field="ChassisNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="AssuredName">NAME <p-sortIcon
+                                            field="AssuredName"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ClaimIntimatedDate">CLAIM INTIMATED DATE
+                                        <p-sortIcon field="ClaimIntimatedDate"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="AccidentDate">ACCIDENT DATE <p-sortIcon
+                                        field="AccidentDate"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="NoOfDays">NO.OF.DAYS <p-sortIcon
+                                        field="NoOfDays"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ClaimStatus">POSITION <p-sortIcon
+                                            field="ClaimStatus"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="BranchName">BRANCH NAME <p-sortIcon
+                                            field="BranchName"></p-sortIcon></th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-intimatGrid>
+                                <tr class="trow">
+                                    <td class="tabledatasub" style="text-align: center;">{{ intimatGrid?.ClaimRefNo }}</td>
+                                    <td class="tabledatasub" style="text-align: left;">{{ intimatGrid?.PolicyNo }}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{ intimatGrid?.ChassisNo}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{ intimatGrid?.AssuredName }}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.ClaimIntimatedDate}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.AccidentDate}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.NoOfDays}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.ClaimStatus}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.BranchName}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage" class="norecord" *ngIf="ClaimIntimateGrid?.length == 0">
+                                <tr>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important">No Records Found!.....</td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <!--Bar Charts Section-->
+                <div class="col-12 col-md-12 BarChart" style="display:none">
+                    <div>
+                        <figure class="highcharts-figure">
+                            <div id="container"></div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4 LossGridIntitmated" style="display:none">
+                    <div class="fullltable">
+                        <h4 class="tableHeading">{{lossstatdesc}}</h4>
+                        <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                            <div class="card">
+                              <div class="card-body">
+                                <div  *ngFor="let claimlossgrid of ClaimLossLogiIdshow">
+                                    <div class="customBorder d-flex justify-content-between">
+                                        <div><h6>{{claimlossgrid?.LoginId}}</h6></div>
+                                        <div>
+                                            <button class="btn btn-primary" id="count" style="cursor: pointer;position: relative;"
+                                             (click)="checkOnChangecountBasedGrid(claimlossgrid,_sStatus)">{{claimlossgrid?.TotalCount}}</button>
+                                        </div>
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 countbasedgrid" style="display:none">
+                    <p-table #dt1 [value]="_ClaimLossData_grid" [tableStyle]="{ 'min-width': '50rem' } " [rows]="5"
+                            [paginator]="true"  [globalFilterFields]="['PolicyNo', 'ClaimRefNo', 'ClaimNo','ChassisNo', 'AssuredName','ClaimIntimatedDate','ClaimApprovedDate'
+                            ,'ClaimStatus','LossNo','LossTypeDesc','ApproverId','GarageId','SurveyorId','PartyNo','PartyName','LossTypeId','LossAmount']">
+                            <ng-template pTemplate="caption">
+                                <div style="text-align: right">
+                                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                                     <input type="text" pInputText size="50" placeholder="Search Filter"
+                                       style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                                </div>
+                              </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="headervalue" pSortableColumn="ClaimRefNo">CLAIM REF.NO <p-sortIcon
+                                            field="ClaimRefNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ClaimNo">CLAIM NO <p-sortIcon
+                                        field="ClaimNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="PolicyNo">POLICY NO <p-sortIcon
+                                        field="PolicyNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ChassisNo">CHASSIS NO <p-sortIcon
+                                            field="ChassisNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="LossAmount">LOSS AMOUNT <p-sortIcon
+                                        field="LossAmount"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="AssuredName">NAME <p-sortIcon
+                                            field="AssuredName"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ClaimIntimatedDate">CLAIM INTIMATED DATE
+                                        <p-sortIcon field="ClaimIntimatedDate"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="AccidentDate">ACCIDENT DATE <p-sortIcon
+                                        field="AccidentDate"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ClaimApprovedDate">CLAIM APPROVED DATE
+                                        <p-sortIcon field="ClaimApprovedDate"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="NoOfDays">NO.OF.DAYS <p-sortIcon
+                                        field="NoOfDays"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ClaimStatus">POSITION <p-sortIcon
+                                            field="ClaimStatus"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="PartyNo">PARTY NO <p-sortIcon
+                                        field="PartyNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="PartyName">PARTY NAME <p-sortIcon
+                                        field="PartyName"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="LossNo">LOSS NO <p-sortIcon
+                                        field="LossNo"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="LossTypeDesc">LOSS TYPE DESC<p-sortIcon
+                                        field="LossTypeDesc"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="SurveyorId">SURVEYOR ID<p-sortIcon
+                                        field="SurveyorId"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="GarageId">GARAGE ID<p-sortIcon
+                                        field="GarageId"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="ApproverId">APPROVER ID<p-sortIcon
+                                        field="ApproverId"></p-sortIcon></th>
+                                    <th class="headervalue" pSortableColumn="BranchName">BRANCH NAME <p-sortIcon
+                                            field="BranchName"></p-sortIcon></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-intimatGrid>
+                                <tr class="trow">
+                                    <td class="tabledatasub" style="text-align: center;">{{ intimatGrid?.ClaimRefNo }}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{ intimatGrid?.ClaimNo }}</td>
+                                    <td class="tabledatasub" style="text-align: left;">{{ intimatGrid?.PolicyNo }}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{ intimatGrid?.ChassisNo}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{ intimatGrid?.LossAmount}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{ intimatGrid?.AssuredName }} </td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.ClaimIntimatedDate}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.AccidentDate}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.ClaimApprovedDate}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.NoOfDays}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.ClaimStatus}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.PartyNo}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.PartyName}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.LossNo}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.LossTypeDesc}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.SurveyorId}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.GarageId}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.ApproverId}}</td>
+                                    <td class="tabledatasub" style="text-align: center;">{{intimatGrid?.BranchName}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage" class="norecord" *ngIf="_ClaimLossData_grid?.length == 0">
+                                <tr>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important">No Records Found!.....</td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                    <td style="border:none !important"></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>

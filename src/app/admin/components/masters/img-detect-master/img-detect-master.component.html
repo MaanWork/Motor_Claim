@@ -1,0 +1,82 @@
+<mat-card>
+  <mat-expansion-panel hideToggle [expanded]="panelOpen">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> IMAGE DETECTION MASTER</h6>
+      </mat-panel-title>
+      <mat-panel-description class="admin-grid-header">
+        <button mat-raised-button color="warn" (click)="onAddNew()">
+          ADD NEW
+        </button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Agency Code</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Document Id</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Minimum Precent</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Valid Words</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Not Valid Words</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Param Detect</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div class="row my-2">
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Param Value</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <mat-form-field appearance="fill" class="mat-form-width">
+            <mat-label>Remarks</mat-label>
+            <input matInput type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="py-1">Status</div>
+          <mat-radio-group aria-label="Select an option">
+              <mat-radio-button value="Y">Active</mat-radio-button>
+              <mat-radio-button value="N">De-Active</mat-radio-button>
+              <mat-radio-button value="R">Referral</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <mat-action-row class="justify-content-center">
+        <button mat-raised-button color="primary">Submit</button>
+      </mat-action-row>
+    </form>
+  </mat-expansion-panel>
+</mat-card>

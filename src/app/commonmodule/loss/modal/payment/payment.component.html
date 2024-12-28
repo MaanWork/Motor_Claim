@@ -1,0 +1,172 @@
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Payment For {{paymentTitle}}</span>
+  <span class="example-spacer"></span>
+</mat-toolbar>
+<mat-dialog-content class="mat-typography">
+  <mat-card class="p-0">
+    <div class="row">
+      <div class="col-md-2">
+        <ul class="list-group my-2">
+          <li matRipple [class.active]="activePayment == 1" class="list-group-item" (click)="onPayment(1,'Surveyor')">
+            Surveyor Payment</li>
+          <li matRipple [class.active]="activePayment == 2" class="list-group-item" (click)="onPayment(2,'Garage')">
+            Garage Payment
+          </li>
+          <li matRipple [class.active]="activePayment == 3" class="list-group-item" (click)="onPayment(3,'New')">
+            New Payment
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-10">
+         <div class="p-3 text-center" *ngIf="activePayment == 3">
+            Flow Not Availabel !
+         </div>
+        <ng-container *ngIf="activePayment != 3">
+          <mat-expansion-panel [expanded]="true" class="my-2">
+            <mat-expansion-panel-header class="payment-header">
+              <mat-panel-title>
+                EXIST ACCOUNT DETAILS
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-data-table-one [data]="tableData" [cols]="columnHeader">
+            </app-data-table-one>
+
+          </mat-expansion-panel>
+          <mat-expansion-panel [expanded]="true" class="my-2">
+            <mat-expansion-panel-header class="payment-header">
+              <mat-panel-title>
+                PAYMENT HISTORY
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-data-table-one [data]="tableData1" [cols]="columnHeader1">
+            </app-data-table-one>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [expanded]="tableData?.length == 0" class="my-2">
+            <mat-expansion-panel-header class="payment-header">
+              <mat-panel-title>
+                Add New Bank Details
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="card-body">
+              <form [formGroup]="paymentForm" class="paymentForm">
+                <div class="row">
+                  <div class="col-12">
+                    <h4 class="payment-title">Bank Details</h4>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                      <mat-label>Account Holder Name</mat-label>
+                      <input matInput formControlName="holderName" required>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                      <mat-label>Bank Name</mat-label>
+                      <input type="text" placeholder="Select Bank" matInput formControlName="bankName"
+                        [matAutocomplete]="auto1">
+                      <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                        (optionSelected)="onChangeBankList($event.option.value)">
+                        <mat-option *ngFor="let option of bankList" [value]="option.Bankcode">
+                          {{option.Bankname}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                      <mat-label>Account Number</mat-label>
+                      <input matInput formControlName="accountNo" required>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                      <mat-label>Re-Account Number</mat-label>
+                      <input matInput formControlName="reAccountNo" required>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                      <mat-label>City</mat-label>
+                      <input type="text" placeholder="Select City" matInput formControlName="Cityname"
+                        [matAutocomplete]="auto" required>
+                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                        (optionSelected)="onChangeCityValue($event.option.value)">
+                        <mat-option *ngFor="let option of cityList" [value]="option.Cityname">
+                          {{option.Cityname}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                      <mat-label>Branch Name</mat-label>
+                      <input type="text" placeholder="Select Insurance" matInput formControlName="branchName"
+                        [matAutocomplete]="auto3">
+                      <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete"
+                        (optionSelected)="onChangeBranchValue($event.option.value)">
+                        <mat-option *ngFor="let option of branchList" [value]="option.Branchcode">
+                          {{option.Branchname}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+
+
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                      <mat-label>Swift Code</mat-label>
+                      <input matInput formControlName="swiftCode" required>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                      <mat-label>MICR Number</mat-label>
+                      <input matInput formControlName="micrNo" required>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-12">
+                    <h4 class="payment-title">Payment Details</h4>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label mb-2 fw-bold">Payment Type</label>
+                    <div class="radio-toolbar">
+                      <input id="totalpay" type="radio" name="paymentType" formControlName="paymentType"
+                        value="TotalAmount">
+                      <label for="totalpay">Total Amount</label>
+                      <input type="radio" id="partialpay" name="paymentType" formControlName="paymentType"
+                        value="PartialAmount">
+                      <label for="partialpay">Partial Amount</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                      <mat-label>Amount</mat-label>
+                      <input matInput formControlName="amount" required>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+
+
+          </mat-expansion-panel>
+
+          <div class="my-2 text-center p-1">
+            <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+            <button class="mx-2" mat-raised-button color="primary" (click)="onInsertBankDetails()">Submit</button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </mat-card>
+
+</mat-dialog-content>

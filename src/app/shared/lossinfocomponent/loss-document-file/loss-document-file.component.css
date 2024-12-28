@@ -1,0 +1,128 @@
+.imag-card {
+  border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    padding: 1rem;
+    background-color: #f1f1f1;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+
+.doc-card {
+    border-radius: 5px;
+    position: relative;
+    color: #673ab7;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.y-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-80%, -50%);
+    transform: translate(-80%, -50%);
+}
+
+.more-doc-grid {
+    grid-area: main;
+    padding: 8px;
+    display: grid;
+    grid-auto-rows: 50px;
+    grid-gap: 20px;
+}
+.accident-gallery{
+    grid-area: main;
+    padding: 8px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+
+@media (min-width: 576px) {
+    .more-doc-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .accident-gallery{
+      grid-template-columns: 1fr;
+    }
+}
+
+
+/* Medium devices (tablets, 768px and up) */
+
+@media (min-width: 768px) {
+    .more-doc-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .accident-gallery{
+      grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* Large devices (desktops, 992px and up) */
+
+@media (min-width: 992px) {
+    .more-doc-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .accident-gallery{
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+
+/* X-Large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {
+    .more-doc-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+     .accident-gallery{
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+
+@media (min-width: 1400px) {
+    .more-doc-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+     .accident-gallery{
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.lossdocument {
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1rem;
+}
+
+
+/* Screen larger than 600px? 2 column */
+
+@media (min-width: 600px) {
+    .lossdocument {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+/* Screen larger than 900px? 3 columns */
+
+@media (min-width: 900px) {
+    .lossdocument {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.noDocument {
+    background-color: #ccc;
+}

@@ -1,0 +1,145 @@
+<div class="card material-shadow border-0">
+    <div class="card-header">
+        <div class="d-flex justify-content-between p-0">
+            <div class="flex-item">
+                <h5 class="card-title mb-0 p-0"><b>Damage Details</b></h5>
+            </div>
+            <div class="flex-item" *ngIf="claimRefNo">
+                <h5 class="p-0"><b>Claim Ref No ~ {{claimRefNo}}</b></h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="px-3 py-2">
+            <div class="text-center my-2">
+                Highlight the damaged areas by tapping on the diagram's on the impact spots below
+            </div>
+            <p class="text-success text-center" style="font-style: italic;">NOTE:Double click to remove the marking area</p>
+
+            <div class="row border-0">
+                <div class="col-md-12 col-lg-12">
+                    <div class="damgepoints1 ">
+                        <img src="./assets/Images/car-above-view.svg" width="300px">
+                        <div class="First-Row one ">
+                            <div [class.active]="damagepoints_11" (dblclick)="method2CallForDblClick(11)" (click)="method1CallForClick(11)" id="damagepoints_11" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Rear Tire (Left)</span>
+                            </div>
+                        </div>
+                        <div class="First-Row two">
+                            <div [class.active]="damagepoints_8" (dblclick)="method2CallForDblClick(8)" (click)="method1CallForClick(8)" id="damagepoints_8" class="damage_points">
+                                <i class="fas fa-circle"></i>
+
+                            </div>
+                            <span class="tooltiptext">Rear View Mirror (Left)</span>
+                        </div>
+                        <div class="First-Row three">
+                            <div [class.active]="damagepoints_5" (dblclick)="method2CallForDblClick(5)" (click)="method1CallForClick(5)" id="damagepoints_5" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Tire (Left)</span>
+                            </div>
+                        </div>
+                        <div class="Second-Row Top-one">
+                            <div [class.active]="damagepoints_13" (dblclick)="method2CallForDblClick(13)" (click)="method1CallForClick(13)" id="damagepoints_13" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Rear BreakLight (Left)</span>
+                            </div>
+                        </div>
+                        <div class="Second-Row Right-one">
+                            <div [class.active]="damagepoints_15" (dblclick)="method2CallForDblClick(15)" (click)="method1CallForClick(15)" id="damagepoints_15" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Boot</span>
+                            </div>
+                        </div>
+                        <div class="Second-Row Left-one">
+                            <div [class.active]="damagepoints_16" (dblclick)="method2CallForDblClick(16)" (click)="method1CallForClick(16)" id="damagepoints_16" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Rear WindShield</span>
+                            </div>
+
+                        </div>
+                        <div class="Second-Row Below-one">
+                            <div [class.active]="damagepoints_14" (dblclick)="method2CallForDblClick(14)" (click)="method1CallForClick(14)" id="damagepoints_14" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Rear BreakLight (Right)</span>
+                            </div>
+
+                        </div>
+
+                        <div class="Second-Row center-one">
+                            <div [class.active]="damagepoints_10" (dblclick)="method2CallForDblClick(10)" (click)="method1CallForClick(10)" id="damagepoints_10" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Roof</span>
+                            </div>
+
+                        </div>
+                        <div class="Second-Row center-two">
+                            <div [class.active]="damagepoints_7" (dblclick)="method2CallForDblClick(7)" (click)="method1CallForClick(7)" id="damagepoints_7" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Front WindShield</span>
+                            </div>
+
+                        </div>
+
+                        <div class="Second-Row Top-three">
+                            <div [class.active]="damagepoints_1" (dblclick)="method2CallForDblClick(1)" (click)="method1CallForClick(1)" id="damagepoints_1" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Front HeadLight</span>
+                            </div>
+
+                        </div>
+                        <div class="Second-Row Right-three">
+                            <div [class.active]="damagepoints_4" (dblclick)="method2CallForDblClick(4)" (click)="method1CallForClick(4)" id="damagepoints_4" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Bonnet</span>
+                            </div>
+
+                        </div>
+                        <div class="Second-Row Left-three">
+                            <div [class.active]="damagepoints_3" (dblclick)="method2CallForDblClick(3)" (click)="method1CallForClick(3)" id="damagepoints_3" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Bumper</span>
+                            </div>
+
+                        </div>
+                        <div class="Second-Row Below-three">
+                            <div [class.active]="damagepoints_2" (dblclick)="method2CallForDblClick(2)" (click)="method1CallForClick(2)" id="damagepoints_2" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Front HeadLight</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="Third-Row one">
+                            <div [class.active]="damagepoints_12" (dblclick)="method2CallForDblClick(12)" (click)="method1CallForClick(12)" id="damagepoints_12" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Rear Tire (Right)</span>
+                            </div>
+
+                        </div>
+                        <div class="Third-Row two">
+                            <div [class.active]="damagepoints_9" (dblclick)="method2CallForDblClick(9)" (click)="method1CallForClick(9)" id="damagepoints_9" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Rear View Mirror (Right)</span>
+                            </div>
+
+                        </div>
+                        <div class="Third-Row three">
+                            <div [class.active]="damagepoints_6" (dblclick)="method2CallForDblClick(6)" (click)="method1CallForClick(6)" id="damagepoints_6" class="damage_points">
+                                <i class="fas fa-circle"></i>
+                                <span class="tooltiptext">Tire (Right)</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onDamageFormSubmit()">Next</button>
+    </div>
+</div>

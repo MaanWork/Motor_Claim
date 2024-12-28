@@ -1,0 +1,11 @@
+<mat-card class="my-2 p-0">
+    <ng-container *ngIf="claimInfo.ClaimRefNo!=null">
+        <app-loss-accident-file pagefrom="lossInfo" [claimInfo]="claimInfo"></app-loss-accident-file>
+    </ng-container>
+</mat-card>
+<mat-card class="my-2 p-0">
+    <ng-container *ngIf="claimInfo.ClaimRefNo!=null">
+        <app-loss-document-file pagefrom="lossInfo" [claimInfo]="claimInfo"></app-loss-document-file>
+    </ng-container>
+
+</mat-card>

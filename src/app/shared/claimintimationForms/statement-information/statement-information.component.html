@@ -1,0 +1,126 @@
+<div class="card material-shadow border-0">
+    <div class="card-header">
+        <div class="d-flex justify-content-between p-0">
+            <div class="flex-item">
+                <h5 class="card-title mb-0 p-0"><b>Statement Information</b></h5>
+            </div>
+            <div class="flex-item" *ngIf="claimRefNo">
+                <h5 class="p-0"><b>Claim Ref No ~ {{claimRefNo}}</b></h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="p-3">
+            <div class="row my-2">
+                <div class="col-md-3 offset-md-1">
+                    <div class="p-3 mx-2">
+                        <h5>TYPE OF VEHICLE&nbsp;&nbsp;<span class="text-danger">*</span></h5>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="p-3 mx-2 checkCard" *ngIf="createComercialVehc.controls.Typeofvehicle.value != 'Private'" id="privateVehicle" (click)="setVehicleType('Private')">
+                        Private
+                    </div>
+                    <div class="p-3 mx-2 activeVehicle" *ngIf="createComercialVehc.controls.Typeofvehicle.value == 'Private'">
+                        Private
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="p-3 mx-2 checkCard" *ngIf="createComercialVehc.controls.Typeofvehicle.value != 'Commercial'" (click)="setVehicleType('Commercial')">
+                        Commercial
+                    </div>
+                    <div class="p-3 mx-2 activeVehicle" *ngIf="createComercialVehc.controls.Typeofvehicle.value == 'Commercial'">
+                        Commercial
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="p-3 mx-2 checkCard" *ngIf="createComercialVehc.controls.Typeofvehicle.value != 'Motor Cycle'" (click)="setVehicleType('Motor Cycle')">
+                        Motor Cycle
+                    </div>
+                    <div class="p-3 mx-2 activeVehicle" *ngIf="createComercialVehc.controls.Typeofvehicle.value == 'Motor Cycle'">
+                        Motor Cycle
+                    </div>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-3 offset-md-1">
+                    <div class="p-3 mx-2">
+                        <h5>DRIVEN BY &nbsp;&nbsp;<span class="text-danger">*</span></h5>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="p-3 mx-2 checkCard" *ngIf="createComercialVehc.controls.Drivedby.value != 'Owner'" (click)="setDrivedBy('Owner')">
+                        Owner
+                    </div>
+                    <div class="p-3 mx-2 activeDrive" *ngIf="createComercialVehc.controls.Drivedby.value == 'Owner'">
+                        Owner
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="p-3 mx-2 checkCard" *ngIf="createComercialVehc.controls.Drivedby.value != 'Driver'" (click)="setDrivedBy('Driver')">
+                        Driver
+                    </div>
+                    <div class="p-3 mx-2 activeDrive" *ngIf="createComercialVehc.controls.Drivedby.value == 'Driver'">
+                        Driver
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="createComercialVehc">
+            <div class="p-3" *ngIf="createComercialVehc.controls.Typeofvehicle.value == 'Commercial'">
+                <div class="row my-1">
+                    <div class="col-md-5 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Name of Owner of goods</mat-label>
+                            <input matInput type="text" maxlength="100" formControlName="NameOwnerOfGood" name="NameOwnerOfGood" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <label>Was a trailor or attached</label>&nbsp;<strong class="text-danger">*</strong><br>
+                        <div class="radio-toolbar">
+                            <input type="radio" value="Y" formControlName="TrailerOrAttached" id="traileryes" name="TrailerOrAttached">
+                            <label for="traileryes">Yes</label>&nbsp;
+                            <input type="radio" value="N" formControlName="TrailerOrAttached" id="trailerno" name="TrailerOrAttached">
+                            <label for="trailerno">No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-1" *ngIf="createComercialVehc.controls.TrailerOrAttached.value == 'Y'">
+                    <div class="col-md-5 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Weight of load on Vehicle (Lbs)</mat-label>
+                            <input matInput type="text" formControlName="WeightOfLoadVeh" name="WeightOfLoadVeh" appNumbersOnly>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Weight of load on Trailer's (Lbs)</mat-label>
+                            <input matInput type="text" formControlName="WeightOfLoadTral" name="WeightOfLoadTral" appNumbersOnly>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-1" *ngIf="createComercialVehc.controls.Drivedby.value == 'Driver'">
+                <div class="col-md-5 offset-md-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Statement By Driver</mat-label>
+                        <textarea matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="statmtByDriver"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-1" *ngIf="createComercialVehc.controls.Drivedby.value == 'Owner'">
+                <div class="col-md-5 offset-md-1">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Statement By Owner Or Policy holderOwner Or Policy holder</mat-label>
+                        <textarea matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="statmtOwnerOrPolicy"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onStatementInfoSubmit()">Next</button>
+    </div>
+</div>

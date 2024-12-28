@@ -1,0 +1,65 @@
+<div class="card my-1">
+    <div class="card-header">
+        {{LossTypeDes}}
+    </div>
+    <div class="card-body">
+        <form [formGroup]="createSecondaryForm">
+            <div class="row my-2">
+                <div class="col-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Vehicle Value</mat-label>
+                        <input matInput formControlName="Amount" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Depreciation Amount</mat-label>
+                        <input matInput formControlName="DepreciationAmount" required>
+                    </mat-form-field>
+                </div>
+
+
+            </div>
+            <div class="row my-2">
+                <div class="col-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Excess Amount</mat-label>
+                        <input matInput formControlName="ExcessAmount" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Salvage Amount</mat-label>
+                        <input matInput formControlName="SalvageAmount" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-8">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <textarea matInput formControlName="Remarks"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-4">
+                    <div class="py-1">VAT Required?</div>
+                    <mat-radio-group aria-label="Select an option" [(ngModel)]="VatYN" [ngModelOptions]="{standalone: true}" name="VatYN">
+                        <mat-radio-button value="Y">Yes</mat-radio-button>
+                        <mat-radio-button value="N">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="row my-2" *ngIf="totalAmount">
+                <div class="text-center ">
+                    <div class="py-1">Total Amount</div>
+                    <span><b>{{totalAmount}}</b></span>
+                </div>
+            </div>
+            <div class="my-2 text-center p-1">
+                <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+                <button class="mx-2" *ngIf="!hidebtn" mat-raised-button color="accent" (click)="saveLossDetails('Save')">Save</button>
+                <button class="mx-2" *ngIf="!hidebtn" type="submit" mat-raised-button color="primary" (click)="saveLossDetails('Submit')">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="card" *ngIf="DocumentImageList.length != 0">
+    <div class="card-header">
+        Accident Photos
+    </div>
+    <div class="card-body">
+        <ng-container>
+            <input style="display: none;" type="file" [multiple]="true" (change)="onSelectAccidentPhotos($event.target.files,null,'direct')" #accidentfileInput multiple>
+            <div id="container" appDragDrop (fileDropped)="onSelectAccidentPhotos($event,null,'direct')" (click)="accidentfileInput.click()" [ngClass]="{'pointerdisable': fileuploadDisable}">
+                <div class="center">
+                    <i class="far fa-images"></i> Drag or Click
+                </div>
+            </div>
+        </ng-container>
+
+        <div [ngClass]="{'accidentphotos-container': AccidentPhotos?.length >0}">
+
+            <div class="row" *ngIf="viewSection">
+                <ng-container *ngFor="let item of AccidentPhotos;let i = index;">
+                    <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
+                        <div class="imgbox" *ngIf="item.FileType!='pdf'" style="
+                          background-image: url({{item.url}});
+                          background-position: center;
+                          background-repeat: no-repeat;
+                          background-size: cover;
+                          height: 100px;
+                          padding: 2px;">
+                        </div>
+                        <div class="imgbox" *ngIf="item.FileType=='pdf'" style="
+                        background-size: cover;
+                        height: 100px;
+                        padding: 2px;">
+                            <h5 class="text-center">{{item.fileName}}</h5>
+                        </div>
+                        <div class="d-flex justify-content-center" *ngIf="!checkUploadimg(item,i)">
+                            <a mat-raised-button class="mx-1" *ngIf="item.FileType!='pdf'" (click)="onViewImage(item)"><i class="far fa-eye mx-1"></i></a>
+                            <a mat-raised-button class="mx-1" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="onDeleteStaticDocument(item)"><i
+                                class="far fa-trash-alt"></i></a>
+                        </div>
+                        <div class="d-flex  justify-content-center" *ngIf="checkUploadimg(item,i)">
+                            <a mat-raised-button class="mx-1" *ngIf="item.FileType!='pdf'" (click)="onViewImage(item)"><i class="far fa-eye mx-1"></i></a>
+                            <a mat-raised-button class="mx-1" (click)="onDownloadImage(item)" download="{{item.filename}}"><i
+                class="fas fa-download mx-1"></i></a>
+                            <a mat-raised-button class="mx-1" *ngIf="item.JsonString.DocumentUploadDetails[0].Delete == 'Y'" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="onDeleteDocument(item)"><i
+                class="far fa-trash-alt"></i></a>
+
+                        </div>
+                        <!-- <div class="d-flex justify-content-center mt-1" *ngIf="checkUploadimg(item,i)">
+                            <a mat-raised-button class="mx-1" [hidden]="!checkAssessmentId(item,i)" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="onGenerateAI(item,i)">Get AI Details</a>
+                            <a mat-raised-button class="mx-1" [hidden]="checkAssessmentId(item,i)" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="ongetAISingleDoc(item,i)">View AI Details</a>
+                        </div> -->
+                    </mat-card>
+                </ng-container>
+            </div>
+
+        </div>
+        <!-- <div [ngClass]="{'accidentphotos-container': AccidentPhotos?.length >0}">
+
+            <div class="row" *ngIf="viewSection">
+                <ng-container *ngFor="let item of AccidentPhotos;let i = index;">
+                    <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
+                        
+                         <div class="d-flex justify-content-center" *ngIf="!checkUploadimg(item,i)">
+                            <a mat-raised-button class="mx-1" (click)="onViewImage(item)"><i class="far fa-eye mx-1"></i></a>
+                            <a mat-raised-button class="mx-1" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="onDeleteStaticDocument(item)"><i
+                                class="far fa-trash-alt"></i></a>
+                        </div>
+                        <div class="d-flex justify-content-center" *ngIf="checkUploadimg(item,i)">
+                            <a mat-raised-button class="mx-1" (click)="onViewImage(item)"><i class="far fa-eye mx-1"></i></a>
+                            <a mat-raised-button class="mx-1" href="{{item.url}}" download="{{item.filename}}"><i
+                class="fas fa-download mx-1"></i></a>
+                            <a mat-raised-button class="mx-1" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="onDeleteDocument(item)"><i
+                class="far fa-trash-alt"></i></a>
+
+                        </div>
+                        <div class="d-flex justify-content-center mt-1" *ngIf="checkUploadimg(item,i)">
+                            <a mat-raised-button class="mx-1" [hidden]="!checkAssessmentId(item,i)" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="onGenerateAI(item,i)">Get AI Details</a>
+                            <a mat-raised-button class="mx-1" [hidden]="checkAssessmentId(item,i)" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="ongetAISingleDoc(item,i)">View AI Details</a>
+                        </div>
+        </mat-card>
+        </ng-container>
+    </div>
+
+</div> -->
+    </div>
+    <div class="card-footer text-center" >
+        <button mat-raised-button class="mx-1" *ngIf="AccidentPhotos.length!=0" [disabled]="damageListDisabled()" (click)="onUploadFiles()"><i
+        class="fas fa-upload"></i>Upload Document</button>
+        <!-- <button mat-raised-button class="mx-1" *ngIf="aiDocSection" [disabled]="damageListDisabled()" (click)="onGetDocAiDetails()"><i class="fas fa-upload"></i>Get AI Details</button> -->
+    </div>
+</div>

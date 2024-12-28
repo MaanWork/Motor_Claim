@@ -1,0 +1,112 @@
+<div class="card">
+
+    <div class="card-header d-flex justify-content-between">
+        <div class="card-title">
+            <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> Cause Of Loss Master</h6>
+        </div>
+        <div class="admin-grid-header">
+            <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{CityListForm.value.InsuranceId}}</b>
+        </div>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="FormGroupData">
+    <div class="row">
+        <div class="col-4">
+            <mat-form-field class="mat-form-width" appearance="fill">
+                <mat-label>Choose Product Id</mat-label>
+                <input type="text" placeholder="Choose ProductId" matInput formControlName="product" [matAutocomplete]="auto1">
+                <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                    <mat-option *ngFor="let option of filteredproductList | async" [value]="option.CodeDesc">
+                        {{option.CodeDesc}}
+                    </mat-option>
+                </mat-autocomplete>
+            
+            </mat-form-field>
+
+        </div>
+   
+        <div class="col-2 offset-10 mr-5" *ngIf="FormGroupData.controls.product.value !=''">
+            <button mat-raised-button color="warn" (click)="onAddNew(citymodal)">
+            ADD NEW Cause Of Loss
+          </button>
+        </div>
+    </div>
+ </form>
+    <ng-container *ngIf="tableData">
+        <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,citymodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+    </ng-container>
+    </div>
+
+</div>
+
+
+
+<ng-template #citymodal let-modal>
+<div class="modal-header" style="height: 48px;">
+    <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Cause Of Loss Master</span></h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="FormGroupData">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field class="mat-form-width" appearance="fill">
+                    <mat-label>Choose Product Id</mat-label>
+                    <input type="text" placeholder="Select Region" matInput formControlName="product" [matAutocomplete]="auto1">
+                    <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                        <mat-option *ngFor="let option of filteredproductList | async" [value]="option.CodeDesc">
+                            {{option.CodeDesc}}
+                        </mat-option>
+                    </mat-autocomplete>
+                
+                </mat-form-field>
+    
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>CclProdCode</mat-label>
+                    <input matInput type="text" formControlName="CclProdCode" name="CclProdCode" />
+                </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>CclCauseLossDesc</mat-label>
+                    <input matInput type="text" formControlName="CclCauseLossDesc" name="CclCauseLossDesc" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="py-1">Status</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                    
+                </mat-radio-group>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+   
+    <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+    <button mat-raised-button color="primary" (click)="onSaveCityDetials(modal)">Submit</button>
+</div>
+</ng-template>

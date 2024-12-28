@@ -1,0 +1,30 @@
+.fa-list-alt{
+    padding: 0 5px;
+}
+.custom-footer{
+    display: block !important;
+}
+.mat-dialog-content{
+    height: 50vh !important;
+    max-height: none;
+}
+.flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .flex-item-left {
+    flex: 50%;
+  }
+  
+  .flex-item-right {
+    flex: 50%;
+  }
+
+  .transparentBtn {
+    border: none;background-color: transparent; border-radius: 10px; padding: 8px;
+  }
+
+  .transparentBtn:hover {
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  }

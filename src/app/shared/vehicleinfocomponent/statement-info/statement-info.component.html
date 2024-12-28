@@ -1,0 +1,80 @@
+<div class="card my-1">
+    <div class="card-header">
+        Statement Information
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Type Of Vehicle</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Typeofvehicle ==null
+                        ?'N/A':ClaimInfo?.Typeofvehicle}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Driven By</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Drivedby ==null
+                        ?'N/A':ClaimInfo?.Drivedby}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item" *ngIf="ClaimInfo?.Typeofvehicle == 'Commercial'">
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Name of Owner of goods</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.OwnerGoods ==null
+                        ?'N/A':ClaimInfo?.OwnerGoods}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Was a trailer or attached</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Trailerattached == 'Y'
+                        ?'Yes': 'No'}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item" *ngIf="ClaimInfo?.Trailerattached == 'Y'">
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Weight of load on Vehicle</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.VehTrailer ==null
+                        ?'N/A':ClaimInfo?.VehTrailer}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Weight of load on Tonnage</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Tonnage ==null
+                        ?'N/A':ClaimInfo?.Tonnage}}</span>
+                </div>
+            </div>
+        </li> 
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-3 col-lg-3" *ngIf="ClaimInfo?.Drivedby == 'Driver'">
+                    <label><b>Statement By Driver</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3" *ngIf="ClaimInfo?.Drivedby == 'Driver'">
+                    <span>{{ClaimInfo?.Statementbydriver ==null
+                        ?'N/A':ClaimInfo?.Statementbydriver}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3" *ngIf="ClaimInfo?.Drivedby == 'Owner'">
+                    <label><b>Statement By Owner Or Policy Holder</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3" *ngIf="ClaimInfo?.Drivedby == 'Owner'">
+                    <span>{{ClaimInfo?.Statementownerpolicyholder ==null
+                        ?'N/A':ClaimInfo?.Statementownerpolicyholder}}</span>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+</div>

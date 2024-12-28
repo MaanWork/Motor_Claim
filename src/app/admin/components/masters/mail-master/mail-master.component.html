@@ -1,0 +1,318 @@
+<div class="card">
+  
+        <div class="card-header d-flex justify-content-between">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i>MAIL MASTER</h6>
+            </div>
+            <div class="admin-grid-header mt-2">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{MailListForm.value.InsuranceId}}</b>
+            </div>
+        </div>
+        
+        <!--<div class="row">
+            <div class="col-2 offset-10 mr-5 mt-3">
+                <button mat-raised-button color="warn" (click)="onAddNew(Mailmodal)">
+              ADD NEW 
+            </button>
+            </div>
+        </div>-->
+        
+        <div class="card-body">
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,Mailmodal)"></app-admin-table>
+        </ng-container>
+        </div>
+   
+    <!--<ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SMTP Host</mat-label>
+                        <input matInput type="text" formControlName="Smtphost" name="Smtphost">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SMTP Port</mat-label>
+                        <input matInput type="text" formControlName="Smtpport" name="Smtpport">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SMTP User</mat-label>
+                        <input matInput type="text" formControlName="Smtpuser" name="Smtpuser">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SMTP Password</mat-label>
+                        <input matInput type="text" formControlName="Smtppwd" name="Smtppwd">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Authorize</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Authorizyn" name="Authorizyn">
+                        <mat-radio-button value="Y">Yes</mat-radio-button>
+                        <mat-radio-button value="N">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>To Address</mat-label>
+                        <input matInput type="text" formControlName="Toaddress" name="Toaddress">
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+              
+
+                <mat-form-field>
+                    <input matInput placeholder="Add New MailId" [matChipInputFor]="chipList" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" [(ngModel)]="ccName" class="chipInput"><br><br>
+                  </mat-form-field>
+                  
+                  <div>
+                    <mat-chip-list #chipList aria-label="Fruit selection">
+                      <mat-chip *ngFor="let mail of mailList" [removable]="removable" (removed)="remove(mail)">
+                        {{mail}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+            </div>
+
+        </form>
+        <mat-action-row class="justify-content-center">
+            <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+            <button mat-raised-button color="primary" (click)="onSaveMailDetials()">Submit</button>
+        </mat-action-row>
+    </ng-container>-->
+</div>
+
+
+
+<ng-template #Mailmodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Mail Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="FormGroupData">
+
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SMTP Host</mat-label>
+                        <input matInput type="text" formControlName="Smtphost" name="Smtphost">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SMTP Port</mat-label>
+                        <input matInput type="text" formControlName="Smtpport" name="Smtpport">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SMTP User</mat-label>
+                        <input matInput type="text" formControlName="Smtpuser" name="Smtpuser">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>SMTP Password</mat-label>
+                        <input matInput type="text" formControlName="Smtppwd" name="Smtppwd">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Authorize</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Authorizyn" name="Authorizyn">
+                        <mat-radio-button value="Y">Yes</mat-radio-button>
+                        <mat-radio-button value="N">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>To Address</mat-label>
+                        <input matInput type="text" formControlName="Toaddress" name="Toaddress">
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+    
+                <mat-form-field>
+                    <input matInput placeholder="Add New MailId" [matChipInputFor]="chipList" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" [(ngModel)]="ccName" class="chipInput"><br><br>
+                  </mat-form-field>
+                  
+                  <div>
+                    <mat-chip-list #chipList aria-label="Fruit selection">
+                      <mat-chip *ngFor="let mail of mailList" [removable]="removable" (removed)="remove(mail)">
+                        {{mail}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+            </div>
+    
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSaveMailDetials(modal)">Submit</button>
+    </div>
+  </ng-template>
+
+<!--<ng-container *ngIf="!panelOpen">
+    <form [formGroup]="FormGroupData">
+
+        <div class="row my-2">
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMTP Host</mat-label>
+                    <input matInput type="text" formControlName="Smtphost" name="Smtphost">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMTP Port</mat-label>
+                    <input matInput type="text" formControlName="Smtpport" name="Smtpport">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMTP User</mat-label>
+                    <input matInput type="text" formControlName="Smtpuser" name="Smtpuser">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>SMTP Password</mat-label>
+                    <input matInput type="text" formControlName="Smtppwd" name="Smtppwd">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="py-1">Authorize</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Authorizyn" name="Authorizyn">
+                    <mat-radio-button value="Y">Yes</mat-radio-button>
+                    <mat-radio-button value="N">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="py-1">Status</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                    <mat-radio-button value="R">Referral</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>To Address</mat-label>
+                    <input matInput type="text" formControlName="Toaddress" name="Toaddress">
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput type="text" formControlName="Remarks" name="Remarks">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-12 col-md-12 col-lg-12">
+                <mat-form-field class="example-chip-list" appearance="fill">
+                    <mat-label>Mail CC</mat-label>
+                    <mat-chip-list #chipList aria-label="Fruit selection">
+                        <mat-chip *ngFor="let mail of mailList" (removed)="remove(mail)" matChipRemove>
+                            {{mail}}
+                            <button class="btn">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                        </mat-chip>
+                        <input placeholder="Add New MailId" [ngModelOptions]="{standalone: true}" [(ngModel)]="ccName" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                    </mat-chip-list>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field>
+                <input matInput placeholder="Add New MailId" [matChipInputFor]="chipList" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" [(ngModel)]="ccName" class="chipInput"><br><br>
+              </mat-form-field>
+              
+              <div>
+                <mat-chip-list #chipList aria-label="Fruit selection">
+                  <mat-chip *ngFor="let mail of mailList" [removable]="removable" (removed)="remove(mail)">
+                    {{mail}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+        </div>
+
+    </form>
+    <mat-action-row class="justify-content-center">
+        <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+        <button mat-raised-button color="primary" (click)="onSaveMailDetials()">Submit</button>
+    </mat-action-row>
+</ng-container>-->

@@ -1,0 +1,13 @@
+.losslistcard{
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+/* .mat-mdc-card {
+    position: relative;
+    border-radius: var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 4px));
+    background-color: var(--mdc-elevated-card-container-color, transparent);
+    border-width: 0;
+    border-style: solid;
+    margin-top: 150% !important;
+} */

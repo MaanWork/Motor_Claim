@@ -1,0 +1,285 @@
+<div class="card my-1">
+    <div class="card-header">
+        Driver Information
+    </div>
+    <mat-expansion-panel [expanded]="panelOpen">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Driver Information
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="card my-1">
+            <div class="card-header">
+                Driver Information
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Driver Name</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Drivername ==null
+                    ?'N/A':ClaimInfo?.Drivername}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Driver Gender</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Drivergender == '1'
+                    ? 'Male': 'Female'}}</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Driver DOB</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Driverdob ==null
+                    ?'N/A':ClaimInfo?.Driverdob}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Email</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Driveremailid ==null
+                    ?'N/A':ClaimInfo?.Driveremailid}}</span>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Driver Mobile</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Mobilecode ==null
+                    ?'N/A':ClaimInfo?.Mobilecode}}</span> &nbsp;&nbsp;
+                            <span>{{ClaimInfo?.Drivermobile ==null
+                    ?'N/A':ClaimInfo?.Drivermobile}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Address</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+
+                            <span>{{ClaimInfo?.Driveraddress ==null
+                    ?'N/A':ClaimInfo?.Driveraddress}}</span>
+                        </div>
+
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>License Number</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+
+                            <span>{{ClaimInfo?.Licenseno ==null
+                    ?'N/A':ClaimInfo?.Licenseno}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Driving Licence valid upto</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Licenceexpirydate ==null
+                    ?'N/A':ClaimInfo?.Licenceexpirydate}}</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Is he employed by you?</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+
+                            <span>{{ClaimInfo?.Employedbyyouyn =='Y'
+                    ?'Yes':'No'}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>How long has he been in service? </b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Licenseexperience ==null
+                    ?'N/A':ClaimInfo?.Licenseexperience}}</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Was he driving with your permission?</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+
+                            <span>{{ClaimInfo?.Permittedtodriveyn =='Y'
+                    ?'Yes':'No'}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>How long has he been driving motor vehicles? </b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Drivingmotorvehicle ==null
+                    ?'N/A':ClaimInfo?.Drivingmotorvehicle}}</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Has he had any previous accident?</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+
+                            <span>{{ClaimInfo?.Previousaccidentyn =='Y'
+                    ?'Yes':'No'}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>If so, how many Accident? </b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Driverlicensedetails ==null
+                    ?'N/A':ClaimInfo?.Driverlicensedetails}}</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Has he any convition for any offence with any motor vehicle or any charges pending?
+                    </b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Offencechargespendingyn =='Y'
+                    ?'Yes':'No'}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>If so, give details including dates </b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Driverlicensedetails ==null
+                    ?'N/A':ClaimInfo?.Driverlicensedetails}}</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Driving test first passed Date</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Drivingtestpasseddate ==null
+                    ?'N/A':ClaimInfo?.Drivingtestpasseddate}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Name and Address of insurer </b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Insurernameaddress ==null
+                    ?'N/A':ClaimInfo?.Insurernameaddress}}</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Was he in anyway to blame for the accident?</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Driverfaultyn =='Y'
+                    ?'Yes':'No'}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Does he have a full/provisional license to drive the vehicle? </b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Provisionallicenseyn =='Y'
+                    ?'Yes':'No'}}</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row my-2">
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Does he own a Motor Vehicle?</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Ownvehicleyn =='Y'
+                    ?'Yes':'No'}}</span>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <label><b>Did he admit liability?</b></label>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <span>{{ClaimInfo?.Liabilityyn =='Y'
+                    ?'Yes':'No'}}</span>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </mat-expansion-panel>
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel [expanded]="panelOpen">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Police Information
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="card my-1">
+                <div class="card-header">
+                    Police Information
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Polce Report No</b></label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <span>{{ClaimInfo?.Policereportno ==null
+                                ?'N/A':ClaimInfo?.Policereportno}}</span>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Police Report Source</b></label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <span>{{ClaimInfo?.Policereportsource ==null
+                                ?'N/A':ClaimInfo?.Policereportsource}}</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Accident Description</b></label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <span>{{ClaimInfo?.Accidentdescription ==null
+                                ?'N/A':ClaimInfo?.Accidentdescription}}</span>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Claim Channnel</b></label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <span>{{ClaimInfo?.Claimchannnel ==null
+                                ?'N/A':ClaimInfo?.Claimchannnel}}</span>
+                            </div>
+                            
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </mat-expansion-panel>
+
+
+
+
+    </mat-accordion>
+</div>

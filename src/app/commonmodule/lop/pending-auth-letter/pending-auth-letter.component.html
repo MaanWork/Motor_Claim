@@ -1,0 +1,839 @@
+<div class="card-header d-flex justify-content-between">
+    <div>
+        Loss Name - {{LossTypeDes}} &nbsp;&nbsp; | &nbsp;&nbsp; Loss Id - {{subLossTypeId}}
+    </div>
+    <div>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</div>
+<ul class="list-group list-group-flush mx-2" *ngIf="panelOpen">
+    <li class="list-group-item">
+        <div class="row">
+            <div class="infopadding col-lg-3 col-md-3 bg-label">Claim No</div>
+            <div class="infopadding col-lg-3 col-md-3 bg-value">{{GarageLoss?.ClaimNo == null ? 'N/A': GarageLoss?.ClaimNo}}
+            </div>
+            <div class="infopadding col-lg-3 col-md-3 bg-label">Claim Ref No</div>
+            <div class="infopadding col-lg-3 col-md-3 bg-value">{{GarageLoss?.ClaimRefNo == null ? 'N/A': GarageLoss?.ClaimRefNo}}
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row">
+            <div class="infopadding col-lg-3 col-md-3 bg-label">Party Name</div>
+            <div class="infopadding col-lg-3 col-md-3 bg-value">
+            </div>
+            <div class="infopadding col-lg-3 col-md-3 bg-label">Party Id</div>
+            <div class="infopadding col-lg-3 col-md-3 bg-value">{{GarageLoss?.PartyNo == null ? 'N/A': GarageLoss?.PartyNo}}
+            </div>
+
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row">
+            <div class="infopadding col-lg-3 col-md-3 bg-label">Previous Remarks</div>
+            <div class="infopadding col-lg-3 col-md-3 bg-value">{{lossRemarks}}
+            </div>
+        </div>
+    </li>
+</ul>
+<div class="flex-container">
+    <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;">
+        <ng-container *ngIf="PolicyInformation">
+            <app-policy-information [PolicyInformation]="PolicyInformation"></app-policy-information>
+        </ng-container>
+    </mat-card>
+    <mat-card class="flex-item-right m-1 p-0" style="box-shadow: none;">
+        <ng-container *ngIf="PolicyInformation">
+            <app-customer-information [CustomerInformation]="PolicyInformation"></app-customer-information>
+        </ng-container>
+    </mat-card>
+</div>
+<div class="flex-container">
+    <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;">
+        <ng-container *ngIf="PolicyInformation">
+            <app-vehicle-information [VehicleInformation]="PolicyInformation"></app-vehicle-information>
+        </ng-container>
+    </mat-card>
+    <mat-card class="flex-item-right m-1 p-0" style="box-shadow: none;">
+        <ng-container *ngIf="GarageEdit">
+            <app-garage-information [GarageInformation]="GarageEdit"></app-garage-information>
+        </ng-container>
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                Approver Information
+            </div>
+        </div>
+        <div class="row p-2" *ngIf="selectedApprover">
+            <div class="infopadding col-lg-8 col-md-8 offset-2 bg-label text-center">
+                <h4>Claim No - {{GarageLoss.ClaimNo}} Allotted to Approver {{selectedApprover}}</h4>
+            </div>
+        </div>
+        <hr>
+        <div class="row" *ngIf="!selectedApprover">
+
+            <div class="infopadding col-lg-8 col-md-8 bg-label offset-3">
+                <h4>Not Yet Alloted to Approver</h4>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<!-- <ng-container *ngIf="GarageEdit">
+    <app-loss-accident-file pagefrom="garageComponent" [claimInfo]="GarageEdit"></app-loss-accident-file>
+</ng-container>
+<mat-card class="my-2 p-0">
+    <ng-container *ngIf="GarageEdit">
+        <app-loss-document-file pagefrom="garageComponent" [claimInfo]="GarageEdit"></app-loss-document-file>
+    </ng-container>
+
+</mat-card> -->
+<form [formGroup]="garageForms">
+    <div class="row" *ngIf="logindata.UserType == 'surveyor' || (logindata.UserType == 'garage' && lossStatus == 'AFA')">
+        <mat-card class="col-6 my-2 p-2" style="box-shadow: none;">
+            <ng-container>
+                <app-loss-dmage-parts [WhoView]="WhoView" pageFrom="garageComponent" approvedSection="garage" (DamageListValues)="getDamageListValues($event)" [form]="surveyorForms" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
+            </ng-container>
+        </mat-card>
+        <mat-card class="col-6 my-2 p-2" style="box-shadow: none;">
+            <ng-container>
+                <app-loss-dmage-parts [WhoView]="WhoView" [surveyorLoginId]="surveyorLoginId" pageFrom="surveyorComponent" approvedSection="garage" (DamageListValues)="getDamageListValues($event)" [form]="garageForms" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
+            </ng-container>
+        </mat-card>
+    </div>
+
+    <!-- <mat-card class="my-2 p-0">
+        <ng-container>
+            <app-loss-dmage-parts [WhoView]="WhoView" pageFrom="pendingAuth" approvedSection="none" (DamageListValues)="getDamageListValues($event)" [form]="garageForms" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
+        </ng-container>
+    </mat-card> -->
+
+
+    <div class="flex-container">
+        <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;" [formGroup]="claimAuthForm">
+            <div class="card border-0">
+                <div class="card-header">Authorization Details </div>
+                <div class="card-body">
+                    <table class="table table-borderless mytable">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount ({{currencyCode}})</th>
+                                <th>Payable By Insurance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Assessed Loss & Labour Cost
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <!-- <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" value="" readonly />
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG' )">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput (change)="setTotalAmount()" formControlName="AssessedLossAmount" name="AssessedLossAmount" type="number" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                        <mat-radio-group aria-label="Select an option" formControlName="AssessedPayYn" name="AssessedPayYn">
+                                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                                            <mat-radio-button value="N">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </fieldset>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Less Betterment
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <!-- <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" value="TZS" readonly />
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC'&& lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="number" (change)="setTotalAmount()" formControlName="Lessbetterment" name="Lessbetterment" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                        <mat-radio-group aria-label="Select an option" formControlName="LessBettermentPayYn" name="LessBettermentPayYn">
+                                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                                            <mat-radio-button value="N">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </fieldset>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Less Excess
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <!-- <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" value="TZS" readonly />
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG' )">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="number" (change)="setTotalAmount()" formControlName="LessExcess" name="LessExcess" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                        <mat-radio-group aria-label="Select an option" formControlName="LessExcessPayYn" name="LessExcessPayYn">
+                                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                                            <mat-radio-button value="N">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </fieldset>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Young Age Driver
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <!-- <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" value="TZS" readonly />
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="number" (change)="setTotalAmount()" formControlName="LessYoung" name="LessYoung" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                        <mat-radio-group aria-label="Select an option" formControlName="LessYoungPayYn" name="LessYoungPayYn">
+                                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                                            <mat-radio-button value="N">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </fieldset>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Under Insurance
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <!-- <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" value="TZS" readonly />
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC'  && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG' )">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="number" (change)="setTotalAmount()" formControlName="UnderInsurance" name="UnderInsurance" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                        <mat-radio-group aria-label="Select an option" formControlName="UnderInsurancePayYn" name="UnderInsurancePayYn">
+                                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                                            <mat-radio-button value="N">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </fieldset>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Salvage Amount
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <!-- <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" value="TZS" readonly />
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="number" (change)="setTotalAmount()" formControlName="SalvageAmount" name="SalvageAmount" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Net Amount Payble
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <!-- <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" value="TZS" readonly />
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="number" (change)="setTotalAmount()" formControlName="NetAmount" name="NetAmount" disabled/>
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- <tr>
+                                <td>
+                                    Principal Amount
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" value="TZS" readonly />
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <fieldset disabled>
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="number" formControlName="PrincipleAmount" name="PrincipleAmount" disabled/>
+                                                </mat-form-field>
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr> -->
+                        </tbody>
+                    </table>
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <label>VAT Required?</label>
+                        </div>
+                        <div class="col-md-3">
+                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                <mat-radio-group aria-label="Select an option" formControlName="VatYn" name="VatYn" (change)="setVatValue($event.value)">
+                                    <mat-radio-button value="Y">Yes</mat-radio-button>
+                                    <mat-radio-button value="N">No</mat-radio-button>
+                                </mat-radio-group>
+                            </fieldset>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <fieldset [disabled]="garageSection || (lossStatus != 'SLP' && lossStatus != 'CFA' && lossStatus != 'RC' && lossStatus != 'SLF' && lossStatus != 'RG' && lossStatus != 'CIRFP' && lossStatus != 'IVG')">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Advance Payment %</mat-label>
+                                    <input matInput type="number" formControlName="AdvanceAmount" (change)="setVariation()" name="AdvanceAmount" required />
+                                </mat-form-field>
+                            </fieldset>
+                        </div>
+                        <div class="col-6">
+                            <fieldset disabled>
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Variation %</mat-label>
+                                    <input matInput type="number" formControlName="Variation" name="Variation" required />
+                                </mat-form-field>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-lg-8 offset-2">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <label><b>Net Payable Amount</b></label>
+                                </div>
+                                <div>
+                                    <h3>{{claimAuthForm.controls.NetAmount.value}}</h3>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between" *ngIf="claimAuthForm.controls.VatYn.value=='Y'">
+                                <div>
+                                    <label><b>VAT Amount</b></label>
+                                </div>
+                                <div>
+                                    <label>(18%)</label>
+                                </div>
+                                <div>
+                                    <h3>{{claimAuthForm.controls.VATAmount.value  | number : '1.2-2'}}</h3>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <label><b>Total Payable Amount</b></label>
+                                </div>
+                                <div>
+                                    <h3>{{claimAuthForm.controls.PrincipleAmount.value}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- <div class="row" *ngIf="claimAuthForm.controls.VatYn.value=='Y'">
+                        <div class="col-md-2 mt-2 offset-md-4">
+                            <label><b>Total Payable Amount</b></label>
+                        </div>
+                        <div class="col-md-3">
+                            <h3>{{claimAuthForm.controls.PrincipleAmount.value}}</h3>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </mat-card>
+        <mat-card class="flex-item-right m-1 p-0" style="box-shadow: none;" [formGroup]="garageAuthForm" *ngIf="(garageSection && (lossStatus == 'RG' || lossStatus == 'CIRFP' || lossStatus == 'IVG' || lossStatus == 'PFS' || lossStatus == 'RC' || lossStatus == 'SLF' || lossStatus == 'SLC' || lossStatus == 'AFA')) || (!garageSection && (lossStatus == 'CIRFP' || lossStatus == 'IVG' || lossStatus == 'PFS' || lossStatus == 'RG' || lossStatus == 'RC' || lossStatus == 'SLF' || lossStatus == 'SLC'))">
+
+            <div class="card border-0">
+                <div class="card-header">Authorization Details </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount ({{currencyCode}})</th>
+                                <!-- <th>Payable By Insurance</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Assessed Parts Net
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <!-- <div class="col-md-2">
+                                            <mat-form-field appearance="fill" class="mat-form-width">
+                                                <input matInput type="text" maxlength="10" value="TZS" readonly />
+                                            </mat-form-field>
+                                        </div> -->
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" appNumbersOnly maxlength="10" formControlName="Assessedpartsnet" name="Assessedpartsnet" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            <!-- <tr>
+                                <td>
+                                    Possible used Parts
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" formControlName="Possibleusedparts" name="Possibleusedparts" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr> -->
+                            
+                            <!-- <tr>
+                                <td>
+                                    Depreciation (%)
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Depreciation (%)</mat-label>
+                                                    <input matInput type="text" maxlength="3" appNumbersOnly formControlName="Depreciation" name="Depreciation" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr> 
+                            <tr>
+                                <td>
+                                    Scrap Value of Metal Part (Kg)
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Metal Part (Kg)</mat-label>
+                                                    <input matInput type="text" maxlength="4" appNumbersOnly formControlName="Scrapvalueofmetalpart" name="Scrapvalueofmetalpart" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>-->
+                            <tr>
+                                <td>
+                                    Labour
+                                </td>
+                                <td>
+                                    <div class="row">
+                                       
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" appNumbersOnly formControlName="Labour" name="Labour" />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td>
+                                    Miscellaneous parts/Materails
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" appNumbersOnly formControlName="Miscallaneousparts" name="Miscallaneousparts" />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr> -->
+                            <!-- <tr>
+                                <td>
+                                    Suspected Parts
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" appNumbersOnly formControlName="Suspectedparts" name="Suspectedparts" />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                    Proble Suspect Parts (Depreciable)
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" appNumbersOnly formControlName="Problesusprctpartsdep" name="Problesusprctpartsdep" />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>-->
+                            <tr>
+                                <td>
+                                    Discount Net(%)
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Discount Net(%)</mat-label>
+                                                    <input matInput type="text" maxlength="3" appNumbersOnly formControlName="Discountnet" name="Discountnet" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                             <tr>
+                                <td>
+                                    Discount
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="15" appNumbersOnly formControlName="DiscountAmt" name="DiscountAmt" required />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr> 
+                            <tr>
+                                <td>
+                                    Net of Discount
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset disabled>
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" appNumbersOnly formControlName="Netofdiscount" name="Netofdiscount" />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td>
+                                    Net of Depreciation
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset disabled>
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" appNumbersOnly formControlName="Netofdepreciation" name="Netofdepreciation" />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                    Proble Suspect Parts (Non-Depreciable)
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset [disabled]="garageSection">
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" appNumbersOnly formControlName="Problesuspectpartsnondep" name="Problesuspectpartsnondep" />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Net of Discount
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset disabled>
+                                                <mat-form-field appearance="fill" class="mat-form-width">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput type="text" maxlength="10" appNumbersOnly formControlName="Netofdiscount" name="Netofdiscount" />
+                                                </mat-form-field>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <button mat-raised-button color="accent" [hidden]="logindata.UserType == 'claimofficer' || (logindata.UserType == 'garage' && lossStatus!='AFA')" (click)="onCalculateValue()">Calculate</button>
+                    </div>
+                    <!-- <div class="row">
+            <div class="col-6">
+              <mat-form-field appearance="fill" class="mat-form-width">
+                <mat-label>Advance Payment %</mat-label>
+                <input matInput type="number" required />
+              </mat-form-field>
+            </div>
+            <div class="col-6">
+              <mat-form-field appearance="fill" class="mat-form-width">
+                <mat-label>Variation %</mat-label>
+                <input matInput type="number" required />
+              </mat-form-field>
+            </div>
+          </div> -->
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+    <div class="flex-container">
+        <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;">
+            <div class="card border-0">
+                <div class="card-header">Terms and conditions</div>
+                <div class="card-body">
+                    <div class="row mt-2" *ngFor="let terms of termsGarageList">
+                        <div class="col-md-2 text-center py-3" *ngIf="logindata.UserType == 'surveyor'">
+                            <mat-checkbox (change)="onGarageTermsSelect($event,terms)" [ngModelOptions]="{standalone: true}" [ngModel]="terms.checked == 'Y'" class="example-margin"></mat-checkbox>
+                        </div>
+                        <div class="col-md-10">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput [disabled]="logindata.UserType != 'surveyor'" [ngModelOptions]="{standalone: true}" [(ngModel)]="terms.Termsdesc" required name="garageidlist"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button mat-raised-button color="accent" [hidden]="logindata.UserType != 'claimofficer'" (click)="addGarageRow()">Add More</button>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card class="flex-item-right m-1 p-0" style="box-shadow: none;">
+            <div class="card border-0">
+                <div class="card-header">Terms and conditions for Payment</div>
+                <div class="card-body">
+                    <div class="row mt-2" *ngFor="let terms of termsPaymentList">
+                        <div class="col-md-2 text-center py-3" *ngIf="logindata.UserType == 'surveyor'">
+                            <mat-checkbox (change)="onPaymentTermsSelect($event,terms)" [ngModelOptions]="{standalone: true}" [ngModel]="terms.checked == 'Y'" class="example-margin"></mat-checkbox>
+                        </div>
+                        <div class="col-md-10">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput [disabled]="logindata.UserType != 'surveyor'" [ngModelOptions]="{standalone: true}" [(ngModel)]="terms.Termsdesc" required name="garageidlist"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button mat-raised-button color="accent" [hidden]="logindata.UserType != 'surveyor'" (click)="addPaymentRow()">Add More</button>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;" [hidden]="lossStatus != 'UP' && lossStatus!='RC' && lossStatus!='SLF' && lossStatus!='RG'
+    && lossStatus!='CIRFP' && lossStatus!='IVG' && lossStatus!='PFS'">
+    <mat-card class="my-2 p-0" style="box-shadow: none;" *ngIf="GarageEdit">
+        <app-loss-document-file lossAcc="Y" pagefrom="authLetter" [garageDetails]="GarageEdit"></app-loss-document-file>
+    </mat-card>
+            <!-- <ng-container *ngIf="GarageEdit">
+                <app-loss-accident-file pagefrom="garageComponent" [claimInfo]="GarageEdit"></app-loss-accident-file>
+            </ng-container> -->
+        <!-- <div class="card border-0">
+            
+            <div class="card-header">Garage Documents</div>
+                <div class="col-4" >
+                    
+                    <input style="display: none;" type="file" (change)="onQuotationDocuments($event)" #fileInput>
+                    <mat-card>
+                        <div class="text-center d-flex" *ngIf="!filename">
+                            <div class="text-danger flex-fill text-center" >
+                                Required *
+                            </div>
+                        </div>
+                        <div id="Image_Quotation" (click)="fileInput.click()" class="image-grid" style="
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            height: 150px;
+                            width: 100%;">
+
+                            
+                        </div>
+                        <div class="text-center" *ngIf="!filename">
+                            <span><b style="color: black;">Garage Invoice</b></span>
+                            <br>
+                                <i class="far fa-images"></i> Drag or Click
+                        </div>
+                        <div class="text-center">
+                            <div>
+                                <span><b style="color: black;">{{filename}}</b></span>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-1" *ngIf="filename">
+                            <a mat-raised-button class="mx-1" (click)="onDownloadImage()" download><i
+                                class="fas fa-download mx-1"></i></a>
+                            <a mat-raised-button class="mx-1" (click)="onDeleteDocument()" *ngIf="filename && logindata.UserType=='garage'"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                    </mat-card>
+                </div>
+        </div> -->
+    </mat-card>
+    <mat-card class="my-2 p-0" style="box-shadow: none;" *ngIf="approverListSection">
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                Allot to Approver
+            </div>
+        </div>
+        <ng-container *ngIf="tableData">
+            <app-data-table (GetClaimApproverAllotDetails)="onGetClaimId($event)" [tableData]="tableData" [columnHeader]="columnHeader"></app-data-table>
+        </ng-container>
+        <ng-container *ngIf="!tableData">
+            <app-loader></app-loader>
+        </ng-container>
+        <div class="text-center mb-3" *ngIf="selectedApprover">
+
+        </div>
+    </mat-card>
+    <div class="my-2 text-center p-1">
+        <button class="mx-2" mat-raised-button color="warn" (click)="back()">
+            Back
+        </button>
+        <button class="mx-2" mat-raised-button color="primary" *ngIf="approverListSection && selectedApprover" (click)="onAllotedToApprover()">Allot</button>
+        <button class="mx-2" type="submit" mat-raised-button color="primary" *ngIf="!approverListSection" (click)="finalProceed()">
+            Proceed
+        </button>
+        <button class="mx-2" mat-raised-button color="warn" [hidden]="lossStatus == 'SLP'" (click)="getClaimPdf('SLP')">
+        Authorization Letter
+        </button>
+        <button class="mx-2" mat-raised-button color="warn" [hidden]="lossStatus != 'RG'" (click)="getClaimPdf('RG')">
+             Vehicle Release Letter PDF
+        </button>
+        <button class="mx-2" mat-raised-button color="warn" [hidden]="lossStatus != 'IVG' && lossStatus != 'PFS' && lossStatus != 'AFA'" (click)="getClaimPdf('IVG')">
+           Claim Discharge Voucher
+       </button>
+    </div>
+</form>

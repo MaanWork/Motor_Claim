@@ -1,0 +1,197 @@
+<mat-card class="flex-item-left m-1 p-0" style="box-shadow: none; margin-bottom: 5px;">
+    <ng-container *ngIf="PolicyInformation">
+        <app-vehicle-information [VehicleInformation]="PolicyInformation"></app-vehicle-information>
+    </ng-container>
+</mat-card>
+<ng-container *ngIf="GarageEdit" style="margin-bottom: 5px;">
+    <app-loss-accident-file pagefrom="garageComponent" [claimInfo]="GarageEdit"></app-loss-accident-file>
+</ng-container>
+<!-- <mat-card class="my-2 p-0">
+    <ng-container *ngIf="GarageEdit">
+        <app-loss-document-file pagefrom="garageComponent" [claimInfo]="GarageEdit"></app-loss-document-file>
+    </ng-container>
+
+</mat-card> -->
+<form [formGroup]="garageForms">
+
+    <mat-card class="p-0" style="box-shadow: none; margin-bottom: 5px;">
+        <div class="card border-0">
+            <div class="card-header">Garage Information</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row my-2">
+                            <!-- <div class="col-12" *ngIf="approvalSection">
+                                <mat-radio-group aria-label="Select an option" formControlName="GarageStatus">
+                                    <mat-radio-button value="Y">Accept</mat-radio-button>
+                                    <mat-radio-button value="R">Reject</mat-radio-button>
+                                </mat-radio-group>
+                            </div> -->
+                            <div class="col-6 mt-3" *ngIf="garageForms.controls.GarageStatus.value == 'Y'">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Expected Start Date</mat-label>
+                                    <input matInput [matDatepicker]="accidentpicker" formControlName="ExpectedStartsDate">
+                                    <mat-datepicker-toggle matSuffix [for]="accidentpicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #accidentpicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6 mt-3" *ngIf="garageForms.controls.GarageStatus.value == 'Y'">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>No.Of.Days</mat-label>
+                                    <input matInput formControlName="NoOfDays">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 mt-3" *ngIf="(GarageEdit.ApprovedYn!='N' && GarageEdit.ApprovedYn!='CL') && GarageEdit.SubStatus!='GQA'">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Remarks</mat-label>
+                                    <textarea matInput required formControlName="GarageRemarks"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4" *ngIf="garageForms.controls.GarageStatus.value == 'Y'">
+                        <div class="text-center">
+                            <span><b style="color: black;">Upload Quotation</b></span>
+                            <br>
+
+                        </div>
+                        <input style="display: none;" type="file" (change)="onQuotationDocuments($event)" #fileInput>
+                        <mat-card>
+                            <div id="Image_Quotation" (click)="fileInput.click()" class="image-grid" style="
+                                  background-position: center;
+                                  background-repeat: no-repeat;
+                                  background-size: cover;
+                                  height: 150px;
+                                  width: 100%;">
+
+
+                            </div>
+                            <div class="text-center">
+                                <div>
+                                    <span><b style="color: black;">{{filename}}</b></span>
+                                </div>
+                            </div>
+                            <div class="d-flex mt-1" *ngIf="filename">
+                                <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(my['image'+item.documentId],item.fileName)"><i
+                                    class="far fa-eye mx-1"></i></a> -->
+                                <a mat-raised-button class="mx-1" (click)="onDownloadImage()" download><i
+                                    class="fas fa-download mx-1"></i></a>
+                                <a mat-raised-button class="mx-1" (click)="onDeleteDocument()" *ngIf="filename && approvalSection"><i class="far fa-trash-alt"></i></a>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="my-2 text-center p-1" *ngIf="garageForms.controls.GarageStatus.value == 'Y'">
+                    <button (click)="getGarageStatus()" mat-raised-button color="accent">Terms & Conditions</button>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <ng-container *ngIf="((GarageEdit.ApprovedYn!='Y' || GarageEdit.ApprovedYn=='CL') && GarageLoss.SubStatus != 'GQA') || !checkGarageStatus()">
+    <!-- <ng-container *ngIf="(logindata.UserType == 'garage' && !checkGarageStatus()) ||  (logindata.UserType=='surveyor' && (GarageEdit.ApprovedYn=='A' || GarageEdit.ApprovedYn=='N'))"> -->
+        <mat-card class="my-2 p-0"  style="box-shadow: none; margin-bottom: 5px;">
+            <ng-container *ngIf="(GarageEdit.ApprovedYn!='Y' || GarageLoss.SubStatus == 'QS' || GarageLoss.SubStatus == 'CLG' || GarageLoss.SubStatus == 'GQA') && logindata.UserType == 'garage'">
+                <app-loss-dmage-parts [WhoView]="WhoView" pageFrom="garageComponent" approvedSection="garage" [surveyorLoginId]="surveyorLoginId" (DamageListValues)="getDamageListValues($event)" [form]="garageForms" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
+            </ng-container>
+        </mat-card>
+    </ng-container>
+    
+    <ng-container *ngIf="checkGarageStatus() && (GarageEdit.ApprovedYn=='Y' || GarageEdit.ApprovedYn=='CL')">
+    <!-- <ng-container *ngIf="checkGarageStatus() && ((((GarageEdit.ApprovedYn!='N'))) && garageForms.controls.GarageStatus.value == 'Y' && GarageEdit.ApprovedYn!='N' && surveyorLoginId)"> -->
+        <div class="row">
+            <mat-card  [ngClass]="{
+                'col-6 my-2 p-2': userType === 'surveyor' && insuranceId === '100003',
+                'col-12 my-2 p-2': userType !== 'surveyor'
+              }" style="box-shadow: none; margin-bottom: 5px;">
+                <ng-container>
+                    <app-loss-dmage-parts [WhoView]="WhoView" pageFrom="garageComponent" approvedSection="garage" [surveyorLoginId]="surveyorLoginId" (DamageListValues)="getDamageListValues($event)" [form]="garageForms" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
+                </ng-container>
+            </mat-card>
+            <mat-card *ngIf="userType==='surveyor' && insuranceId==='100003'" class="col-6 my-2 p-2"  style="box-shadow: none;">
+                <ng-container>
+                    <app-loss-dmage-parts [WhoView]="WhoView" pageFrom="surveyorComponent" approvedSection="garage" [surveyorLoginId]="surveyorLoginId" (DamageListValues)="getDamageListValues($event)" [form]="surveyorForms" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
+                </ng-container>
+            </mat-card>
+        </div>
+
+    </ng-container>
+    <mat-card class="p-0"  style="box-shadow: none; margin-bottom: 5px;" *ngIf="claimApproveSection && (GarageEdit.ApprovedYn=='Y' || GarageEdit.ApprovedYn=='CL')">
+        <div class="row">
+            <div class="card border-0 col-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="card-header">ClaimOfficer / Assessor Remarks</div>
+                <div class="card-body">
+                    <div class="my-2" *ngIf="logindata.UserType=='garage'">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="infopadding col-lg-3 col-md-3 bg-label">Status</div>
+                                    <div class="infopadding col-lg-9 col-md-9">
+                                        <b>{{garageForms.controls.claimOfficerStatus.value == '' ? 'N/A': getStatusName()}}</b>
+                                    </div>
+                                    <div class="infopadding col-lg-3 col-md-3 mt-2 bg-label">Remarks</div>
+                                    <div class="infopadding col-lg-9 col-md-9 mt-2">
+                                        <b>{{garageForms.controls.claimOfficerRemarks.value == '' ? 'N/A': garageForms.controls.claimOfficerRemarks.value}}</b>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row my-2" *ngIf="logindata.UserType!='garage'">
+                        <div class="col-6">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Select an option</mat-label>
+                                <mat-select formControlName="claimOfficerStatus" required>
+                                    <mat-option value="">Select Status</mat-option>
+                                    <mat-option value="CL"> Clarification Required</mat-option>
+                                    <mat-option value="CA"> Accept</mat-option>
+                                    <mat-option value="CR"> Reject</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row my-2 " *ngIf="logindata.UserType!='garage'">
+                        <div class="col-6">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Remarks</mat-label>
+                                <textarea matInput required formControlName="claimOfficerRemarks"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-0 col-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="card-header">Garage Remarks</div>
+                <div class="card-body">
+                    <!-- <div class="row my-2" *ngIf="GarageLoss.SubStatus != 'CLG' && GarageLoss.SubStatus != 'QS'">
+                        <div class="col-12  col-md-8 col-lg-8 col-xl-8">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Select an option</mat-label>
+                                <mat-select formControlName="garageApproveStatus" required>
+                                    <mat-option value="">Select Status</mat-option>
+                                    <mat-option value="CL"> Clarification Required</mat-option>
+                                    <mat-option value="CA"> Accept</mat-option>
+                                    <mat-option value="CR"> Reject</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+                    <div class="row my-2 ">
+                        <div class="col-12  col-md-8 col-lg-8 col-xl-8">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Remarks</mat-label>
+                                <textarea matInput required formControlName="garageApproveRemarks"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </mat-card>
+    <div class="my-2 text-center p-1">
+        <button class="mx-2" mat-raised-button color="warn" (click)="back()">Back</button>
+        <button class="mx-2" mat-raised-button color="accent" (click)="saveGarageDetails('Save')">Save</button>
+        <button class="mx-2" type="submit" mat-raised-button color="primary" (click)="saveGarageDetails('Submit')" *ngIf="logindata.UserType == 'garage' || (logindata.UserType=='surveyor' && (GarageEdit.ApprovedYn=='Y' || GarageEdit.ApprovedYn=='CL'))">Submit</button>
+    </div>
+</form>

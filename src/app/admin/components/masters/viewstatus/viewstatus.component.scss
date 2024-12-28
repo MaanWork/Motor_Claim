@@ -1,0 +1,25 @@
+.maan-grid-column-1 {
+    min-width: 700px;
+    min-height: 300px;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+.customer-grid .maan-grid-item {
+    overflow: hidden;
+    /* border: 3px solid var(--theme1); */
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 24px 100px 0px;
+}
+
+.customer-grid .maan-grid-item-title {
+    padding: .5rem;
+    font: bolder;
+    font-size: 17px;
+    background-color: whitesmoke;
+    color: black;
+    font-weight: 600;
+}
+
+.customer-grid .maan-grid-item-body {
+    padding: 10px !important;
+}

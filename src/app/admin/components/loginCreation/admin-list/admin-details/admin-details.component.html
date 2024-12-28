@@ -1,0 +1,146 @@
+<div class="card">
+    <div class="card-header">ADMIN MASTER</div>
+    <div class="card-body">
+        <form [formGroup]="AdminForm">
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>User Type</mat-label>
+                        <input matInput type="text" formControlName="UserType" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" formControlName="Username" required />
+                        <mat-error *ngIf="AdminForm.get('Username').errors">
+                            {{AdminForm.controls['Username'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Login Id</mat-label>
+                        <input matInput type="text" formControlName="LoginId" required />
+                        <mat-error *ngIf="AdminForm.get('LoginId').errors">
+                            {{AdminForm.controls['LoginId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <label><b>Inurance Company</b></label><br> {{insuranceName}}
+                </div>
+             
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Branch</mat-label>
+                        <mat-select formControlName="BranchCode" name="BranchCode" required multiple>
+                            <mat-select-trigger>
+                                {{(AdminForm.controls.BranchCode.value?.length === 0 ? '' : AdminForm.controls.BranchCode.value[0])| branchbyname |async}}
+                                <span *ngIf="AdminForm.controls.BranchCode.value?.length > 1" class="example-additional-selection">
+                                    (+{{AdminForm.controls.BranchCode.value.length - 1}}
+                                    {{AdminForm.controls.BranchCode.value?.length === 2 ? 'other' : 'others'}})
+                                </span>
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let option of filteredBranchList | async" [value]="option.Code">
+                                {{option.CodeDesc}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core Login Id</mat-label>
+                        <input matInput type="text" formControlName="CoreLoginId" maxlength="12" appNumbersOnly required/>
+                        <mat-error *ngIf="AdminForm.get('CoreLoginId').errors">
+                            {{AdminForm.controls['CoreLoginId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+    
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput type="text" formControlName="UserMail" required />
+                        <mat-error *ngIf="AdminForm.get('UserMail').errors">
+                            {{AdminForm.controls['UserMail'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput type="text" formControlName="MobileNumber" required />
+                        <mat-error *ngIf="AdminForm.get('MobileNumber').errors">
+                            {{AdminForm.controls['MobileNumber'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="row my-2">
+    
+                <ng-container *ngIf="InsertMode == 'Insert'">
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" formControlName="Password" required />
+                            <mat-error *ngIf="AdminForm.get('Password').errors">
+                               Please Enter the Password
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field appearance="fill" class="mat-form-width">
+                            <mat-label>Re-Password</mat-label>
+                            <input matInput type="password" formControlName="RePassword" required />
+                            <mat-error *ngIf="AdminForm.get('RePassword').errors">
+                                Please Enter the RePassword
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+            </div>
+            <ng-container *ngIf="InsertMode == 'Update'">
+                <div class="row my-2">
+                    <div class="col-4">
+                        <div class="py-2 text-primary">Do You Want Change Password ?</div>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="ChangePassword" [ngModelOptions]="{standalone: true}">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <ng-container *ngIf="ChangePassword == 'Y'">
+                        <div class="col-4">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>New Password</mat-label>
+                                <input matInput type="password" [(ngModel)]="NewPassword" required [ngModelOptions]="{standalone: true}" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Re-New Password</mat-label>
+                                <input matInput type="password" [(ngModel)]="ReNewPassword" required [ngModelOptions]="{standalone: true}" />
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <div class="justify-content-center" style="text-align:center;">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onsave()" style="margin-left:20px;">Submit</button>
+            </div>
+        </form>
+    </div>
+   
+
+</div> 

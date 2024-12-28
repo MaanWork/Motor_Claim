@@ -1,0 +1,452 @@
+<mat-card>
+    <mat-expansion-panel hideToggle [expanded]="panelOpen">
+        <mat-expansion-panel-header>
+            <!--Search Title-->
+            <mat-panel-title>
+                <h6 class="admin-title-header"><i class="fas fa-search"></i><span>Search</span></h6>
+            </mat-panel-title>
+            <!--Insurance Company Name-->
+            <mat-panel-description class="admin-grid-header">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{PolicyChassisForm.value.InsuranceId}}</b>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <form [formGroup]="PolicyChassisForm">
+            <div class="row my-3">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <select [(ngModel)]="searchBy" [ngModelOptions]="{standalone: true}" class="form-select">
+                        <option value="">Search By *</option>
+                        <option value='Chassis Number'>Chassis Number</option>
+                        <option value='Policy Number'>Policy Number</option>
+                        <option value='Claim Number'>Claim Number</option>
+                        <option value='Claim Reference Number'>Claim Reference Number</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="searchValue">
+                </div>
+                <div class="col-12 col-md-4 col-lg-2 text-center submit">
+                    <button mat-raised-button [disabled]="!searchValue" color="primary"
+                        (click)="onSearchDetails()">Submit</button>
+                </div>
+                <div class="col-12 col-md-4 col-lg-1 text-center clear">
+                    <button mat-raised-button  color="primary"
+                        (click)="onClearDetails();">Clear</button>
+                </div>
+            </div>
+        </form>
+        <!--Table Section-->
+        <div>
+            <div class="card">
+                <p-table  [value]="TableData" [tableStyle]="{ 'min-width': '50rem' }" class="Data">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="tablehead">MORE VIEW</th>
+                            <th class="tablehead" pSortableColumn="PolicyNo">POLICY NO<p-sortIcon field="PolicyNo"></p-sortIcon></th>
+                            <th class="tablehead" pSortableColumn="Contactpername">ASSURED NAME<p-sortIcon field="Contactpername"></p-sortIcon></th>
+                            <th class="tablehead" pSortableColumn="Product">PRODUCT<p-sortIcon field="Product"></p-sortIcon></th>
+                            <th class="tablehead" pSortableColumn="PolicyFrom">POLICY FROM<p-sortIcon field="PolicyFrom"></p-sortIcon></th>
+                            <th class="tablehead" pSortableColumn="PolicyTo">POLICY TO<p-sortIcon field="PolicyTo"></p-sortIcon></th>
+                            <th class="tablehead">ACTIONS</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product let-index>
+                        <tr>
+                            <td class="Arrow">
+                                <!-- <i class="fa-solid fa-chevron-down chevrondown" style="display:none;"(click)="subgridchevrondown()"></i> -->
+                                <i class="fa-solid fa-chevron-up chevronup" (click)="ClaimDetailsPolicychassis(product,index)"></i>
+                            </td>
+                            <td>{{ product?.PolicyInfo?.PolicyNo }}</td>
+                            <td>{{ product?.PolicyInfo?.Contactpername }}</td>
+                            <td class="text-center">{{ product?.PolicyInfo?.Product }}</td>
+                            <td class="text-center">{{ product?.PolicyInfo?.PolicyFrom }}</td>
+                            <td class="text-center">{{ product?.PolicyInfo?.PolicyTo }}</td>
+                            <td class="text-center">
+                                <button class="eyeicon" (click)="htmlcard(mymodal,product,index)"><i
+                                        class="fas fa-eye eye"></i></button>
+                            </td>
+                        </tr>  
+                    </ng-template>
+                </p-table>
+                <!--Claim Number Table-->
+                <table class="dataone">
+                    <thead>
+                        <tr>
+                            <th class="tablehead">POLICY NO</th>
+                            <th class="tablehead">ASSURED NAME</th>
+                            <th class="tablehead">CLAIM NO</th>
+                            <th class="tablehead">CLAIM DATE</th>
+                            <th class="tablehead">ACCIDENT DATE</th>
+                            <th class="tablehead">CREATED BY</th>
+                            <th class="tablehead">CLAIM REFNO</th>
+                            <th class="tablehead">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-size: 0.9rem;">{{ PolicyNumberClaim }}</td>
+                            <td style="font-size: 0.9rem;">{{ AssuredName}}</td>
+                            <td class="text-center" style="font-size: 0.9rem;">{{ ClaimNo }}</td>
+                            <td class="text-center" style="font-size: 0.9rem;">{{AssignedDate}}</td>
+                            <td class="text-center" style="font-size: 0.9rem;">{{ Accidentdate }}</td>
+                            <td class="text-center" style="font-size: 0.9rem;">{{ CreatedBy}}</td>
+                            <td class="text-center" style="font-size: 0.9rem;">{{ Claimrefno }}</td>
+                            <td class="text-center" *ngIf="ClaimNo != '' || ClaimNo != null || ClaimNo != undefined" >
+                                <button class="eyeicon" (click)="claimDetails(ClaimNo,mymodalclaim)"><i
+                                        class="fas fa-eye eye"></i></button>
+                            </td>
+                        </tr>  
+                    </tbody>
+                </table>
+  
+                <p-table [value]="ClaimDetails" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }" style="display:none" class="subTable">
+                    <ng-template pTemplate="header">
+                        <tr style="position: sticky;top: 0px;">
+                            <th class="sub_Table" pSortableColumn="ClaimNo">CLAIM NO<p-sortIcon field="ClaimNo"></p-sortIcon></th>
+                            <th class="sub_Table" pSortableColumn="ClaimDate">CLAIM DATE<p-sortIcon field="ClaimDate"></p-sortIcon></th>
+                            <th class="sub_Table" pSortableColumn="DateOfIncident">ACCIDENT DATE<p-sortIcon field="DateOfIncident"></p-sortIcon></th>
+                            <th class="sub_Table" pSortableColumn="CreatedBy">CREATED BY<p-sortIcon field="CreatedBy"></p-sortIcon></th>
+                            <th class="sub_Table" pSortableColumn="Claimrefno">CLAIM REFNO<p-sortIcon field="Claimrefno"></p-sortIcon></th>
+                            <th class="sub_Table">ACTION</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-claimdetail let-index>
+                        <tr>
+                            <td class="text-center">{{ claimdetail?.ClaimNo}}</td>
+                            <td class="text-center">{{ claimdetail?.ClaimDate}}</td>
+                            <td class="text-center">{{ claimdetail?.DateOfIncident}}</td>
+                            <td class="text-center">{{ claimdetail?.CreatedBy}}</td>
+                            <td class="text-center">{{ claimdetail?.Claimrefno}}</td>
+                            <td class="text-center">
+                                <button class="eyeicon"  color="primary" (click)="claimlossdetailsbyclaimno(claimdetail,mymodalclaimloss,index)"><i class="fas fa-file-circle-exclamation" style="position: relative;bottom: 0.2rem;left: 0.1rem;color: white;"></i></button>
+                            </td>
+                        </tr>  
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" *ngIf="ClaimDetails.length < 0">
+                        <td>
+                            <span class="norecord">No Records Found</span>
+                        </td>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <ng-template #mymodal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Claim
+                    Information</span></h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true" class="cross">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="maan-grid-item popover-card customTemplatess shawdowcustom">
+                <mat-dialog-content class="mat-typography">
+                    <mat-tab-group>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <i class="far fa-list-alt"></i> Policy Information
+                            </ng-template>
+                            <div class="card my-1">
+                                <div class="card-header">
+                                    Policy Information
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2">
+                                                <label><b>Customer Name</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4" style="position: relative;left: 2rem;">
+                                                <span>{{RowTableData?.PolicyInfo?.Contactpername}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2">
+                                                <label><b>Policy Number</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.PolicyInfo?.PolicyNo}}</span>
+                                            </div> 
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2">
+                                                <label><b>Start Date</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.PolicyInfo?.PolicyFrom}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2">
+                                                <label><b>End Date</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4" style="position: relative;left: 2rem;">
+                                                <span>{{RowTableData?.PolicyInfo?.PolicyTo}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2">
+                                                <label><b>Product Code</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.PolicyInfo?.ProductCode}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Product</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4" style="position: relative;left: 2rem;">
+                                                <span>{{RowTableData?.PolicyInfo?.ProductDesc}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2">
+                                                <label><b>Civil Id</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.PolicyInfo?.Civilid}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Broker Code</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4" style="position: relative;left: 2rem;">
+                                                <span>{{RowTableData?.PolicyInfo?.Customer}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Department Code</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.PolicyInfo?.Department}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Outstanding Amount</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4" style="position: relative;left: 2rem;">
+                                                <span>{{RowTableData?.PolicyInfo?.OutstandingAmt}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2">
+                                                <label><b>Currency Code</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.PolicyInfo?.CurrencyCode}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Division Code</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4" style="position: relative;left: 2rem;">
+                                                <span>{{RowTableData?.PolicyInfo?.Divisioncode}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Under Writter Year</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.PolicyInfo?.Uwyear}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <i class="far fa-list-alt"></i> Vehicle Information
+                            </ng-template>
+                            <div class="card my-1">
+                                <div class="card-header">
+                                    Vehicle Information
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Chassis Number</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.VehicleInfo?.ChassisNo}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Registration No</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.VehicleInfo?.VechRegNo}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Vehicle Make</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.VehicleInfo?.Vehiclemodeldesc}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Vehicle Body</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.VehicleInfo?.Vehicletypedesc}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Manufacture Year</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.VehicleInfo?.Manufactureyear}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Sum Insured</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.VehicleInfo?.Suminsured}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Seating capacity</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.VehicleInfo?.Seating}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2" style="white-space: nowrap;">
+                                                <label><b>Vehicle CC</b></label>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4">
+                                                <span>{{RowTableData?.VehicleInfo?.Vehiclecc}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                </mat-dialog-content>
+            </div>
+        </div>
+        <div class="modal-footer" style="box-shadow: inset 0px 0px 0px #b8b9be,inset -3px 0px 0px #FFE!important;">
+            <button type="button" class="custom-btn btn-5 col-lg-2 spancommon span_font_size"
+                (click)="modal.close('Save click')">Close</button>
+        </div>
+    </ng-template>
+    <!--Claim Losss Details Modal Popup-->
+    <ng-template #mymodalclaimloss let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Claim-Loss Details
+                    Information</span></h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true" class="cross">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="maan-grid-item popover-card customTemplatess shawdowcustom">
+                <p-table [value]="ClaimLossDetails" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="tableheadclaim" pSortableColumn="PartyNo">PARTY NO<p-sortIcon field="PartyNo"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="PartyName">PARTY NAME<p-sortIcon field="PartyName"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="Contactpername">LOSS NO<p-sortIcon field="Contactpername"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="Product">LOSS DESCRIPTION<p-sortIcon field="Product"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="PolicyFrom">TOTAL PAYABLE<p-sortIcon field="PolicyFrom"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="PolicyTo">LOSS ENTRY DATE<p-sortIcon field="PolicyTo"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="PolicyTo">REMARKS<p-sortIcon field="PolicyTo"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="PolicyTo">TOTAL PRICE<p-sortIcon field="PolicyTo"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="PolicyTo">CURRENT STATUS<p-sortIcon field="PolicyTo"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-claimlossdetails let-index>
+                        <tr>  
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.PartyNo}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.PartyName}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.LossNo}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.Losstypedescp }}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.TotalPayable}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.EntryDate }}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.Remarks }}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.TotalPrice }}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.Statusdescrip}}</td>
+                        </tr>  
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="modal-footer" style="box-shadow: inset 0px 0px 0px #b8b9be,inset -3px 0px 0px #FFE!important;">
+            <button type="button" class="custom-btn btn-5 col-lg-2 spancommon span_font_size"
+                (click)="modal.close('Save click')">Close</button>
+        </div>
+    </ng-template>
+    <!--Claim Number Details Popup-->
+    <ng-template #mymodalclaim let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Claim Details
+                    Information</span></h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true" class="cross">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="maan-grid-item popover-card customTemplatess shawdowcustom">
+                <p-table [value]="Claim_Details" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="tableheadclaim" pSortableColumn="PartyNo">PARTY NO<p-sortIcon field="PartyNo"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="PartyName">PARTY NAME<p-sortIcon field="PartyName"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="LossNo">LOSS NO<p-sortIcon field="LossNo"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="LosstypeId">LOSS TYPE ID<p-sortIcon field="LosstypeId"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="Losstypedescp">LOSS DESCRIPTION<p-sortIcon field="Losstypedescp"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="TotalPayable">TOTAL PAYABLE<p-sortIcon field="TotalPayable"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="EntryDate">LOSS ENTRY DATE<p-sortIcon field="EntryDate"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="Remarks">REMARKS<p-sortIcon field="Remarks"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="TotalPrice">TOTAL PRICE<p-sortIcon field="TotalPrice"></p-sortIcon></th>
+                            <th class="tableheadclaim" pSortableColumn="Statusdescrip">CURRENT STATUS<p-sortIcon field="Statusdescrip"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-claimlossdetails let-index>
+                        <tr>  
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.PartyNo}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.PartyName}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.LossNo}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.LosstypeId}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.Losstypedescp }}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.TotalPayable}}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.EntryDate }}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.Remarks }}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.TotalPrice }}</td>
+                            <td class="text-center tablebodyclaim">{{ claimlossdetails?.Statusdescrip}}</td>
+                        </tr>  
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" let-columns *ngIf="Claim_Details.length == 0">
+                        <tr>
+                          <td>
+                             Claim Loss Not Available
+                          </td>
+                        </tr>
+                      </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="modal-footer" style="box-shadow: inset 0px 0px 0px #b8b9be,inset -3px 0px 0px #FFE!important;">
+            <button type="button" class="custom-btn btn-5 col-lg-2 spancommon span_font_size"
+                (click)="modal.close('Save click')">Close</button>
+        </div>
+    </ng-template>
+
+</mat-card>

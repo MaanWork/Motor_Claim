@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>Track Your Loss</h2>
+<mat-dialog-content class="mat-typography">
+
+    <mat-card>
+        <ng-container *ngFor="let item of statusList;let i=index;">
+            <div class="row">
+                <div class="col-2">
+                   <div class="round-shape">
+                       <div class="icon-middle">
+                        <div id="outerContainer">
+                            <div id="container">
+                              <div class="item">
+                                <span class="fa-stack fa-3x">
+                                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                                    <i class="fas fa-cogs fa-stack-1x text-light" *ngIf="showLossStatus['status'+item.Code] == false"></i>
+                                    <i class="fas fa-check-circle fa-stack-1x text-light" *ngIf="showLossStatus['status'+item.Code] == true"></i>
+                                </span>
+                              </div>
+                              <div class="circle" style="animation-delay: -3s" *ngIf="currentStatus == item.Code"></div>
+                              <div class="circle" style="animation-delay: -2s" *ngIf="currentStatus == item.Code"></div>
+                              <div class="circle" style="animation-delay: -1s" *ngIf="currentStatus == item.Code"></div>
+                              <div class="circle" style="animation-delay: 0s" *ngIf="currentStatus == item.Code"></div>
+                            </div>
+                          </div>
+
+                       </div>
+
+                   </div>
+                </div>
+                <div class="col-4 margin-left-minus">
+                    <div class="middle-box">
+                          <div class="middle-line">
+                            <h4 class="m-0 p-0 text-center">{{item.CodeDesc}}</h4>
+                          </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                   <div class="left-box">
+
+                   </div>
+                </div>
+                <div class="col-12" *ngIf="i != statusList.length-1">
+                    <div class="vertical-box">
+                       <div class="vertical-line">
+                       </div>
+                    </div>
+                </div>
+           </div>
+        </ng-container>
+
+
+    </mat-card>
+</mat-dialog-content>

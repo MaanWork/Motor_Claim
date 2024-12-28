@@ -1,0 +1,146 @@
+<section id="header" class="">
+    <nav class="navbar navbar-expand-sm bg-motor navbar-motor">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/Images/logo-2.png" width="170" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" > <i class="fas fa-user-tie"></i> {{MobileNumber}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="onLogOut()"> <i class="fa fa-sign-out"></i> Logout</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/Login/Assessor']" routerLinkActive="router-link-active"> <i class="fas fa-user-tie"></i> Assessor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/Login/Garage']" routerLinkActive="router-link-active"> <i class="fas fa-car"></i> Garage</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+</section>
+<section id="hero">
+    <mat-card class="col-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card-header d-flex justify-content-between customised-header" style="padding-left: 5px;padding-right: 5px;margin-left: 5px;margin-right: 5px;margin-top: 5px;">
+            <div style="line-height: 30px;" *ngIf="claimDetails?.ClaimInfo?.ClaimNo">
+                Claim Number:{{claimDetails?.ClaimInfo?.ClaimNo}}
+            </div>
+            <div style="line-height: 30px;" *ngIf="claimDetails?.ClaimInfo?.ClaimRefNo">
+                Claim Ref No - {{claimDetails?.ClaimInfo?.ClaimRefNo}}
+            </div>
+        </div>
+    </mat-card>
+    <div class="row">
+        <mat-card class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <ng-container *ngIf="claimDetails">
+                <app-policy-information [PolicyInformation]="claimDetails" [panelOpen]="panelOpen"></app-policy-information>
+            </ng-container>
+        </mat-card>
+        <mat-card class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <ng-container *ngIf="claimDetails">
+                <app-customer-information [CustomerInformation]="claimDetails" [panelOpen]="panelOpen"></app-customer-information>
+            </ng-container>
+        </mat-card>
+        <mat-card class="col-12 col-md-6 col-lg-6 col-xl-6">
+            <ng-container *ngIf="claimDetails">
+                <app-vehicle-information [VehicleInformation]="claimDetails"></app-vehicle-information>
+            </ng-container>
+        </mat-card>
+        <!-- <mat-card class="col-12 col-md-6 col-lg-6 col-xl-6" *ngIf="coInsuranceData.length!=0">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between p-1">
+                    <div style="line-height: 30px;">
+                        Co-Insurance Details
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ng-container *ngIf="coInsuranceData.length==0">
+                            <div class="text-center">
+                                No Data Available
+                            </div>
+                    </ng-container>
+                    <ul class="list-group list-group-flush" *ngIf="coInsuranceData.length!=0">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 bg-label text-center">Insurance Company</div>
+                                <div class="col-lg-6 col-md-6 bg-label text-center">Shared &nbsp; (%)</div>
+                            </div>
+                        </li>
+                        <li class="list-group-item" *ngFor="let entry of coInsuranceData">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 bg-value" >{{entry.CompanyName}}</div>
+                                <div class="col-lg-6 col-md-6 bg-value text-center">{{entry.SharePercent}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </mat-card> -->
+        <mat-card class="col-12 col-md-6 col-lg-6 col-xl-6" *ngIf="reserveDetails">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between p-1">
+                    <div style="line-height: 30px;">
+                        Reserve Amount Details
+                    </div>
+                    <div style="line-height: 30px;">
+                        Currency({{reserveDetails?.CurrencyCode}})
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 bg-label text-center"><b>Reserve Amount</b></div>
+                                <div class="col-lg-4 col-md-4 bg-label text-center"><b>Total Paid</b></div>
+                                <div class="col-lg-4 col-md-4 bg-label text-center"><b>Balance</b></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 bg-value text-center" >{{reserveDetails?.ReserveAmount}}</div>
+                                <div class="col-lg-4 col-md-4 bg-value text-center">{{reserveDetails?.TotalPaidAmount}}</div>
+                                <div class="col-lg-4 col-md-4 bg-value text-center">{{reserveDetails?.BalanceReserveAmount}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card class="col-12 col-md-12 col-lg-12 col-xl-12 m-0 p-0">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between p-1">
+                    <div style="line-height: 30px;">
+                        Claim Information
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="infopadding col-lg-3 col-md-3 bg-label text-center">Intimated Date<br>{{claimInfo?.ClaimIntimatedDate == null ? 'N/A': claimInfo?.ClaimIntimatedDate}}</div>
+                                <div class="infopadding col-lg-3 col-md-3 bg-value text-center">Approved Date<br>{{claimInfo?.ClaimApprovedDate == null ? 'N/A': claimInfo?.ClaimApprovedDate}}</div>
+                                <div class="infopadding col-lg-3 col-md-3 bg-value text-center">Driven By<br>{{claimInfo?.DrivenBy == null ? 'N/A': claimInfo?.DrivenBy}}</div>
+                                <div class="infopadding col-lg-3 col-md-3 bg-value text-center">Mobile No<br>{{claimInfo?.CustMobCode == null ? 'N/A': claimInfo?.CustMobCode}}&nbsp;{{claimInfo?.Contactno}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="row mt-2">
+                        <div class="col-10 col-lg-10 col-md-10 col-sm-10">
+                           <ng-container *ngFor="let loss of ">
+                                
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    
+</section>

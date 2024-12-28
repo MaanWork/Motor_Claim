@@ -1,0 +1,18 @@
+mat-form-field {
+  width: 100px !important;
+  margin: 2px !important;
+}
+
+.headerCell {
+  background-color: #d3e9fb;
+  color: #362c82;
+}
+
+.tableCell {
+  padding: 10px 6px;
+  width: 400px;
+}
+
+.fieldInCell {
+  min-width: 100%;
+}

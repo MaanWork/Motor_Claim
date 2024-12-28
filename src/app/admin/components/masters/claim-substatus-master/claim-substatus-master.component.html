@@ -1,0 +1,60 @@
+<mat-card>
+    <mat-expansion-panel hideToggle [expanded]="panelOpen">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> CLAIM SUBSTATUS MASTER</h6>
+            </mat-panel-title>
+            <mat-panel-description class="admin-grid-header">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{ClaimListForm.value.InsuranceId}}</b>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!-- <div class="row">
+            <div class="col-3 offset-9 mr-5" *ngIf="ClaimListForm.controls.Usertype.value !=''">
+                <button mat-raised-button color="warn" (click)="onAddNew()">
+                  ADD NEW CLAIM SUBSTATUS
+                </button>
+            </div>
+        </div> -->
+        <form [formGroup]="ClaimListForm">
+
+            <div class="row my-3">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>UserType</mat-label>
+                        <input type="text" placeholder="Select Usertype" matInput formControlName="Usertype" [matAutocomplete]="auto1">
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeUserTypeList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredUserTypeComp | async" [value]="option.Usertypedesc">
+                                {{option.Usertypedesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="ClaimListForm.get('Usertype').errors">
+                            {{ClaimListForm.controls['Usertype'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)"></app-admin-table>
+        </ng-container>
+    </mat-expansion-panel>
+    <ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+            <div class="row mt-3">
+                <div class="col-md-4 col-lg-4 col-xl-4 offset-1">
+                    <label>Claim Status</label><br> {{FormGroupData.controls.ClaimOfficerStatusDesc.value}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-4 offset-1">
+                    <label>Claim Main Sub Status</label><br> {{FormGroupData.controls.SubstatusDesc.value}}
+                </div>
+            </div>
+            <ng-container>
+                <app-admin-table [cols]="columnHeader2" [data]="relatedStatusList" (onAction)="onActionHandler($event)" (onChangeCheckBox)="onChangeCheckBox($event,row)"></app-admin-table>
+            </ng-container>
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onSaveCityDetials()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>
+</mat-card>

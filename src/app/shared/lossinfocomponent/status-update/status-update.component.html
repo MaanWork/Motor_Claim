@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Update Your Status</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-card class="my-2">
+        <div class="my-2">
+            <div class="my-2">Do You Want Update Your Loss Status ?</div>
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="statusYN">
+                <mat-radio-button value="Yes">Yes</mat-radio-button>
+                <mat-radio-button value="No" mat-dialog-close>No</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div *ngIf="statusYN">
+            <div class="row">
+                <div class="col-6 offset-md-3">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Select</mat-label>
+                        <input type="text" placeholder="Pick one" aria-label="Number" matInput
+                            [formControl]="statusValue" [matAutocomplete]="auto" />
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onStatusSelect($event.option.value)">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.CodeDesc">
+                                    {{ option.CodeDesc }}
+                                </mat-option>
+                            </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-6 offset-md-3">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Remarks</mat-label>
+                        <textarea matInput [formControl]="statusUpdateRemarks"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-2 text-center p-1">
+            <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>
+                Close
+            </button>
+            <button class="mx-2" mat-raised-button color="accent" (click)="onUpdateStatus('save')">
+                Save
+            </button>
+            <button class="mx-2" mat-raised-button color="primary" (click)="onUpdateStatus('submit')">
+                Submit
+            </button>
+        </div>
+    </mat-card>
+</mat-dialog-content>

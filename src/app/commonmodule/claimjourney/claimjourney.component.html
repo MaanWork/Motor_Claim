@@ -1,0 +1,241 @@
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel [expanded]="panelOpen">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Search Your Policy Claim </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field appearance="fill" class="mat-form-width">
+              <mat-label>Select</mat-label>
+              <mat-select formControlName="selectedValue" name="search">
+                <mat-option *ngFor="let search of searchDropdown" [value]="search.Code">
+                  {{ search.CodeDesc }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field appearance="fill" class="mat-form-width">
+              <mat-label></mat-label>
+              <input matInput formControlName="searchvalue" />
+            </mat-form-field>
+          </div>
+          <div class="col-6 pt-2">
+            <button class="mx-1" mat-raised-button color="primary" [disabled]="!searchForm.valid">
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="panelOpen" *ngIf="policyInformation != undefined">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Claim Information by Your Policy Number
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+      <table class="table">
+        <thead class="table-success">
+          <tr>
+            <th>Policy No</th>
+            <th>Policy Period</th>
+            <th>Product</th>
+            <th>Sum Insured</th>
+            <th>Make-Model</th>
+            <th>Year Of Manufacture</th>
+            <th>Chassis No</th>
+            <th>No of Claim</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Policy No">
+              {{
+              policyInformation?.PolicyInfo?.PolicyNo == null
+              ? "N/A"
+              : policyInformation?.PolicyInfo?.PolicyNo
+              }}
+            </td>
+            <td data-label="Policy Period">
+              ({{ policyInformation?.PolicyInfo?.PolicyFrom }}-
+              {{ policyInformation?.PolicyInfo?.PolicyTo }})
+            </td>
+
+            <td data-label="Product">
+              {{
+              policyInformation?.PolicyInfo?.ProductDesc == null
+              ? "N/A"
+              : policyInformation?.PolicyInfo?.ProductDesc
+              }}
+            </td>
+            <td data-label="Sum Insured">
+              {{
+              policyInformation?.VehicleInfo?.Suminsured == null
+              ? "N/A"
+              : policyInformation?.VehicleInfo?.Suminsured
+              }}
+            </td>
+            <td data-label="Make-Model">
+              {{
+              policyInformation?.VehicleInfo?.Vehiclemakemodel == null
+              ? "N/A"
+              : policyInformation?.VehicleInfo?.Vehiclemakemodel
+              }}
+              -
+              {{
+              policyInformation?.VehicleInfo?.Vehiclemodeldesc == null
+              ? "N/A"
+              : policyInformation?.VehicleInfo?.Vehiclemodeldesc
+              }}
+            </td>
+            <td data-label="Yom">
+              {{
+              policyInformation?.PolicyInfo?.Uwyear == null
+              ? "N/A"
+              : policyInformation?.PolicyInfo?.Uwyear
+              }}
+            </td>
+            <td data-label="Chassis No">
+              {{
+              policyInformation?.VehicleInfo?.ChassisNo == null
+              ? "N/A"
+              : policyInformation?.VehicleInfo?.ChassisNo
+              }}
+            </td>
+            <td data-label="No of Claim">
+              {{
+              policyInformation?.CustomerInfo?.NoClaimRegistered == null
+              ? "N/A"
+              : policyInformation?.CustomerInfo?.NoClaimRegistered
+              }}
+            </td>
+            <td data-label="Option">
+              <button mat-raised-button color="primary" (click)="onGoPolicyDetails()">
+                Go <i class="fas fa-long-arrow-alt-right px-2"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="panelOpen" *ngIf="claimInformation != undefined">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Claim Information by Your Claim Number
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+      <table class="table">
+        <thead class="table-success">
+          <tr>
+            <th>Policy No</th>
+            <th>Policy Period</th>
+            <th>Assured Name</th>
+            <th>Product</th>
+            <th>Sum Insured</th>
+            <th>Make-Model</th>
+            <th>YOM</th>
+            <th>TCF No</th>
+            <th>Chassis No</th>
+            <th>No of Claim</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Policy No">
+              {{
+              claimInformation?.PolicyNo == null
+              ? "N/A"
+              : claimInformation?.PolicyNo
+              }}
+            </td>
+            <td data-label="Policy Period">
+              {{ claimInformation?.PolicyFrom }} -
+              {{ claimInformation?.PolicyTo }}
+            </td>
+            <td data-label="Assured Name">
+              {{
+              claimInformation?.AssuredName == null
+              ? "N/A"
+              : claimInformation?.AssuredName
+              }}
+            </td>
+            <td data-label="Product">
+              {{
+              claimInformation?.Product == null
+              ? "N/A"
+              : claimInformation?.Product
+              }}
+            </td>
+            <td data-label="Sum Insured">
+              {{
+              claimInformation?.Suminsured == null
+              ? "N/A"
+              : claimInformation?.Suminsured
+              }}
+            </td>
+            <td data-label="Make-Model">
+              {{
+              claimInformation?.Vehiclemakemodel == null
+              ? "N/A"
+              : claimInformation?.Vehiclemakemodel
+              }}
+            </td>
+            <td data-label="Yom">
+              {{
+              claimInformation?.Uwyear == null
+              ? "N/A"
+              : claimInformation?.Uwyear
+              }}
+            </td>
+            <td data-label="Tcf No">N/A</td>
+            <td data-label="Chassis No">
+              {{
+              claimInformation?.ChassisNo == null
+              ? "N/A"
+              : claimInformation?.ChassisNo
+              }}
+            </td>
+            <td data-label="No of Claim">
+              <span class="badge badge-primary">
+                {{
+                claimDetailsByPolicyNO?.NoClaimRegistered == null
+                ? "N/A"
+                : claimDetailsByPolicyNO?.NoClaimRegistered
+                }}
+              </span>
+            </td>
+            <td data-label="Option">
+              <button mat-raised-button color="primary" (click)="onGoPolicyDetails()">
+                Go<i class="fas fa-long-arrow-alt-right ml-1"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<mat-card class="mt-2" *ngIf="onShowCondition()">
+  <mat-card class="font-weight-bolder">
+    <i class="far fa-folder-open mx-2"></i>Alloted claim Loss
+  </mat-card>
+
+  <ng-container *ngIf="tableData">
+    <app-data-table (GetClaimLossDetails)="GetClaimLossDetails($event)" [tableData]="tableData"
+      [columnHeader]="columnHeader"></app-data-table>
+  </ng-container>
+  <ng-container *ngIf="!tableData">
+    <app-loader></app-loader>
+  </ng-container>
+</mat-card>

@@ -1,0 +1,823 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+:root {
+    --ourcolor: #362c82  !important;
+    --ourcolor2: #e31c23 !important;
+    --labelboxcolor: #27a2db !important;
+    --inputboxcolor: #e1e6e9 !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none  !important;
+    margin: 0  !important;
+}
+
+html,
+body {
+    margin: 0 !important;
+    font: small/ 1.4 Arial, Helvetica, sans-serif !important;
+    font-size: 14px !important;
+    height: 100% !important;
+}
+
+.mat-card {
+    font: small/ 1.4 Arial, Helvetica, sans-serif !important;
+    padding: 16px !important;
+    /* font-weight: 600 !important; */
+}
+
+.float-right {
+    float: right !important;
+}
+
+.font-bold-700 {
+    font-weight: 700 !important;
+}
+
+.material-shadow {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px !important;
+}
+
+.menu-mat-toolbar {
+    background-color: white !important;
+}
+mat-card{
+    padding: 16px !important;
+  }
+.new-notification-center {
+    padding-top: 20px !important;
+}
+
+.main-content {
+    margin-top: 70px !important;
+    background-color: white;
+}
+
+.header-card {
+    background-color: powderblue !important;
+    font-size: 13px !important;
+}
+
+.example-sidenav {
+    padding-top: 5px !important;
+}
+
+.new-notification-center.badge {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+}
+
+.new-notification-center .card-header {
+    background-color: var(--ourcolor) !important;
+    color: white !important;
+}
+
+.menubarbox {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(141, 141, 141, 0.15) 0px 2px 6px 2px !important;
+}
+
+.mat-form-width {
+    width: 100% !important;
+}
+
+.card-header {
+    background-color: #D3E9FB !important;
+    color: #362C82 !important;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
+.center {
+    margin: 0 !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    -ms-transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important;
+    text-align: center !important;
+}
+
+.mat-radio-button~.mat-radio-button {
+    margin-left: 16px  !important;
+}
+
+.losserrorlist {
+    text-align: left !important;
+    font-weight: bolder !important;
+    color: red !important;
+}
+
+.childerrorlist {
+    text-align: initial !important;
+    padding-left: 35px !important;
+    color: red !important;
+}
+
+.fa-circle {
+    font-size: 10px !important;
+}
+
+.btn-div {
+    background-color: var(--ourcolor) !important;
+}
+
+.example-spacer {
+    flex: 1 1 auto !important;
+}
+
+.admin-grid-header {
+    justify-content: end !important;
+}
+
+.admin-title-header {
+    line-height: 2 !important;
+}
+
+
+/* .main-header-page{
+  background-color: var(--ourcolor);
+  color: white;
+  height: 70px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.15),
+  0 2px 2px rgba(0,0,0,0.15),
+  0 4px 4px rgba(0,0,0,0.15),
+  0 8px 8px rgba(0,0,0,0.15);
+} */
+
+.radio-toolbar input[type="radio"] {
+    opacity: 0 !important;
+    position: fixed !important;
+    width: 0 !important;
+}
+
+.radio-toolbar label {
+    margin-left: 0px !important;
+    display: inline-block !important;
+    background-color: #ddd !important;
+    padding: 5px 15px !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    font-size: 14px !important;
+    border: 2px solid #444 !important;
+    border-radius: 4px !important;
+}
+
+.radio-toolbar input[type="radio"]:checked+label {
+    background-color: dodgerblue !important;
+    border-color: 1px solid black !important;
+    color: white !important;
+}
+
+.radio-toolbar input[type="radio"]:focus+label {
+    border: 2px dashed #444 !important;
+}
+
+.radio-toolbar label:hover {
+    background-color: #dfd !important;
+}
+
+.checkCard {
+    background-color: powderblue !important;
+    color: black !important;
+    text-align: center !important;
+    border-radius: 7px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+}
+
+.activeDrive {
+    background-color: #27a2db !important;
+    color: white !important;
+    text-align: center !important;
+    border-radius: 7px !important;
+    border: 1px solid black !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+}
+
+.activeVehicle {
+    background-color: mediumslateblue !important;
+    color: white !important;
+    text-align: center !important;
+    border-radius: 7px !important;
+    border: 1px solid black !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+}
+
+.damage_points {
+    cursor: pointer !important;
+    display: inline !important;
+}
+
+.fas.fa-circle {
+    font-size: 15px !important;
+    color: ghostwhite !important;
+}
+
+i.fas.fa-circle {
+    display: inline-block !important;
+    border-radius: 33px !important;
+    box-shadow: 0px 0px 2px #f1f1f1 !important;
+    padding: 3px !important;
+    background-color: white !important;
+    border: 1px solid darkblue !important;
+}
+
+.damage_points.active .fas.fa-circle {
+    font-size: 15px !important;
+    color: dodgerblue !important;
+}
+
+.damgepoints1 {
+    width: fit-content !important;
+    position: relative !important;
+    margin: auto !important;
+}
+
+.damgepoints1 .marginTopRadioRow-One {
+    margin-top: 20px !important;
+}
+
+.damgepoints1 .marginTopRadioRow-two {
+    margin-top: 30px !important;
+}
+
+.damgepoints1 .fourdotscontainer .row-1,
+.damgepoints1 .fourdotscontainer .row-3 {
+    margin-left: 20px !important;
+}
+
+.damgepoints1 label {
+    cursor: pointer !important;
+    font-weight: 500 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    margin-bottom: 0.375em !important;
+}
+
+.damgepoints1 label input {
+    position: absolute !important;
+    left: -9999px !important;
+}
+
+.damgepoints1 label input:checked+span:before {
+    box-shadow: inset 0 0 0 0.4375em #00005c !important;
+}
+
+.damgepoints1 label span {
+    display: flex !important;
+    align-items: center !important;
+    padding: 2px !important;
+    border-radius: 99em !important;
+    transition: 0.25s ease !important;
+}
+
+.damgepoints1 label span:before {
+    display: flex !important;
+    flex-shrink: 0 !important;
+    content: "" !important;
+    background-color: #fff !important;
+    width: 1.5em !important;
+    height: 1.5em !important;
+    border-radius: 50% !important;
+    margin-right: 0.375em !important;
+    transition: 0.25s ease !important;
+    box-shadow: inset 0 0 0 0.125em #00005c !important;
+}
+
+.First-Row {
+    position: absolute !important;
+}
+
+.First-Row.one {
+    left: 25% !important;
+    top: 2% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.First-Row.two {
+    left: 48% !important;
+    top: 2% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.First-Row.three {
+    left: 69% !important;
+    top: 2% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Third-Row {
+    position: absolute !important;
+}
+
+.Third-Row.one {
+    left: 25% !important;
+    top: 80% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Third-Row.two {
+    left: 48% !important;
+    top: 80% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Third-Row.three {
+    left: 69% !important;
+    top: 80% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row {
+    position: absolute !important;
+}
+
+.Second-Row.Top-one {
+    left: -1% !important;
+    top: 14% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.Below-one {
+    left: -2% !important;
+    top: 64% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.Right-one {
+    left: -5% !important;
+    top: 40% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.Left-one {
+    left: 10% !important;
+    top: 40% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.center-one {
+    left: 48% !important;
+    top: 40% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.center-two {
+    left: 58% !important;
+    top: 40% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.Top-three {
+    left: 92% !important;
+    top: 15% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.Below-three {
+    left: 92% !important;
+    top: 65% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.Right-three {
+    left: 88% !important;
+    top: 40% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.Second-Row.Left-three {
+    left: 98% !important;
+    top: 40% !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.one .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.one:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.two .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.two:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.three .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.three:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.Top-one .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.Top-one:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.Left-one .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.Left-one:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.Below-one .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.Below-one:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.center-one .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.center-one:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.center-two .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.center-two:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.Top-three .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.Top-three:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.Right-three .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.Right-three:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.Below-three .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.Below-three:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.Left-three .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.Left-three:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+.Right-one .tooltiptext {
+    visibility: hidden !important;
+    width: 120px !important;
+    background-color: black !important;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    /* Position the tooltip text - see examples below! */
+    position: absolute !important;
+    z-index: 1 !important;
+}
+
+.Right-one:hover .tooltiptext {
+    visibility: visible !important;
+}
+
+
+/* custom scrollbar */
+
+::-webkit-scrollbar {
+    width: 20px !important;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc !important;
+    border-radius: 20px !important;
+    border: 6px solid transparent !important;
+    background-clip: content-box !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf !important;
+}
+
+.noshadow.mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+    background-color: rgba(0, 0, 0, .06) !important;
+}
+
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+    color: rgba(0, 0, 0, .68) !important;
+}
+
+.mat-select-disabled .mat-select-value {
+    color: rgba(0, 0, 0, .68) !important;
+}
+
+.customised-header {
+    background-color: transparent !important;
+    color: #362C82 !important;
+    font-weight: 600;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.card-heading-strip {
+    color: #462C82;
+    font-size: large;
+    font-weight: 600;
+}
+
+
+/* #swal2-title{
+  display: none !important;
+} */
+
+.mat-tab-label-active {
+    background-color: #00005c !important;
+    color: ghostwhite !important;
+}
+
+
+
+
+
+/* login Css */
+
+.bg-container {
+  padding-top: 8rem !important;
+  height: 100vw !important;
+  /* background-color: var(--bg-color) !important; */
+  /* background-image: url('./assets/Images/home-bg.svg') !important; */
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+}
+
+.notofonts {
+  font-family: "Noto Sans", sans-serif !important;
+}
+
+.login-card{
+  padding: 1rem !important;
+  border-radius: 1rem !important;
+  background-color: white !important;
+}
+
+.login-card .heading{
+  font-weight: bold !important;
+  color: #147bc7 !important;
+}
+
+.login-card .form-control {
+  padding: 5px !important;
+  height: 45px !important;
+  background-color: #d1e8f5 !important;
+  border: 0 !important;
+  font-family: "Noto Sans", sans-serif !important;
+  border-radius: 0px 30px 30px 0px !important;
+
+}
+.login-card label {
+  font-size: 16px !important;
+  padding-left: 15px !important;
+}
+.login-card .input-group .input-group-text {
+  width: 30px !important;
+  text-align: center !important;
+  border-radius: 30px 0px 0px 30px !important;
+  background-color: #d1e8f5 !important;
+  border: 0 !important;
+}
+
+.login-card-bg{
+  background-image: url("./assets/Images/login-bg-1.png"), url("./assets/Images/login-bg-2.png") !important;
+  background-position: right bottom, left bottom !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-size: 200px !important;
+
+}
+
+.login-card-body,.login-card-title{
+  padding: 0 2rem !important;
+}
+
+@media (min-width:800px) {
+  .login-card-bg-asses{
+    background-image: url("./assets/Images/assessor-bg.png") !important;
+    background-position: right bottom !important;
+    background-repeat: no-repeat !important;
+    background-size: 300px !important;
+
+  }
+}
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    width: 125% !important;
+    color: var(--bs-modal-color);
+    pointer-events: auto;
+    background-color: var(--bs-modal-bg);
+    background-clip: padding-box;
+    border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+    border-radius: var(--bs-modal-border-radius);
+    outline: 0;
+    position: relative !important;
+    right: 6rem !important;
+}
+
+.p-paginator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 6px !important;
+}
+.p-datatable .p-datatable-header {
+    background: #f4f4f4;
+    color: #333;
+    border: none !important;
+    border-width: 1px 1px 0 1px;
+    padding: 0.857rem 1rem;
+    font-weight: 700;
+}
+.highcharts-credits{
+    display: none !important;
+  }
+.highcharts-title{
+    font-family: Roboto,sans-serif !important;
+    letter-spacing: .5px !important;
+    font-weight: 500 !important;
+}
+.highcharts-label{
+    font-family: Roboto,sans-serif !important;
+    letter-spacing: .5px !important;
+    font-weight: 500 !important;
+}
+.norecord tr td{
+    border: none !important;
+  }
+
+  .p-datatable .p-paginator-bottom {
+    border-width: 0 0px 0px 0px !important;
+    border-radius: 0 !important;
+}

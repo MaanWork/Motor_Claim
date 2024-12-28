@@ -1,0 +1,188 @@
+<div class="card my-1">
+    <div class="card-header">
+        <ng-container *ngIf="pageFrom!='garageComponent' && pageFrom!='surveyorComponent'">Damage Information</ng-container>
+        <ng-container *ngIf="pageFrom=='surveyorComponent'">Damage Information (Assessor)</ng-container>
+        <ng-container *ngIf="pageFrom=='garageComponent'">Damage Information (Garage)</ng-container>
+    </div>
+    <div class="card-body">
+        <div class="my-2 text-center p-1">
+            <button class="mx-2" *ngIf="pageFrom!='garageComponent' && pageFrom!='surveyorComponent'" mat-raised-button color="accent" (click)="method1CallForClick(1)">Add/Edit Damage Details</button>
+            <ng-container *ngIf="pageFrom=='surveyorComponent' && approvedSection=='garage' && checkValues()">
+                <button class="mx-2" *ngIf="pageFrom=='surveyorComponent' && approvedSection=='garage'" mat-raised-button color="accent" (click)="method1CallForClick(1)">View Assessor Damage Details</button>
+            </ng-container>
+            <ng-container *ngIf="pageFrom=='surveyorComponent' && approvedSection=='garage' && !checkValues()">
+                <div class="text-center">
+                    <b class="text-danger">* Assessot Not Yet Submitted Appraisal</b>
+                </div>
+            </ng-container>
+        </div>
+        <!-- <div class="damgepoints1">
+            <img src="./assets/Images/car-above-view.svg" width="300px" />
+            <div class="First-Row one">
+                <div [class.active]="damagepoints_11" (dblclick)="method2CallForDblClick(11)" (click)="method1CallForClick(11)" id="garage_damagepoints_11" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="First-Row two">
+                <div [class.active]="damagepoints_8" (dblclick)="method2CallForDblClick(8)" (click)="method1CallForClick(8)" id="garage_damagepoints_8" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="First-Row three">
+                <div [class.active]="damagepoints_5" (dblclick)="method2CallForDblClick(5)" (click)="method1CallForClick(5)" id="garage_damagepoints_5" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+
+            <div class="Second-Row Top-one">
+                <div [class.active]="damagepoints_13" (dblclick)="method2CallForDblClick(13)" (click)="method1CallForClick(13)" id="garage_damagepoints_13" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Second-Row Right-one">
+                <div [class.active]="damagepoints_15" (dblclick)="method2CallForDblClick(15)" (click)="method1CallForClick(15)" id="garage_damagepoints_15" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Second-Row Left-one">
+                <div [class.active]="damagepoints_16" (dblclick)="method2CallForDblClick(16)" (click)="method1CallForClick(16)" id="garage_damagepoints_16" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Second-Row Below-one">
+                <div [class.active]="damagepoints_14" (dblclick)="method2CallForDblClick(14)" (click)="method1CallForClick(14)" id="garage_damagepoints_14" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+
+            <div class="Second-Row center-one">
+                <div [class.active]="damagepoints_10" (dblclick)="method2CallForDblClick(10)" (click)="method1CallForClick(10)" id="garage_damagepoints_10" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Second-Row center-two">
+                <div [class.active]="damagepoints_7" (dblclick)="method2CallForDblClick(7)" (click)="method1CallForClick(7)" id="garage_damagepoints_7" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+
+            <div class="Second-Row Top-three">
+                <div [class.active]="damagepoints_1" (dblclick)="method2CallForDblClick(1)" (click)="method1CallForClick(1)" id="garage_damagepoints_1" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Second-Row Right-three">
+                <div [class.active]="damagepoints_4" (dblclick)="method2CallForDblClick(4)" (click)="method1CallForClick(4)" id="garage_damagepoints_4" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Second-Row Left-three">
+                <div [class.active]="damagepoints_3" (dblclick)="method2CallForDblClick(3)" (click)="method1CallForClick(3)" id="garage_damagepoints_3" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Second-Row Below-three">
+                <div [class.active]="damagepoints_2" (dblclick)="method2CallForDblClick(2)" (click)="method1CallForClick(2)" id="garage_damagepoints_2" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+
+            <div class="Third-Row one">
+                <div [class.active]="damagepoints_12" (dblclick)="method2CallForDblClick(12)" (click)="method1CallForClick(12)" id="garage_damagepoints_12" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Third-Row two">
+                <div [class.active]="damagepoints_9" (dblclick)="method2CallForDblClick(9)" (click)="method1CallForClick(9)" id="garage_damagepoints_9" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+            <div class="Third-Row three">
+                <div [class.active]="damagepoints_6" (dblclick)="method2CallForDblClick(6)" (click)="method1CallForClick(6)" id="garage_damagepoints_6" class="damage_points">
+                    <i class="fas fa-circle"></i>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <form [formGroup]="form">
+        <div class="Calculate px-2">
+            <div class="row my-2">
+                <div class="col-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Spare Parts Cost Check</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="20" (change)="validateNumber($event.target.value,'SparePartsCost')" formControlName="SparePartsCost" required/>
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Consumables</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="10" formControlName="Consumables" required/>
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Total Labour Hours</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="10" formControlName="TotalLabourHours" required/>
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Labour Cost Per Hour</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="10" formControlName="LabourCostPerHour" required/>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Labour Cost</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="10" formControlName="LabourCost" [ngModel]="(form.controls['TotalLabourHours'].value * form.controls['LabourCostPerHour'].value)" required/>
+                    </mat-form-field>
+                </div>
+                <!-- <span  ></span> -->
+                <div class="col-3" *ngIf="WhoView!='GarageSide'">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Less Betterment</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="10" formControlName="LessBetterment" required/>
+                    </mat-form-field>
+                </div>
+                <div class="col-3" *ngIf="WhoView!='GarageSide'">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Less Excess</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="10" formControlName="LessExcess" required/>
+                    </mat-form-field>
+                </div>
+                <div class="col-3" *ngIf="WhoView!='GarageSide'">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Young Age Driver</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="10" formControlName="YoungAgeDriver" required/>
+                    </mat-form-field>
+                </div>
+                <div class="col-3" *ngIf="WhoView!='GarageSide'">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Under Insurance</mat-label>
+                        <input matInput type="text" appNumbersOnly maxlength="10" formControlName="UnderInsurance" required/>
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Salvage Amount</mat-label>
+                        <input type="text" appNumbersOnly matInput maxlength="20" (change)="validateNumber($event.target.value,'SalvageAmount')" formControlName="SalvageAmount" required/>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+
+            </div>
+        </div>
+    </form>
+    <div class="card-footer">
+        Total Estimate Amount: {{ (ConvertToInt(form.controls['SparePartsCost'].value) + ConvertToInt(form.controls['Consumables'].value) + (ConvertToInt(form.controls['TotalLabourHours'].value) * ConvertToInt(form.controls['LabourCostPerHour'].value)))- (ConvertToInt(form.controls['LessBetterment'].value)
+        + ConvertToInt(form.controls['LessExcess'].value) + ConvertToInt(form.controls['UnderInsurance'].value)) }}
+        <!-- {{
+      (ConvertToInt(form.controls['SparePartsCost'].value)+ConvertToInt(form.controls['Consumables'].value)+(ConvertToInt(form.controls['TotalLabourHours'].value)*ConvertToInt(form.controls['LabourCostPerHour'].value)))-
+      (ConvertToInt(form.controls['LessBetterment'].value)+ConvertToInt(form.controls['LessExcess'].value)+ConvertToInt(form.controls['UnderInsurance'].value))
+      }} -->
+
+    </div>
+</div>

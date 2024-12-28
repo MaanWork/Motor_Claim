@@ -1,0 +1,78 @@
+<mat-card>
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h6 class="admin-title-header"><i class="fab fa-accusoft"></i> &nbsp;CLAIM INTIMATIONS</h6>
+            </mat-panel-title>
+            <mat-panel-description class="admin-grid-header">
+                <button mat-raised-button color="warn" (click)="clearChassisSection()">
+          INTIMATE NEW CLAIM
+        </button>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row text-center">
+            <div class="col-md-4 col-12 offset-md-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Policy Number</mat-label>
+                    <input matInput type="text" [(ngModel)]="policyNumber" required>
+                </mat-form-field>
+                <div class="text-center">
+                  <button mat-raised-button [disabled]="policyNumber==''" color="primary" (click)="onPolicySearchExist('Policy')">Submit</button>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="tableData1 && chassisSection">
+            <app-data-info-table [cols]="columnHeader4" [data]="tableData1" (onChangeCheck)="onActionHandler($event)">
+            </app-data-info-table>
+        </ng-container>
+        <ng-container *ngIf="!tableData1 && chassisSection">
+            <app-loader></app-loader>
+        </ng-container>
+    </mat-expansion-panel>
+    <mat-tab-group class="mt-4">
+        <mat-tab label="Notified Claims">
+            <ng-template matTabContent>
+                <ng-container *ngIf="NotifiedClaims">
+                    <app-data-table-one [data]="NotifiedClaims" [gridType]="Notified" [cols]="columnHeader" [innercols]="innerColumnHeader" (onViewData)="onViewData($event)" (onEditClaimData)="onEditClaimData($event)" (onGeneratePdf)="onGeneratePdf($event)">
+                    </app-data-table-one>
+                </ng-container>
+                <ng-container *ngIf="!NotifiedClaims">
+                    <app-loader></app-loader>
+                </ng-container>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Approved Claims">
+            <ng-template matTabContent>
+                <ng-container *ngIf="ApprovedClaims">
+                    <app-data-table-one [data]="ApprovedClaims" [gridType]="Approved" [cols]="columnHeader1" [innercols]="innerColumnHeader1" (onViewData)="onViewData($event)" (onEditClaimData)="onEditClaimData($event)" (onGeneratePdf)="onGeneratePdf($event)">
+                    </app-data-table-one>
+                </ng-container>
+                <ng-container *ngIf="!ApprovedClaims">
+                    <app-loader></app-loader>
+                </ng-container>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Rejected Claims">
+            <ng-template matTabContent>
+                <ng-container *ngIf="RejectedClaims">
+                    <app-data-table-one [data]="RejectedClaims" [gridType]="Rejected" [cols]="columnHeader2" [innercols]="innerColumnHeader2" (onViewData)="onViewData($event)" (onEditClaimData)="onEditClaimData($event)" (onGeneratePdf)="onGeneratePdf($event)">
+                    </app-data-table-one>
+                </ng-container>
+                <ng-container *ngIf="!RejectedClaims">
+                    <app-loader></app-loader>
+                </ng-container>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Clarification Required Claims">
+            <ng-template matTabContent>
+                <ng-container *ngIf="ClarificationClaims">
+                    <app-data-table-one [data]="ClarificationClaims" [gridType]="Clarified" [cols]="columnHeader3" [innercols]="innerColumnHeader3" (onViewData)="onViewData($event)" (onEditClaimData)="onEditClaimData($event)" (onGeneratePdf)="onGeneratePdf($event)">
+                    </app-data-table-one>
+                </ng-container>
+                <ng-container *ngIf="!ClarificationClaims">
+                    <app-loader></app-loader>
+                </ng-container>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>

@@ -1,0 +1,185 @@
+<h2 mat-dialog-title>Status tracking</h2>
+<mat-dialog-content class="mat-typography">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 bg-label">Claim No</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                    {{ claimNo == null ? "N/A" : claimNo }}
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label">Policy No</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                    {{ policyNo == null ? "N/A" : policyNo }}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 bg-label" *ngIf="losstypeId">Loss ID</div>
+                <div class="col-lg-3 col-md-3 bg-value" *ngIf="losstypeId">
+                    {{ losstypeId == null ? "N/A" : losstypeId }}
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label" *ngIf="partyId">Party ID</div>
+                <div class="col-lg-3 col-md-3 bg-value" *ngIf="partyId">
+                    {{ partyId == null ? "N/A" : partyId }}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 bg-label">Current Status</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                    {{ currentStatus == null ? "N/A" : currentStatus }}
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label">Last Updated Date</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                    {{ currentStatusUpdatedTime == null ? "N/A" : currentStatusUpdatedTime }}
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="row p-0 mt-5">
+        <div class="col-1 offset-7">
+            <div class="success">
+
+            </div>
+        </div>
+        <div class="col-4">
+            <span>- Completed</span>
+        </div>
+    </div>
+    <div class="row p-0">
+        <div class="col-1  offset-7">
+            <div class="pending">
+
+            </div>
+        </div>
+        <div class="col-4">
+            <span>- Pending</span>
+        </div>
+    </div>
+    <!-- <div class="row mt-2" *ngIf="totalTrackList.length!=0">
+        <div class="col-md-12 col-lg-12">
+            <p-timeline [value]="totalTrackList">
+                <ng-template pTemplate="content" let-event>
+                    <span class="text-primary"><b>{{event.UserType}}</b></span> <br>
+                    <small class="p-text-secondary">&#123;&#123;event.Entrydate&#125;&#125;</small>
+                </ng-template>
+                <ng-template pTemplate="opposite" let-event>
+                    <h5 class="text-success p-0" *ngIf="event.CompletedYn=='Y'"><b>{{event.Substatusdescription}}</b></h5>
+                    <h5 class="text-secondary p-0" *ngIf="event.CompletedYn!='Y'"><b>{{event.Substatusdescription}}</b></h5>
+                    <small class="text-dark" *ngIf="event.Remarks!=null">Remarks :&nbsp;<small class="p-text-secondary p-0">&#123;&#123;event.Remarks&#125;&#125;</small></small>
+                </ng-template>
+            </p-timeline>
+        </div>
+    </div> -->
+    <section class="section-timeline" *ngIf="totalTrackList.length!=0">
+        <div class="container">
+            <ul class="timeline">
+                <ng-container *ngFor="let track of totalTrackList;let i=index;">
+                    <li class="customList" *ngIf="track.CompletedYn=='Y'">
+                        <div class="content">
+                            <h3 class="success-timeline">{{track.Substatusdescription}}</h3>
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item" *ngIf="track.UserType">
+                                    <div class="row">
+                                        <div class="text-center bg-value">
+                                            <span class="row text-primary text-center p-0" *ngIf="track.UserType=='claimofficer'"><b>Approver</b></span>
+                                            <span class="row text-primary text-center p-0" *ngIf="track.UserType=='user'"><b>User</b></span>
+                                            <span class="row text-primary text-center p-0" *ngIf="track.UserType=='surveyor'"><b>Assessor</b></span>
+                                            <span class="row text-primary text-center p-0" *ngIf="track.UserType=='garage'"><b>Garage</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item" *ngIf="track.Entrydate">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="">Updated date</div>
+                                        <div class="ml-auto">
+                                            <span class="row text-secondary text-center p-0"><b>{{track.Entrydate}}</b></span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col-lg-3 col-md-3 bg-label">
+                                            Updated date
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 bg-value float-right">
+                                            <span class="row text-secondary text-center p-0"><b>{{track.Entrydate}}</b></span>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="">
+                                            Days
+                                        </div>
+                                        <div class="bg-value">
+                                            <span class="row text-secondary text-center p-0" *ngIf="track.Days==null "><b>N/A</b></span>
+                                            <span class="row text-secondary text-center p-0" *ngIf=" track.Days == '0'"><b>Same Day</b></span>
+                                            <span class="row text-secondary text-center p-0" *ngIf=" track.Days == '1'"><b>{{track.Days}} Day</b></span>
+                                            <span class="row text-secondary text-center p-0" *ngIf=" track.Days !=null && track.Days != '0' && track.Days != '1'"><b>{{track.Days}} Days</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="">
+                                            Remarks
+                                        </div>
+                                        <div class="bg-value">
+                                            <span class="row text-secondary text-center p-0"><b>{{ track.Remarks == null ? "N/A" : track.Remarks }}</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="" *ngIf="track.CompletedYn=='N'">
+                        <div class="content">
+                            <h3 class="pending-timeline">{{track.Substatusdescription}}</h3>
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item" *ngIf="track.UserType">
+                                    <div class="row">
+                                        <div class="text-center bg-value">
+                                            <span class="row text-primary text-center p-0" *ngIf="track.UserType=='claimofficer'"><b>ClaimOfficer</b></span>
+                                            <span class="row text-primary text-center p-0" *ngIf="track.UserType=='user'"><b>User</b></span>
+                                            <span class="row text-primary text-center p-0" *ngIf="track.UserType=='surveyor'"><b>Assessor</b></span>
+                                            <span class="row text-primary text-center p-0" *ngIf="track.UserType=='garage'"><b>Garage</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item" *ngIf="track.Entrydate">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 bg-label">
+                                            Updated date
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 bg-value">
+                                            <span class="row text-secondary text-center p-0"><b>{{track.Entrydate}}</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item" *ngIf="track.Remarks!=null">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 bg-label">
+                                            Remarks
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 bg-value">
+                                            <span class="row text-secondary text-center p-0"><b>{{track.Remarks}}</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </li>
+                </ng-container>
+
+
+            </ul>
+        </div>
+    </section>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>&nbsp;&nbsp;
+    <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Next Information</button> -->
+</mat-dialog-actions>

@@ -1,0 +1,62 @@
+<mat-horizontal-stepper #stepper>
+    <mat-step>
+        <ng-template matStepLabel>Customer Information</ng-template>
+        <ng-container matStepContent *ngIf="claimInformation && assuredName">
+            <app-customer-details [claimInformation]="claimInformation" [assuredName]="assuredName" (GetCustomerInfo)="onGetCustomerFromGroup($event)"></app-customer-details>
+        </ng-container>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Accident Details</ng-template>
+        <ng-container matStepContent *ngIf="claimInformation?.Claimrefno">
+            <app-accident-details [claimInformation]="claimInformation" [claimRefNo]="Claimrefno" (GetAccidentInfo)="onGetAccidentFromGroup($event)"></app-accident-details>
+        </ng-container>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Statement Information</ng-template>
+        <ng-container matStepContent *ngIf="claimInformation?.Claimrefno">
+            <app-statement-information [claimInformation]="claimInformation" [claimRefNo]="Claimrefno" (GetStatementInfo)="onGetStatementFromGroup($event)"></app-statement-information>
+        </ng-container>
+    </mat-step>
+    <!-- <mat-step>
+        <ng-template matStepLabel>Damage Details</ng-template>
+        <ng-container matStepContent *ngIf="claimInformation?.Claimrefno">
+            <app-damage-details [claimInformation]="claimInformation" [claimRefNo]="Claimrefno" (GetDamageInfo)="onGetDamageFromGroup($event)"></app-damage-details>
+        </ng-container>
+    </mat-step> -->
+    <mat-step>
+        <ng-template matStepLabel>Reasons Information</ng-template>
+        <ng-container matStepContent *ngIf="claimInformation?.Claimrefno">
+            <app-reason-information [claimInformation]="claimInformation" [claimRefNo]="Claimrefno" (GetReasonInfo)="onGetReasonFromGroup($event)"></app-reason-information>
+        </ng-container>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Driver Details</ng-template>
+        <ng-container matStepContent *ngIf="claimInformation?.Claimrefno">
+            <app-drivers-details [claimInformation]="claimInformation" [claimRefNo]="Claimrefno" (GetDriverInfo)="onGetDriverFromGroup($event)"></app-drivers-details>
+        </ng-container>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Document Information</ng-template>
+        <ng-container matStepContent *ngIf="claimInformation?.Claimrefno">
+            <div class="card material-shadow border-0">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between p-0">
+                        <div class="flex-item">
+                            <h5 class="card-title mb-0 p-0"><b>Document Information</b></h5>
+                        </div>
+                        <div class="flex-item" *ngIf="Claimrefno">
+                            <h5 class="p-0"><b>Claim Ref No ~ {{Claimrefno}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" *ngIf="Claimrefno && claimInformation?.Claimrefno">
+                    <app-document-information [claimRefNo]="claimInformation?.Claimrefno" [claimInformation]="claimInformation"></app-document-information>
+                </div>
+                <div class="card-footer">
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="finalProceed()">Next</button>
+                </div>
+            </div>
+        </ng-container>
+    </mat-step>
+</mat-horizontal-stepper>

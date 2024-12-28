@@ -1,0 +1,101 @@
+<mat-card>
+    <mat-expansion-panel hideToggle [expanded]="panelOpen">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i>PRODUCT MASTER</h6>
+            </mat-panel-title>
+            <mat-panel-description class="admin-grid-header">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{ProductListForm.value.InsuranceId}}</b>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row">
+            <div class="col-2 offset-10 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNew()">
+              ADD NEW PRODUCT
+            </button>
+            </div>
+        </div>
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)"></app-admin-table>
+        </ng-container>
+    </mat-expansion-panel>
+    <ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>App Login Url</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Branch Code</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Insurance Company</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Payment</div>
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="Y">Yes</mat-radio-button>
+                        <mat-radio-button value="N">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Payment Url</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Product Code</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="primary">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>
+</mat-card>

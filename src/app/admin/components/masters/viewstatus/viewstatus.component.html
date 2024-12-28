@@ -1,0 +1,46 @@
+<div class="maan-grid customer-grid maan-grid-column-1">
+    <div class="maan-grid-item">
+        <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span class="mx-1">
+                      <i class="fas fa-document mx-1"></i>
+                  </span> Status Change
+                </div>
+                <div>
+                    <ng-container>
+
+                    </ng-container>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="maan-grid-item-body mt-2">
+            <div class="text-center">
+                <div class="d-flex">
+                <div class="col-12 col-md-6 col-lg-6 ml-2">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="title">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div>Status</div>
+                    <mat-radio-group aria-label="Select an option" [(ngModel)]="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                    </mat-radio-group>
+                </div>
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <button class="btn btn-danger" (click)="close()">Close</button>
+                <button class="btn btn-success" style="margin-left:10px;" (click)="submit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

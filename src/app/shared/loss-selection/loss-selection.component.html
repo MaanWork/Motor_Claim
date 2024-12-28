@@ -1,0 +1,77 @@
+<div class="card">
+        <div class="card-body">
+                <h2 mat-dialog-title>LossType Information</h2>
+                <div class="row">
+                        <div class="col-md-5">
+                                <mat-card class="m-1 losslistcard">
+                                        <ul class="list-group"  *ngIf="!primaryCheckbox" >
+                                                <li class="list-group-item list-group-item-primary">
+                                                <mat-checkbox class="example-margin" [(ngModel)]="PrimaryHead" (change)="onSelectAllPrimary($event.checked)"
+                                                      >PRIMARY LOSS
+                                                </mat-checkbox>     
+                                                </li>
+                                                <li class="list-group-item" *ngFor="let loss of lossTypeList?.Primary;let i=index;">
+                                                        <mat-checkbox class="example-margin" [(ngModel)]="PrimaryLoss['Primary'+loss.Code]" (change)="onChangeLossList(loss,'primary',i)"
+                                                          [value]="loss.Code">{{loss.CodeDesc}}
+                                                        </mat-checkbox>
+                                                </li>
+                                        </ul>
+                                        <ul class="list-group" *ngIf="!secondarycheckbox">
+                                                <li class="list-group-item list-group-item-primary">
+                                                <mat-checkbox class="example-margin" [(ngModel)]="secondaryHead" (change)="onSelectAllSecondary($event.checked)">SECONADRY LOSS
+                                                </mat-checkbox>     
+                                                </li>
+                                                <li class="list-group-item" *ngFor="let loss of lossTypeList?.Secondary,let i=index;">
+                                                        <mat-checkbox class="example-margin" [(ngModel)]="SecondaryLoss['Secondary'+loss.Code]" (change)="onChangeLossList(loss,'secondary',i)"
+                                                                [value]="loss.Code">{{loss.CodeDesc}}
+                                                        </mat-checkbox>
+                                                </li>
+                                        </ul>
+                                </mat-card>
+                        </div>
+                        <div class="col-md-2 mt-4">
+                                <!-- <mat-card class="m-1 losslistcard">
+                                        <div class="center text-center">
+                                                <button mat-raised-button color="warn" class="my-1" (click)="onMoveLoss()">
+                                                        <span style="font-size:14px;">Move All</span></button> <br>
+                                                <button mat-raised-button color="primary" class="my-1" (click)="onClearAllLoss()">Remove All</button>
+                                        </div>
+                                </mat-card> -->
+                                
+                                        <div style="text-align:center;margin-top:140%;">
+                                                <button mat-raised-button color="warn" (click)="onMoveLoss(lossTypeList)">
+                                                        <span style="font-size:14px;">Move All</span></button> <br>
+                                                <button mat-raised-button color="primary" (click)="onClearAllLoss()" class="mt-3">
+                                                        <span style="font-size:14px;">Remove All</span>
+                                                        </button>
+                                        </div>
+                                
+                        </div>
+        
+                        <div class="col-md-5">
+                                <mat-card class="m-1 losslistcard">
+                                        <ul class="list-group">
+                                                <li class="list-group-item list-group-item-primary">
+                                                        SELECTED LOSS     
+                                                </li>
+                                                <li class="list-group-item" *ngFor="let loss of LossMovedList;let i=index">
+                                                        <mat-checkbox class="example-margin" (change)="onExcludeLoss(loss,i)"
+                                                                [value]="loss.Code">{{loss.CodeDesc}}
+                                                        </mat-checkbox>
+                                                </li>
+                                        </ul>
+                                </mat-card>
+                        </div>
+                       
+                </div>
+        </div>
+        <div class="card-footer">
+                <div class="text-center mb-2">
+                        <button mat-raised-button (click)="onSubmitLossDetails('close')" class="mx-2" color="warn">Close</button>&nbsp;&nbsp;
+                        <button mat-raised-button color="primary" (click)="onSubmitLossDetails('submit')">Submit</button>
+                </div>
+        </div>
+</div>
+
+        
+

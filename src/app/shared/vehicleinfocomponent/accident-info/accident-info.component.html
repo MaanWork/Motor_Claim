@@ -1,0 +1,114 @@
+<div class="card my-1">
+    <div class="card-header">
+        Accident Information
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Accident Date</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Accidentdate ==null
+                        ?'N/A':ClaimInfo?.Accidentdate}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Accident Time</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Accidenttime ==null
+                        ?'N/A':ClaimInfo?.Accidenttime}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Road Surface</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Typeofroadsurface ==null
+                        ?'N/A':ClaimInfo?.Typeofroadsurface}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Visibility</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Visibility ==null
+                        ?'N/A':ClaimInfo?.Visibility}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row ">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Road Condition</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.WetOrDry ==null
+                        ?'N/A':ClaimInfo?.WetOrDry}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b> your driver given?</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Driverwarningdescription ==null
+                        ?'N/A':ClaimInfo?.Driverwarningdescription}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Weather Conditions</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Weatherconditions ==null
+                        ?'N/A':ClaimInfo?.Weatherconditions}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Estimate speed before accident</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Estimatespeedbeforeaccident ==null
+                        ?'N/A':ClaimInfo?.Estimatespeedbeforeaccident}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row ">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>What warning did you/your driver give?</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.Driverwarningdescription ==null
+                        ?'N/A':ClaimInfo?.Driverwarningdescription}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Loss Type</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    {{ClaimInfo?.LosstypeName}}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row ">
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Accident Location Inside Africa?</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.InsideafricaYn == 'N'
+                        ?'No': 'Yes'}}</span>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label><b>Cause of Loss</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <span>{{ClaimInfo?.ColDescription ==null
+                    ?'N/A':ClaimInfo?.ColDescription}}</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

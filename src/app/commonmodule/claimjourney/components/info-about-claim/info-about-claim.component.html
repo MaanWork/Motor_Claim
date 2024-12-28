@@ -1,0 +1,11 @@
+
+<app-data-table-two *ngIf="tableData"
+[data]="tableData"
+[cols]="columnHeader"
+[innerData]="innerTableData"
+[innerCols]="innerColumnHeader"
+(GetLossList)="onGetLossList($event)"
+(onLossListView)="onLossListView($event)"
+>
+
+</app-data-table-two>

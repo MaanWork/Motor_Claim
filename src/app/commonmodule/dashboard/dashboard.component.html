@@ -1,0 +1,187 @@
+<div class="new-notification-center">
+  <mat-card class="my-2">
+    <div class="example-action-buttons">
+      <mat-slide-toggle
+        class="example-margin"
+        [(ngModel)]="accordionchecked"
+        [checked]="accordionchecked"
+        (change)="onCollapseToggle()"
+      >
+      </mat-slide-toggle>
+    </div>
+  </mat-card>
+
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="panelOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <i class="bx bx-grid-alt"></i> Quick Summary
+        </mat-panel-title>
+        <mat-divider></mat-divider>
+      </mat-expansion-panel-header>
+      <div class="row g-2">
+        <div class="card">
+          <!-- <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ng-container *ngIf="onProcessessGrid">
+                                    <mat-card class="bg-barchart">
+                                        <app-barchart [claimChart]="onProcessessGrid" [chartType]="barchart"></app-barchart>
+                                    </mat-card>
+                                </ng-container>
+                            </div>
+                            <div class="col-md-6">
+                                <ng-container *ngIf="onProcessessGrid">
+                                    <mat-card class="bg-piechart"> 
+                                        <app-piechart [claimChart]="onProcessessGrid" [chartType]="piechart"></app-piechart>
+                                    </mat-card>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div> -->
+          <mat-card
+            class="font-weight-bolder card-heading-strip"
+            *ngIf="claimStatusList.length != 0"
+            >OFFICER</mat-card
+          >
+          <div class="main-dashboard" *ngIf="claimStatusList.length != 0">
+            <mat-card
+              matRipple
+              class="dashboard-card"
+              style="background-color: white !important; max-height: 90px"
+              *ngFor="let item of claimStatusList"
+              (click)="onViewClickedClaimData(item)"
+            >
+              <div class="small-chart">
+                <div class="fw-medium fs-5" style="color: black; opacity: 70%">
+                  {{ item.Statusdescrip }}
+                </div>
+                <div class="chart-text">
+                  <span class="fw-bolder fs-3">{{ item.StatusCount }}</span>
+                </div>
+              </div>
+              <div>
+                <img src="./assets/Images/pie-chart.png" />
+              </div>
+            </mat-card>
+          </div>
+          <mat-card
+            class="font-weight-bolder card-heading-strip"
+            *ngIf="surveyorStatusList.length != 0"
+            >ASSESSOR</mat-card
+          >
+          <div class="main-dashboard" *ngIf="surveyorStatusList.length != 0">
+            <mat-card
+              matRipple
+              class="dashboard-card"
+              style="background-color: white !important; max-height: 90px"
+              *ngFor="let item of surveyorStatusList"
+              (click)="onViewClickedClaimData(item)"
+            >
+              <div class="small-chart">
+                <div class="fw-medium fs-5" style="color: black; opacity: 70%">
+                  {{ item.Statusdescrip }}
+                </div>
+                <div class="chart-text">
+                  <span class="fw-bolder fs-3">{{ item.StatusCount }}</span>
+                </div>
+              </div>
+              <div>
+                <img src="./assets/Images/pie-chart.png" />
+              </div>
+            </mat-card>
+          </div>
+          <mat-card
+            class="font-weight-bolder card-heading-strip"
+            *ngIf="garageStatusList.length != 0"
+            >GARAGE</mat-card
+          >
+          <div class="main-dashboard" *ngIf="garageStatusList.length != 0">
+            <mat-card
+              matRipple
+              class="dashboard-card"
+              style="background-color: white !important; max-height: 90px"
+              *ngFor="let item of garageStatusList"
+              (click)="onViewClickedClaimData(item)"
+            >
+              <div class="small-chart">
+                <div class="fw-medium fs-5" style="color: black; opacity: 70%">
+                  {{ item.Statusdescrip }}
+                </div>
+                <div class="chart-text">
+                  <span class="fw-bolder fs-3">{{ item.StatusCount }}</span>
+                </div>
+              </div>
+              <div>
+                <img src="./assets/Images/pie-chart.png" />
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="panelOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <i class="bx bx-grid-alt"></i> My Recent Activities
+        </mat-panel-title>
+        <mat-divider></mat-divider>
+      </mat-expansion-panel-header>
+
+      <div class="">
+        <ng-container *ngIf="tableData1">
+          <mat-card class="font-weight-bolder card-heading-strip">
+            <i class="far fa-folder-open mx-2"></i>Top Recent
+            Activities</mat-card
+          >
+          <div class="group-btns my-2 text-center">
+            <button mat-stroked-button (click)="onFilterByDays('3')">
+              Last 3 Days
+            </button>
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="onFilterByDays('6')"
+            >
+              Last 6 Days
+            </button>
+            <button
+              mat-stroked-button
+              color="accent"
+              (click)="onFilterByDays('12')"
+            >
+              Last 12 Days
+            </button>
+            <button
+              mat-stroked-button
+              color="warn"
+              (click)="onFilterByDays('30')"
+            >
+              Last 30 Days
+            </button>
+          </div>
+          <app-data-table-one
+            [data]="tableData1"
+            [cols]="columnHeader1"
+            [innercols]="innerColumnHeader1"
+          >
+          </app-data-table-one>
+        </ng-container>
+        <ng-container *ngIf="!tableData1">
+          <app-loader></app-loader>
+        </ng-container>
+      </div>
+
+      <!-- <ng-container *ngIf="tableData">
+                <mat-card class="font-weight-bolder card-heading-strip"> <i class="far fa-folder-open mx-2"></i>All Recent Activities</mat-card>
+
+                <app-data-table-one [data]="tableData" [cols]="columnHeader" [innercols]="innerColumnHeader">
+                </app-data-table-one>
+            </ng-container>
+            <ng-container *ngIf="!tableData">
+                <app-loader></app-loader>
+            </ng-container> -->
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

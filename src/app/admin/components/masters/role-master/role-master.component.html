@@ -1,0 +1,181 @@
+<div class="card">
+   
+        <div class="card-header d-flex justify-content-between">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> ROLE MASTER</h6>
+            </div>
+            <div class="admin-grid-header">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{RoleListForm.value.InsuranceId}}</b>
+            </div>
+
+        </div>
+
+        <!-- <form [formGroup]="RoleListForm">
+
+            <div class="row my-3">
+                <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto2">
+                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onChangeCompanyList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="RoleListForm.get('InsuranceId').errors">
+                            {{RoleListForm.controls['InsuranceId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 offset-md-5 col-lg-3 offset-lg-5" *ngIf="panelOpen">
+                    <button mat-raised-button color="warn" (click)="onAddNew()">
+                      ADD NEW ROLE
+                    </button>
+                </div>
+            </div>
+        </form> -->
+        <div class="card-body">
+        <div class="row">
+            <div class="col-1 offset-9 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNew(rolemodal)" style="width:200px;">
+                  ADD NEW ROLE
+                </button>
+            </div>
+        </div>
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,rolemodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+        </ng-container>
+        </div>
+   
+    <!--<ng-container *ngIf="!panelOpen">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsuranceComp | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div> 
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Role</mat-label>
+                        <input matInput type="text" formControlName="Roledesc" name="Roledesc" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Rolehierarchy</mat-label>
+                        <input matInput type="text" formControlName="Rolehierarchy" maxlength="10" appNumbersOnly name="Rolehierarchy" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <mat-radio-button value="R">Referral</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onSaveRoleDetials()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>-->
+</div>
+
+
+
+
+<ng-template #rolemodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Role Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2">
+                <!-- <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsuranceComp | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div> -->
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Role</mat-label>
+                        <input matInput type="text" formControlName="Roledesc" name="Roledesc" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Rolehierarchy</mat-label>
+                        <input matInput type="text" formControlName="Rolehierarchy" maxlength="10" appNumbersOnly name="Rolehierarchy" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="row my-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" name="Remarks" />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status" name="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                    </mat-radio-group>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSaveRoleDetials(modal)">Submit</button>
+    </div>
+  </ng-template>

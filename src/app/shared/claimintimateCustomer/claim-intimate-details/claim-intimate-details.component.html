@@ -1,0 +1,1045 @@
+<section id="header" class="">
+  <nav class="navbar navbar-expand-sm bg-motor navbar-motor shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <span *ngIf="insuranceId=='100002'"  class="" style="color:#362C82"><img  src="./assets/Images/logo.jpg" width="65"  /></span>
+        <span *ngIf="insuranceId=='100003'"  class="" style="color:#362C82"><img  src="./assets/Images/AllianceAfrica.PNG" width="300"  /></span>
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="collapsibleNavbar"
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link">
+              <i class="fas fa-user-tie"></i> {{ MobileNumber }}</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="onLogOut()">
+              <i class="fa fa-sign-out"></i> Logout</a
+            >
+          </li>
+          <!-- <li class="nav-item">
+                      <a class="nav-link" [routerLink]="['/Login/Assessor']" routerLinkActive="router-link-active"> <i class="fas fa-user-tie"></i> Assessor</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" [routerLink]="['/Login/Garage']" routerLinkActive="router-link-active"> <i class="fas fa-car"></i> Garage</a>
+                  </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+</section>
+<section>
+    <div
+      class="col-12 d-sm-flex flex-sm-row justify-content-sm-between align-items-center h-100"
+    >
+      <div class="hero2 flex-md-grow-1 rounded-3 overflow-hidden" style="height: 80svh;">
+        <div
+          class="hero2-shadow h-100 d-flex items-center flex-column justify-content-center"
+          style="padding: 14px"
+        >
+          <h5
+            class="motor-get-started-content__Heading motor-get-started-content__Heading--mobile-large motor-get-started-content__Heading--main-heading"
+          >
+            Quick & Easy Car Insurance Claims
+          </h5>
+          <div class="progress-step-indicator-wrapper centerProgress">
+            <div class="progress-step-indicator-video-wrapper"></div>
+            <div
+              style="
+                padding: 10px;
+                border-radius: 10px;
+                background-color: #fff !important;
+                width: 90%;
+              "
+            >
+              <ul class="progressbar">
+                <li [ngClass]="{ active: !claimSection }">Claim Details</li>
+                <li
+                  [ngClass]="{ active: !claimSection && !causeOfLossSection }"
+                >
+                  Cause Of Loss
+                </li>
+                <li
+                  [ngClass]="{
+                    active:
+                      !claimSection &&
+                      !causeOfLossSection &&
+                      !incidentInfoSection
+                  }"
+                >
+                  Additional Info
+                </li>
+                <li
+                  [ngClass]="{
+                    active:
+                      !claimSection &&
+                      !causeOfLossSection &&
+                      !incidentInfoSection &&
+                      !locationSection
+                  }"
+                >
+                  Location Info
+                </li>
+                <li>Document Info</li>
+              </ul>
+              <div class="progress" *ngIf="claimSection">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  0%
+                </div>
+              </div>
+              <div class="progress" *ngIf="causeOfLossSection">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 20%"
+                  aria-valuenow="20"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  20%
+                </div>
+              </div>
+              <div class="progress" *ngIf="incidentInfoSection">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 40%"
+                  aria-valuenow="40"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  40%
+                </div>
+              </div>
+              <div class="progress" *ngIf="locationSection">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 60%"
+                  aria-valuenow="60"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  60%
+                </div>
+              </div>
+              <div class="progress" *ngIf="documentSection">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 80%"
+                  aria-valuenow="80"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  80%
+                </div>
+              </div>
+              <div class="progress" *ngIf="finalSection">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 100%"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  100%
+                </div>
+              </div>
+            </div>
+
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 p-2 hero-content round-0" style="width: 35svw">
+        <div
+          class="card content-box content-box--margin-bottom content-box--is-padded content-box--limit-max-width formContent"
+          *ngIf="claimSection"
+        >
+          <div class="row align-items-center">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <h1
+                class="motor-get-started-content__Heading motor-get-started-content__Heading--sub-heading"
+              >
+                Accident Details
+              </h1>
+            </div>
+            <div
+              class="col-12 col-md-8 col-lg-8 col-xl-8 my-1"
+              style="padding-top: 10px; text-align: end"
+            >
+              <span
+                ><b>{{ policyNumber }}</b></span
+              ><br />
+              <span class="text-end" *ngIf="claimRefNo"
+                >ClaimNo - <b>{{ claimRefNo }}</b></span
+              >
+            </div>
+          </div>
+          <hr class="divider divider--is-dark-gray divider--is-margin-20px" />
+          <div
+            class="card-body"
+            style="
+              overflow-y: scroll;
+              overflow-x: hidden !important;
+              max-height: 550px;
+              padding: 0px !important;
+            "
+          >
+            <div class="grid-x grid-padding-x" style="display: flex">
+              <div class="cell large-12">
+                <div class="row">
+                  <div class="col-1 col-md-1 col-lg-1 col-xl-1">
+                    <input
+                      class="checkbox checkboxCenter checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin"
+                      (change)="onSelectValue($event.target.checked)"
+                      [(ngModel)]="checkValidate"
+                      type="radio"
+                      name="email"
+                      value="Y"
+                    />&nbsp;
+                  </div>
+                  <div class="col-11 col-md-11 col-lg-11 col-xl-11">
+                    <b
+                      >I will be honest and truthful in claim process. I also
+                      agree for <span *ngIf="insuranceId=='100002'"> Alliance Insurance</span><span *ngIf="insuranceId=='100003'">Allaince Africa General Insurance Limited</span> to look into my insurance
+                      history,where applicable
+                    </b>
+                    <div class="input-form-error" *ngIf="checkAcknowledgeError">
+                      <div class="error-text text-danger">
+                        Please Select Declaration
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cell large-12 mt-3">
+                <div class="row">
+                  <div class="col-10 col-md-10 col-lg-10 col-xl-10">
+                    <b>When did the Accident Occur?</b>
+                  </div>
+                </div>
+                <div class="row mt-2 d-flex flex-row align-items-center">
+                  <div class="col-1 col-md-1 col-lg-1 col-xl-1 d-flex align-item-center justify-content-center">
+                    <input
+                      class="checkbox checkboxCenter checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin"
+                      type="checkbox"
+                      id="incidentDateType1"
+                      name="incidentDateType1"
+                      (change)="onIncidentTypeChange('T')"
+                      [checked]="incidentDateType == 'T'"
+                    />&nbsp;
+                  </div>
+                  <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                    <span [ngClass]="{'boldestPick': incidentDateType == 'T'}">Today</span>
+                  </div>
+                  <div class="col-1 col-md-1 col-lg-1 col-xl-1 d-flex align-item-center justify-content-center">
+                    <input
+                      class="checkbox checkboxCenter checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin"
+                      type="checkbox"
+                      id="incidentDateType2"
+                      name="incidentDateType2"
+                      (change)="onIncidentTypeChange('Y')"
+                      [checked]="incidentDateType == 'Y'"
+                    />&nbsp;
+                  </div>
+                  <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                    <span [ngClass]="{'boldestPick': incidentDateType == 'Y'}">Yesterday</span>
+                  </div>
+                  <div class="col-1 col-md-1 col-lg-1 col-xl-1 d-flex align-item-center justify-content-center">
+                    <input
+                      class="checkbox checkboxCenter checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin"
+                      type="checkbox"
+                      id="incidentDateType3"
+                      name="incidentDateType3"
+                      (change)="onIncidentTypeChange('O')"
+                      [checked]="incidentDateType == 'O'"
+                    />&nbsp;
+                  </div>
+                  <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                    <span [ngClass]="{'boldestPick': incidentDateType == 'O'}">Other</span>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-10 col-lg-10 col-xl-10">
+                    <mat-form-field
+                      appearance="outline"
+                      class="mat-form-width"
+                      style="width: 100% !important"
+                    >
+                      <input
+                        matInput
+                        [max]="maxDate"
+                        [matDatepicker]="picker"
+                        (dateChange)="onAccidentDateChange()"
+                        placeholder="Accident Date"
+                        [(ngModel)]="incidentDate"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <span
+                      >Policy Period({{ policyFrom }} - {{ policyTo }})</span
+                    >
+                    <div class="input-form-error" *ngIf="incidentDateError">
+                      <div class="error-text text-danger">
+                        Please Select Accident Date
+                      </div>
+                    </div>
+                    <div class="input-form-error" *ngIf="incidentDateBtwnError">
+                      <div class="error-text text-danger">
+                        Select Accident Date Between Policy Period
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cell large-12 mt-3">
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-xl-10">
+                    <b>What Time did the Accident Occur?</b>&nbsp;(24Hrs Format)
+                  </div>
+                  <div class="col-md-10 col-lg-10 col-xl-10">
+                    <input
+                      matInput
+                      type="text"
+                      atp-time-picker
+                      class="text-input rounded-3 p-3"
+                      [(ngModel)]="incidentTime"
+                      required
+                    /><button (click)="openTimePicker()">Select Time</button>
+                      <!-- <input class="text-input rounded-3 p-3" [(ngModel)]="incidentTime" matInput [ngxMatTimepicker]="picker" placeholder="Choose a time" >
+                      <ngx-mat-timepicker-toggle  [for]="picker"></ngx-mat-timepicker-toggle>
+                      <ngx-mat-timepicker #picker ></ngx-mat-timepicker>
+                    <div class="input-form-error" *ngIf="incidentTimeError">
+                      <div class="error-text text-danger">
+                        Please Select Accident Time
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="cell large-12 mt-3">
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-xl-10">
+                    <b>Email ID</b>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-xl-10">
+                    <div class="text-input-wrapper">
+                      <input
+                        class="text-input rounded-3 p-3"
+                        type="text"
+                        name="emailId"
+                        [(ngModel)]="emailId"
+                        placeholder="Please Enter EmailId"
+                        id="motor-get-started-contact-number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <!-- <div class="input-form-error" *ngIf="accidentLocationError">
+                        <div class="error-text text-danger">
+                            Please Enter Accident Address
+                        </div>
+                    </div> -->
+                </div>
+              </div>
+              <div class="cell large-12 mt-3" *ngIf="tableData1">
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-xl-10">
+                    <b
+                      >Which Item(s) would you like to include in your Claim?</b
+                    >
+                    <div class="input-form-error" *ngIf="chassisNoError">
+                      <div class="error-text text-danger">
+                        Please Select Any Item
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <div class="col-8 col-md-8 col-lg-8 col-xl-8"></div>
+                  <div class="col-4 col-md-4 col-lg-4 col-xl-4">
+                    <input class="text-input rounded-3 p-3" type="text" name="searchValue" (keyup)="onSearchData()" [(ngModel)]="searchValue" placeholder="Search Vehicle" id="motor-get-started-contact-number" value=""/>
+                  </div>
+                </div>
+                <ng-container *ngIf="filteredData.length!=0">
+                  <div class="row mt-1" *ngFor="let entry of filteredData">
+                    <div class="col-1 col-md-1 col-lg-1 col-xl-1">
+                      <input
+                        class="checkbox checkboxCenter checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin"
+                        type="checkbox"
+                        id="vehicleId"
+                        name="vehicleId"
+                        (change)="onSelectChassisNo(entry)"
+                        [checked]="checkChassisSelection(entry)"
+                      />&nbsp;
+                    </div>
+                    <div class="col-10 col-md-10 col-lg-10 col-xl-10">
+                      <b
+                        >{{ entry?.VehicleInfo?.Vehiclemakemodel }}&nbsp;|&nbsp;{{
+                          entry?.VehicleInfo?.Vehiclemodeldesc
+                        }}</b
+                      >&nbsp;|&nbsp;{{ entry?.VehicleInfo?.Platenocharacter }}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="filteredData.length==0">
+                  <div class="text-center">
+                    <b>No Data Available</b>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="grid-x grid-padding-x"><div class="cell large-12"><div class="numberplate-input-parent-wrapper"><p class="numberplate-input-label">Fax No</p><div class="
+                  numberplate-input-wrapper
+                  
+                "><input class="sessioncamhidetext text-input text-input--is-numberplate-input" style="line-height:0.4em;" type="text" name="numberPlate" placeholder="ex. PINE 123 GP" id="motor-get-started-number-plate" value="">
+                <p class="form-input-error-message"></p></div></div></div></div> -->
+
+          <!--disabled="" -->
+          <div class="card-footer">
+            <div class="text-center">
+              <button
+                (click)="onProceed('back')"
+                class="button button-is--transparent"
+                id="motor-get-started-start-button"
+                style="background-color: transparent"
+              >
+                Back</button
+              >&nbsp;
+              <button
+                (click)="onSaveAccidentInfo()"
+                class="button button-is--transparent"
+                id="motor-get-started-start-button"
+                style="background-color: transparent"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card content-box content-box--margin-bottom content-box--is-shadowed content-box--is-padded content-box--limit-max-width formContent"
+          *ngIf="causeOfLossSection"
+        >
+          <div class="d-flex justify-content-between">
+            <div>
+              <h1
+                class="motor-get-started-content__Heading motor-get-started-content__Heading--sub-heading"
+              >
+                Loss Info
+              </h1>
+            </div>
+            <div class="my-1" style="padding-top: 20px">
+              <span
+                ><b>{{ policyNumber }}</b></span
+              ><br />
+              <span *ngIf="claimRefNo"
+                >ClaimNo - <b>{{ claimRefNo }}</b></span
+              >
+            </div>
+          </div>
+          <hr class="divider divider--is-dark-gray divider--is-margin-20px" />
+          <div
+            class="card-body"
+            style="
+              overflow-y: scroll;
+              overflow-x: hidden !important;
+              max-height: 550px;
+              padding: 0px !important;
+            "
+          >
+            <div class="row">
+              <div class="col-md-10 col-lg-10 col-xl-10">
+                <b>What is the nature of the loss?</b>
+              </div>
+            </div>
+            <div class="input-form-error" *ngIf="lossTypeError">
+              <div class="error-text text-danger">Please Select Any Loss</div>
+            </div>
+            <div *ngFor="let loss of lossTypeList; let i = index">
+              <div class="inputGroup">
+                <ng-container>
+                  <input
+                    [id]="'orginwarehouse_' + i"
+                    type="radio"
+                    name="originatingWarehouse1"
+                    [(ngModel)]="lossTypeId"
+                    (change)="onSelectLossType(loss)"
+                    [value]="loss.Code"
+                  />
+                  <label [for]="'orginwarehouse_' + i">{{
+                    loss.CodeDesc
+                  }}</label>
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- <div class="row mt-2">
+                      <div class="col-md-1 col-lg-1 col-xl-1">
+                        <input class="checkbox checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin" type="checkbox">&nbsp;
+                      </div>
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                            <b>Own Damage</b>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-1 col-lg-1 col-xl-1">
+                        <input class="checkbox checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin" type="checkbox">&nbsp;
+                      </div>
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                            <b>Theft</b>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-1 col-lg-1 col-xl-1">
+                        <input class="checkbox checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin" type="checkbox">&nbsp;
+                      </div>
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                            <b>Third Party Liability</b>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-1 col-lg-1 col-xl-1">
+                        <input class="checkbox checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin" type="checkbox">&nbsp;
+                      </div>
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                            <b>Wind Screen</b>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-1 col-lg-1 col-xl-1">
+                        <input class="checkbox checkbox--is-bordered checkbox--is-large checkbox--round checkbox--is-no-margin" type="checkbox">&nbsp;
+                      </div>
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                            <b>Passenger Liability</b>
+                      </div>
+                    </div> -->
+            <!-- <div class="row mt-2">
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                        <b>What is the Accident Type?</b>
+                      </div>
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                        <ng-select [items]="categories"
+                        bindLabel="name"
+                        placeholder="Select Accident Type"
+                        appendTo="body"
+                        [(ngModel)]="selected">
+                        </ng-select>
+                      </div>
+                    </div> -->
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="text-center">
+                <button
+                  (click)="onProceed('claim')"
+                  class="button button-is--transparent"
+                  id="motor-get-started-start-button"
+                  style="background-color: transparent"
+                >
+                  Back</button
+                >&nbsp;
+                <button
+                  (click)="onSaveLossTypeInfo()"
+                  class="button button-is--transparent"
+                  id="motor-get-started-start-button"
+                  style="background-color: transparent"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card content-box content-box--margin-bottom content-box--is-shadowed content-box--is-padded content-box--limit-max-width  formContent"
+          *ngIf="incidentInfoSection"
+        >
+          <div class="d-flex justify-content-between">
+            <div>
+              <h1
+                class="motor-get-started-content__Heading motor-get-started-content__Heading--sub-heading"
+              >
+                Cause Of Loss
+              </h1>
+            </div>
+            <div class="my-1" style="padding-top: 10px">
+              <span
+                ><b>{{ policyNumber }}</b></span
+              ><br />
+              <span class="text-end" *ngIf="claimRefNo"
+                >ClaimNo - <b>{{ claimRefNo }}</b></span
+              >
+            </div>
+          </div>
+
+          <hr class="divider divider--is-dark-gray divider--is-margin-20px" />
+          <div
+            class="card-body"
+            style="
+              overflow-y: scroll;
+              overflow-x: hidden !important;
+              max-height: 550px;
+              padding: 0px !important;
+            "
+          >
+            <div class="row">
+              <div class="col-md-10 col-lg-10 col-xl-10">
+                <b>What is the Cause of this Loss?</b>
+              </div>
+            </div>
+            <div class="input-form-error" *ngIf="causeLossError">
+              <div class="error-text text-danger">
+                Please Select Actual Cause of this Loss
+              </div>
+            </div>
+            <div *ngFor="let loss of causesOfLossList; let i = index">
+              <div class="inputGroup">
+                <ng-container>
+                  <input
+                    [id]="'orginwarehouse_' + i"
+                    type="radio"
+                    name="causeOfLosses1"
+                    [(ngModel)]="causeLossId"
+                    (change)="onSelectCauseLossType(loss)"
+                    [value]="loss.CclCauseLossCode"
+                  />
+                  <label [for]="'orginwarehouse_' + i">{{
+                    loss.CclCauseLossDesc
+                  }}</label>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="text-center">
+              <button
+                (click)="onProceed('causeOfLoss')"
+                class="button button-is--transparent"
+                id="motor-get-started-start-button"
+                style="background-color: transparent"
+              >
+                Back</button
+              >&nbsp;
+              <button
+                (click)="onSaveCauseInfo()"
+                class="button button-is--transparent"
+                id="motor-get-started-start-button"
+                style="background-color: transparent"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card content-box content-box--margin-bottom content-box--is-shadowed content-box--is-padded content-box--limit-max-width formContent"
+          *ngIf="locationSection"
+        >
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <h1
+                class="motor-get-started-content__Heading motor-get-started-content__Heading--sub-heading"
+              >
+                Location Details
+              </h1>
+            </div>
+            <div
+              class="col-12 col-md-8 col-lg-8 col-xl-8 my-1"
+              style="padding-top: 10px; text-align: end !important">
+              <span
+                ><b>{{ policyNumber }}</b></span
+              ><br />
+              <span class="text-end" *ngIf="claimRefNo"
+                >ClaimNo - <b>{{ claimRefNo }}</b></span
+              >
+            </div>
+          </div>
+          <hr class="divider divider--is-dark-gray divider--is-margin-20px" />
+          <div
+            class="card-body"
+            style="
+              overflow-y: scroll;
+              overflow-x: hidden !important;
+              max-height: 550px;
+              padding: 0px !important;
+            "
+          >
+            <div class="row">
+              <div class="col-md-10 col-lg-10 col-xl-10">
+                <b>Where did Accident take place?</b>
+              </div>
+            </div>
+            <div class="cell large-12">
+              <div class="text-input-wrapper">
+                <input
+                  class="text-input rounded-3 p-3"
+                  type="text"
+                  name="contactNumber"
+                  [(ngModel)]="accidentAddress"
+                  placeholder="Please Enter Accident Address"
+                  id="motor-get-started-contact-number"
+                  value=""
+                />
+              </div>
+              <div class="input-form-error" *ngIf="accidentLocationError">
+                <div class="error-text text-danger">
+                  Please Enter Accident Address
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-10 col-lg-10 col-xl-10">
+                <b
+                  >State the exact purposes for which the vehicle was being used
+                  at the time of the accident
+                </b>
+              </div>
+              <div class="cell large-12">
+                <div class="text-input-wrapper">
+                  <input
+                    class="text-input rounded-3 p-3"
+                    type="text"
+                    name="contactNumber"
+                    [(ngModel)]="vehicleUsagePurpose"
+                    placeholder="Please Enter Vehicle Used Purpose"
+                    id="motor-get-started-contact-number"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-10 col-lg-10 col-xl-10">
+                <b>Who was driving the vehicle at the time of accident?</b>
+              </div>
+              <div class="cell large-12">
+                <div *ngFor="let loss of drivenList; let i = index">
+                  <div class="inputGroup">
+                    <ng-container>
+                      <input
+                        [id]="'drivenBy' + i"
+                        type="radio"
+                        name="drivenBy"
+                        [(ngModel)]="drivenBy"
+                        [value]="loss.Code"
+                      />
+                      <label [for]="'drivenBy' + i">{{ loss.CodeDesc }}</label>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="input-form-error" *ngIf="drivenByError">
+                <div class="error-text text-danger">
+                  Please Select Vehicle Driven By...
+                </div>
+              </div>
+            </div>
+            <ng-container *ngIf="drivenBy == 'Driver'">
+              <div class="cell large-12 mt-3">
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-xl-10">
+                    <b>Driver Name</b>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-xl-10">
+                    <div class="text-input-wrapper">
+                      <input
+                        class="text-input rounded-3 p-3"
+                        type="text"
+                        name="driverName"
+                        [(ngModel)]="driverName"
+                        placeholder="Please Enter Driver Name"
+                        id="motor-get-started-contact-number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- <div class="row">
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                        <b>Additional Details About Accident</b>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-10 col-lg-10 col-xl-10">
+                        <div class="app-speech-input" [class.app-speech-input-listening]="listening">
+                          <input class="app-speech-input-form-control form-control" type="text" [value]="message" [placeholder]="placeholder">
+                          <button class="app-speech-input-btn" [disabled]="listening" (click)="listen()"></button>
+                        </div>
+                      </div>
+                      
+                    </div> -->
+            <div class="row">
+              <div class="col-md-10 col-lg-10 col-xl-10">
+                <b
+                  >Statement of the person who was driving the vehicle at the
+                  time of accident.</b
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10 col-lg-10 col-xl-10">
+                <div class="text-input-wrapper">
+                  <textarea
+                    class="text-input rounded-3 p-3"
+                    [(ngModel)]="accidentInfo"
+                    cols="60"
+                    rows="3"
+                    placeholder="Please Enter Statement Of Accident"
+                  ></textarea>
+                </div>
+              </div>
+              <!-- <div class="col-md-2 col-lg-2 col-xl-2">
+                        <button mat-mini-fab color="primary" *ngIf="!recordSection" #tooltip1="matTooltip" matTooltip="Record Voice" matTooltipPosition="below" (click)="onRecordVoice()" matTooltipHideDelay="1000" >
+                            <i class="fa fa-microphone"></i>
+                        </button>
+                        <button mat-mini-fab color="primary" *ngIf="recordSection" #tooltip1="matTooltip" matTooltip="Record Voice" matTooltipPosition="below" (click)="onStopRecord()" matTooltipHideDelay="1000" >
+                          <i class="fa fa-stop-circle"></i>
+                        </button>
+                      </div> -->
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="text-center">
+              <button
+                (click)="onProceed('incidentInfo')"
+                class="button button-is--transparent"
+                id="motor-get-started-start-button"
+                style="background-color: transparent"
+              >
+                Back</button
+              >&nbsp;
+              <button
+                (click)="onSaveLocationDetails()"
+                class="button button-is--transparent"
+                id="motor-get-started-start-button"
+                style="background-color: transparent"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card content-box content-box--margin-bottom content-box--is-shadowed content-box--is-padded content-box--limit-max-width formContent"
+          *ngIf="documentSection"
+        >
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <h1
+                class="motor-get-started-content__Heading motor-get-started-content__Heading--sub-heading"
+              >
+                Document Details
+              </h1>
+            </div>
+            <div
+              class="col-12 col-md-8 col-lg-8 col-xl-8 my-1"
+              style="padding-top: 10px; text-align: end !important"
+            >
+              <span
+                ><b>{{ policyNumber }}</b></span
+              ><br />
+              <span class="text-end" *ngIf="claimRefNo"
+                >ClaimNo - <b>{{ claimRefNo }}</b></span
+              >
+            </div>
+          </div>
+          <hr class="divider divider--is-dark-gray divider--is-margin-20px" />
+          <div
+            class="card-body"
+            style="
+              overflow-y: scroll;
+              overflow-x: hidden !important;
+              max-height: 550px;
+              padding: 0px !important;
+            "
+          >
+            <mat-card class="my-2 p-0" *ngIf="claimInformation">
+              <ng-container *ngIf="claimInformation.ClaimRefNo != null">
+                <app-loss-accident-file
+                  pagefrom="lossInfo"
+                  [claimInfo]="claimInformation"
+                ></app-loss-accident-file>
+              </ng-container>
+            </mat-card>
+            <mat-card class="my-2 p-0" *ngIf="claimInformation">
+              <ng-container *ngIf="claimInformation.ClaimRefNo != null">
+                <app-loss-document-file
+                  pagefrom="lossInfo"
+                  [claimInfo]="claimInformation"
+                ></app-loss-document-file>
+              </ng-container>
+            </mat-card>
+            <!-- <div class="cell large-12">
+                      
+                      <div class="row mt-2">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                              <b>Accident Photos</b><br>
+                              <hr class="m-0 p-0">
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <ng-container>
+                      <input style="display: none;" type="file" [multiple]="true" (change)="onSelectAccidentPhotos($event.target.files,null,'direct')" #accidentfileInput multiple>
+                      <div id="container" appDragDrop (fileDropped)="onSelectAccidentPhotos($event,null,'direct')" (click)="accidentfileInput.click()" [ngClass]="{'pointerdisable': fileuploadDisable}">
+                          <div class="center">
+                              <i class="far fa-images"></i> Drag or Click
+                          </div>
+                      </div>
+                  </ng-container>
+                    <div [ngClass]="{'accidentphotos-container': AccidentPhotos?.length!=0}" *ngIf="AccidentPhotos.length!=0">
+                      <div class="d-flex justify-content-between" >
+                        <div>
+                            <h1 class="motor-get-started-content__Heading motor-get-started-content__Heading--sub-heading">Documents                    </h1>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="viewSection">
+                          <ng-container *ngFor="let item of AccidentPhotos;let i = index;">
+                              <mat-card class="col-md-6 col-lg-6 col-6 col-sm-6">
+                                  <div class="imgbox" *ngIf="item.FileType!='pdf'" style="
+                                    background-image: url({{item.url}});
+                                    background-position: center;
+                                    background-repeat: no-repeat;
+                                    background-size: cover;
+                                    height: 100px;
+                                    padding: 2px;">
+                                  </div>
+                                  <div class="imgbox" *ngIf="item.FileType=='pdf'" style="
+                                  background-size: cover;
+                                  height: 100px;
+                                  padding: 2px;">
+                                      
+                                  </div>
+                                  <div class="d-flex justify-content-center" *ngIf="!checkUploadimg(item,i)">
+                                      <a mat-raised-button *ngIf="item.FileType!='pdf'" (click)="onViewImage(item)"><i class="far fa-eye mx-1"></i></a>
+                                      <a mat-raised-button (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="onDeleteStaticDocument(item)"><i
+                                          class="far fa-trash-alt"></i></a>
+                                  </div>
+                                  <div class="d-flex  justify-content-center" *ngIf="checkUploadimg(item,i)">
+                                      <a mat-raised-button  *ngIf="item.FileType!='pdf'" (click)="onViewImage(item)"><i class="far fa-eye mx-1"></i></a>
+                                      <a mat-raised-button  (click)="onDownloadImage(item)" download="{{item.filename}}"><i
+                                          class="fas fa-download mx-1"></i></a>
+                                      <a mat-raised-button  *ngIf="item.JsonString.DocumentUploadDetails[0].Delete == 'Y'" (mouseenter)="fileuploadDisable=true" (mouseleave)="fileuploadDisable=false" (click)="onDeleteDocument(item)"><i
+                                          class="far fa-trash-alt"></i></a>
+          
+                                  </div>
+                                  <span class="text-center">{{item.fileName}}</span>
+                              </mat-card>
+                          </ng-container>
+                      </div>
+          
+                    </div> -->
+          </div>
+          <div class="card-footer mb-2">
+            <div class="text-center">
+              <button
+                class="button button-is--transparent"
+                (click)="onProceed('locationInfo')"
+              >
+                <span style="position: relative; bottom: 0.22rem"
+                  >Back</span
+                ></button
+              >&nbsp;
+              <!-- <button class="button button-is--transparent" *ngIf="AccidentPhotos.length !=0" (click)="onUploadFiles()"><span style="position:relative;bottom:0.22rem">Proceed</span></button>&nbsp; -->
+              <button
+                class="button button-is--transparent"
+                (click)="onProceed('finalInfo')"
+              >
+                <span style="position: relative; bottom: 0.22rem">Proceed</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card content-box content-box--margin-bottom content-box--is-shadowed content-box--is-padded content-box--limit-max-width formContent"
+          *ngIf="finalSection"
+        >
+          <div class="d-flex justify-content-between">
+            <div>
+              <h1
+                class="motor-get-started-content__Heading motor-get-started-content__Heading--sub-heading"
+              >
+                Claim Intimation
+              </h1>
+            </div>
+          </div>
+          <hr class="divider divider--is-dark-gray divider--is-margin-20px" />
+          <div class="d-flex w-100 flex-column align-item-center justify-content-center">
+            <div class="successBg text-center"></div>
+            <!-- <img src="../.././../assets/Images/success.png" width="200px" height="300px"> -->
+          </div>
+          <div class="d-flex flex-column gap-2">
+            <h5 class="text-center text-success">
+              Claim Intimated Successfully
+            </h5>
+            <br />
+            <hr class="m-0 p-0" />
+            <div class="d-flex justify-content-between">
+              <div><h5 class="text-center">Policy No -</h5></div>
+              <div>
+                <h5 class="text-center">{{ policyNumber }}</h5>
+                <br />
+              </div>
+            </div>
+            <hr class="m-0 p-0" />
+            <div class="d-flex justify-content-between">
+              <div><h5 class="text-center">Claim No -</h5></div>
+              <div>
+                <h5 class="text-center">{{ claimRefNo }}</h5>
+                <br />
+              </div>
+            </div>
+            <hr class="m-0 p-0" />
+          </div>
+          <div class="card-footer mb-2">
+            <div class="text-center mt-2">
+              <button class="button button-is--transparent">
+                <span
+                  style="position: relative; bottom: 0.22rem"
+                  (click)="onProceed('final')"
+                  >Okay</span
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>

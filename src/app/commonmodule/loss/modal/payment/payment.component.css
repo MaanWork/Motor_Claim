@@ -1,0 +1,58 @@
+.paymentForm .radio-toolbar input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+
+.paymentForm .radio-toolbar label {
+  margin-left: 0px;
+  display: inline-block;
+  background-color: white;
+  padding: 10px 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
+  border: 1px solid lightgrey;
+  cursor: pointer;
+
+}
+.payment-title{
+  border-bottom: 2px dotted #ccc;
+}
+
+.paymentForm .radio-toolbar input[type="radio"]:checked + label {
+  background-color: var(--ourcolor);
+  color: white;
+}
+
+.example-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #f1f1f1;
+}
+
+.mat-expansion-panel-header.mat-expanded,
+.mat-expansion-panel-header.mat-expanded:hover {
+  background-color: var(--ourcolor);
+  color: white;
+}
+
+
+ .payment-header{
+  background-color: var(--ourcolor);
+}
+.payment-header mat-panel-title{
+  color: white;
+
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 48px;
+}
+.payment-header:hover{
+  background-color: #493f96 !important;
+  color: black !important;
+
+}
+.myRippleColor{
+  background-color: #42536bc4;
+}

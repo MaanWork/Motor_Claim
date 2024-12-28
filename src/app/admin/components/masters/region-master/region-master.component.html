@@ -1,0 +1,260 @@
+<div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> REGION MASTER</h6>
+            </div>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-2 offset-10 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNewRegion(regionmodal)">
+              ADD NEW REGION
+            </button>
+            </div>
+        </div>
+        <ng-container *ngIf="tableData">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,regionmodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+        </ng-container>
+      </div>
+
+  
+</div>
+
+
+<ng-template #regionmodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Region Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="RegionForm">
+            <div class="row my-2">
+              
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Region Name</mat-label>
+                        <input matInput type="text" formControlName="RegionName" name="RegionName" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address 1</mat-label>
+                        <input matInput type="text" formControlName="Address1" required/>
+                        <mat-error *ngIf="RegionForm.get('Address1').errors">
+                            {{RegionForm.controls['Address1'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address 2</mat-label>
+                        <input matInput type="text" formControlName="Address2" />
+                        <mat-error *ngIf="RegionForm.get('Address2').errors">
+                            {{RegionForm.controls['Address2'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+
+
+                <!--<div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input type="text" placeholder="Select City" matInput formControlName="City" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCityValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCity | async" [value]="option.Sno">
+                                {{option.City}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="RegionForm.get('City').errors">
+                            {{RegionForm.controls['City'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>-->
+                <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Country</mat-label>
+                        <input type="text" placeholder="Select Country" matInput formControlName="Country" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeCountryValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCountry | async" [value]="option.Countryid">
+                                {{option.Countryname}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="RegionForm.get('Country').errors">
+                            {{RegionForm.controls['Country'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput type="text" formControlName="Phone" />
+                        <mat-error *ngIf="RegionForm.get('Phone').errors">
+                            {{RegionForm.controls['Phone'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <!--<div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput type="text" formControlName="Email" required/>
+                        <mat-error *ngIf="RegionForm.get('Email').errors">
+                            {{RegionForm.controls['Email'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>-->
+                <div class="col-12 col-md-4 col-lg-4 ">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" />
+                        <mat-error *ngIf="RegionForm.get('Remarks').errors">
+                            {{RegionForm.controls['Remarks'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSaveRegionDetials(modal)">Submit</button>
+    </div>
+  </ng-template>
+
+
+    <!--<ng-container *ngIf="!panelOpen">
+        <form [formGroup]="RegionForm">
+            <div class="row my-2">
+              
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Region Name</mat-label>
+                        <input matInput type="text" formControlName="RegionName" name="RegionName" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address 1</mat-label>
+                        <input matInput type="text" formControlName="Address1" required/>
+                        <mat-error *ngIf="RegionForm.get('Address1').errors">
+                            {{RegionForm.controls['Address1'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address 2</mat-label>
+                        <input matInput type="text" formControlName="Address2" />
+                        <mat-error *ngIf="RegionForm.get('Address2').errors">
+                            {{RegionForm.controls['Address2'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+
+
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input type="text" placeholder="Select City" matInput formControlName="City" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCityValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCity | async" [value]="option.City">
+                                {{option.City}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="RegionForm.get('City').errors">
+                            {{RegionForm.controls['City'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Country</mat-label>
+                        <input type="text" placeholder="Select Country" matInput formControlName="Country" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeCountryValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCountry | async" [value]="option.Countryid">
+                                {{option.Countryname}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="RegionForm.get('Country').errors">
+                            {{RegionForm.controls['Country'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput type="text" formControlName="Phone" />
+                        <mat-error *ngIf="RegionForm.get('Phone').errors">
+                            {{RegionForm.controls['Phone'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput type="text" formControlName="Email" required/>
+                        <mat-error *ngIf="RegionForm.get('Email').errors">
+                            {{RegionForm.controls['Email'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 ">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" />
+                        <mat-error *ngIf="RegionForm.get('Remarks').errors">
+                            {{RegionForm.controls['Remarks'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+                <button mat-raised-button color="primary" (click)="onSaveRegionDetials()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>-->
+
+

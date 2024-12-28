@@ -1,0 +1,118 @@
+<div class="card border-0">
+    <div class="row">
+    <div class="col-lg-12 col-md-12 col-12">
+
+   
+
+    <div class="card-header d-flex justify-content-between">
+        <div>
+            Vehicle Information
+        </div>
+        <div (click)="onViewInfo()">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Cover Type</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">
+                    {{VehicleInformation?.VehicleInfo?.Vehtype == null ? 'N/A': VehicleInformation?.VehicleInfo?.Vehtype}}
+                </div>
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Chassis No</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">
+                    {{VehicleInformation?.VehicleInfo?.ChassisNo == null ? 'N/A': VehicleInformation?.VehicleInfo?.ChassisNo}}
+                </div>
+
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Vehicle Make</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">
+                    {{VehicleInformation?.VehicleInfo?.Vehiclemakemodel == null ? 'N/A': VehicleInformation?.VehicleInfo?.Vehiclemakemodel}}
+
+                </div>
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Model</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">
+                    {{VehicleInformation?.VehicleInfo?.Vehiclemodeldesc == 'null' ? 'N/A': VehicleInformation?.VehicleInfo?.Vehiclemodeldesc}}
+
+                </div>
+
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Sum Insured</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">
+                    {{VehicleInformation?.VehicleInfo?.Suminsured == null ? 'N/A': VehicleInformation?.VehicleInfo?.Suminsured}}
+                </div>
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Body Type</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">
+                    {{VehicleInformation?.VehicleInfo?.Vehicletypedesc == null ? 'N/A': VehicleInformation?.VehicleInfo?.Vehicletypedesc}}
+
+
+                </div>
+
+
+            </div>
+        </li>
+        <ng-container>
+            <mat-expansion-panel [expanded]="panelOpen" class="noshadow">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="infopadding col-lg-3 col-md-3 bg-label">Engine No</div>
+                        <div class="infopadding col-lg-3 col-md-3 bg-value">
+                            {{VehicleInformation?.VehicleInfo?.Engineno == null ? 'N/A': VehicleInformation?.VehicleInfo?.Engineno}}
+                        </div>
+                        <div class="infopadding col-lg-3 col-md-3 bg-label">Seating Capacity</div>
+                        <div class="infopadding col-lg-3 col-md-3 bg-value">
+                            {{VehicleInformation?.VehicleInfo?.Seats == null ? 'N/A': VehicleInformation?.VehicleInfo?.Seats}}
+                        </div>
+
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="infopadding col-lg-3 col-md-3 bg-label">Year.of.Manuf</div>
+                        <div class="infopadding col-lg-3 col-md-3 bg-value">
+                            {{VehicleInformation?.VehicleInfo?.Manufactureyear == null ? 'N/A': VehicleInformation?.VehicleInfo?.Manufactureyear}}
+
+                        </div>
+                        <div class="infopadding col-lg-3 col-md-3 bg-label">Vehicle Color</div>
+                        <div class="infopadding col-lg-3 col-md-3 bg-value">
+                            N/A
+                        </div>
+
+                    </div>
+                </li>
+            </mat-expansion-panel>
+        </ng-container>
+
+    </ul>
+    </div>
+    <!-- <div class="col-lg-6 col-md-6 col-12">
+    <div class="mat-elevation-z8 ">
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="CoverName">
+              <th mat-header-cell *matHeaderCellDef> Cover Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.CoverName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="SumInsured">
+              <th mat-header-cell *matHeaderCellDef> Sum Insured </th>
+              <td mat-cell *matCellDef="let element"> {{element.SumInsured}} </td>
+            </ng-container>
+            <ng-container matColumnDef="IncludedTax">
+              <th mat-header-cell *matHeaderCellDef> Included Tax (%) </th>
+              <td mat-cell *matCellDef="let element"> {{element.IncludedTax}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          
+      </div>
+      </div> -->
+    </div>
+
+</div>

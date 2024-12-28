@@ -1,0 +1,255 @@
+<div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> LOSS TYPE MASTER</h6>
+            </div>
+            <div class="admin-grid-header mt-2">
+                <span>Insurance Company</span>&nbsp;~&nbsp;<b>{{LossGridForm.value.InsuranceId}}</b>
+            </div>
+        </div>
+        <div class="card-body">
+        <mat-tab-group class="mt-2">
+            <mat-tab label="Primary Loss">
+                <ng-template matTabContent>
+                    <div class="row mt-2">
+                        <div class="col-md-2 offset-md-10">
+                            <button mat-raised-button color="warn" (click)="onAddNewLossType('primary',lossmodal)">
+                                ADD NEW LOSS
+                              </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tableData">
+                        <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,lossmodal)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+                    </ng-container>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Secondary Loss">
+                <ng-template matTabContent>
+                    <div class="row mt-2">
+                        <div class="col-md-2 offset-md-10">
+                            <button mat-raised-button color="warn" (click)="onAddNewLossType('secondary',lossmodal)">
+                                ADD NEW LOSS
+                              </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tableData1">
+                        <app-admin-table [cols]="columnHeader1" [data]="tableData1" (onAction)="onActionHandler($event,lossmodal)"  changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+                    </ng-container>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+        </div>
+
+
+    
+
+</div>
+
+<ng-template #lossmodal let-modal>
+    <ng-contanier *ngIf="panel">
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Loss Type Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="LossTypeForm">
+            <div class="row my-2 mt-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Loss Category Name</mat-label>
+                        <input matInput type="text" formControlName="Categorydesc" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Loss Type</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="Typeid" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeLossTypet($event.option.value)">
+                            <mat-option *ngFor="let option of LossType" [value]="option.value">
+                                {{option.key}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" formControlName="Coreappcode" />
+                    </mat-form-field>
+                </div>
+                
+            </div>
+            <div class="row my-2 mt-2">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Applicable Policy Type</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Compyn">
+                        <mat-radio-button value="Y">Comprehensive</mat-radio-button>
+                        <mat-radio-button value="N">TPL</mat-radio-button>
+                        <mat-radio-button value="B">Both</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Surveyor Allotment</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="SurveyorYn">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="py-1">Garage Allotment</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="GarageYn">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="row my-2 mt-3">
+                <div class="col-12 col-md-4 col-lg-4 mt-3">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 mt-2">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 mt-2">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="Remarks" required/>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row my-2 mt-3">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Est Code</mat-label>
+                        <input type="text" placeholder="Est Code" matInput formControlName="CeolossType" [matAutocomplete]="auto3" >
+                        <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete" (optionSelected)="onChangeCurrencyValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCoeLossType | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Ref Type</mat-label>
+                        <input type="text" placeholder="Est Code" matInput formControlName="RefType" [matAutocomplete]="auto4">
+                        <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete" (optionSelected)="onChangeValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredRefType | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 mt-2 mb-2">
+                <button class="btn btn-warning" (click)="getDocumentDetails()">Applicable Documents</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSaveLossTypeDetails(modal)">Submit</button>
+    </div>
+</ng-contanier>
+  </ng-template>
+
+
+<!--<ng-container *ngIf="!panelOpen">
+    <form [formGroup]="LossTypeForm">
+        <div class="row my-2 mt-2">
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Loss Category Name</mat-label>
+                    <input matInput type="text" formControlName="Categorydesc" required />
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field class="mat-form-width" appearance="fill">
+                    <mat-label>Loss Type</mat-label>
+                    <input type="text" placeholder="Select Insurance" matInput formControlName="Typeid" [matAutocomplete]="auto" required>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeLossTypet($event.option.value)">
+                        <mat-option *ngFor="let option of LossType" [value]="option.value">
+                            {{option.key}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Core App Code</mat-label>
+                    <input matInput type="text" formControlName="Coreappcode" />
+                </mat-form-field>
+            </div>
+            
+        </div>
+        <div class="row my-2 mt-2">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="py-1">Applicable Policy Type</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Compyn">
+                    <mat-radio-button value="Y">Comprehensive</mat-radio-button>
+                    <mat-radio-button value="N">TPL</mat-radio-button>
+                    <mat-radio-button value="B">Both</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="py-1">Surveyor Allotment</div>
+                <mat-radio-group aria-label="Select an option" formControlName="SurveyorYn">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="py-1">Garage Allotment</div>
+                <mat-radio-group aria-label="Select an option" formControlName="GarageYn">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div class="row my-2 mt-3">
+            <div class="col-12 col-md-4 col-lg-4 mt-3">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                <div class="py-1">Status</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Status">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput type="text" formControlName="Remarks" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 mt-2 mb-2">
+            <button class="btn btn-warning" (click)="getDocumentDetails()">Applicable Documents</button>
+        </div>
+
+        <mat-action-row class="justify-content-center">
+            <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+            <button mat-raised-button color="primary" (click)="onSaveLossTypeDetails()">Submit</button>
+        </mat-action-row>
+    </form>
+</ng-container>-->

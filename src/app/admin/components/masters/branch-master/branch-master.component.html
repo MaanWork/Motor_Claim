@@ -1,0 +1,596 @@
+<div class="card">
+        <div class="card-header">
+            <div class="card-tiltle">
+                <h6 class="admin-title-header"> <i class="fas fa-user-tie"></i> BRANCH MASTER</h6>
+            </div>
+    
+        </div>
+        <div class="card-body">
+      
+        <form [formGroup]="BranchForm">
+
+            <div class="row my-3">
+                <!-- <div class="col-4">
+          <mat-form-field class="mat-form-width" appearance="fill">
+            <mat-label>Insurance Company</mat-label>
+            <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId"
+              [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+              (optionSelected)="onChangeCompanyList($event.option.value)">
+              <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                {{option.CodeDesc}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="BranchForm.get('InsuranceId').errors">
+              {{BranchForm.controls['InsuranceId'].errors.message}}
+            </mat-error>
+          </mat-form-field>
+  
+        </div> -->
+                <div class="col-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Region</mat-label>
+                        <input type="text" placeholder="Select Region" matInput formControlName="RegionCode" [matAutocomplete]="auto1">
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredRegionList | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="BranchForm.get('RegionCode').errors">
+                            {{BranchForm.controls['RegionCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="admin-grid-header col-4 offset-10" *ngIf="BranchForm.controls.RegionCode.value !=''">
+                    <button mat-raised-button color="warn" (click)="onAddNewBranch(branchmodal)">
+              ADD NEW
+            </button>
+        </div>
+
+            </div>
+        </form>
+        <div *ngIf="BranchListGrid?.length > 0">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,branchmodal)" (onChangeCheckBox)="onChangeCheckBox($event)" changestatus="true" (onStatus)="onstatus($event)"></app-admin-table>
+        </div>
+        </div>
+
+  
+
+    <!--<ng-container *ngIf="!panelOpen">
+        <form [formGroup]="BranchFormValue">
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Branch Name</mat-label>
+                        <input matInput type="text" formControlName="branchName" required />
+                        <mat-error *ngIf="BranchFormValue.get('belongingBranch').errors">
+                            {{BranchFormValue.controls['belongingBranch'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" formControlName="coreAppCode" required />
+                        <mat-error *ngIf="BranchFormValue.get('coreAppCode').errors">
+                            {{BranchFormValue.controls['coreAppCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address1</mat-label>
+                        <input matInput type="text" formControlName="address1" />
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address2</mat-label>
+                        <input matInput type="text" formControlName="address2" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Belonging Branch</mat-label>
+                        <input matInput type="text" formControlName="belongingBranch" required />
+                        <mat-error *ngIf="BranchFormValue.get('belongingBranch').errors">
+                            {{BranchFormValue.controls['belongingBranch'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input matInput type="text" formControlName="city" />
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Country</mat-label>
+                        <input matInput type="text" formControlName="country" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Destination CountryId</mat-label>
+                        <input matInput type="text" formControlName="destinationCountryId" required />
+                        <mat-error *ngIf="BranchFormValue.get('destinationCountryId').errors">
+                            {{BranchFormValue.controls['destinationCountryId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput type="text" formControlName="phone" required />
+                        <mat-error *ngIf="BranchFormValue.get('phone').errors">
+                            {{BranchFormValue.controls['phone'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput type="text" formControlName="email" required />
+                        <mat-error *ngIf="BranchFormValue.get('email').errors">
+                            {{BranchFormValue.controls['email'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="insCompanyId" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="BranchFormValue.get('insCompanyId').errors">
+                            {{BranchFormValue.controls['insCompanyId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Region</mat-label>
+                        <input type="text" placeholder="Select Region" matInput formControlName="regionCode" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredRegionList | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="BranchFormValue.get('regionCode').errors">
+                            {{BranchFormValue.controls['regionCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Abbreviation</mat-label>
+                        <input matInput type="text" formControlName="currencyAbbreviation" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Acronym</mat-label>
+                        <input matInput type="text" formControlName="currencyAcronym" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Decimal Digit</mat-label>
+                        <input matInput type="text" formControlName="currencyDecimalDigit" />
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Decimal Name</mat-label>
+                        <input matInput type="text" formControlName="currencyDecimalName" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Name</mat-label>
+                        <input matInput type="text" formControlName="currencyName" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Decimal Places</mat-label>
+                        <input matInput type="text" formControlName="decimalPlaces" />
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Department Code</mat-label>
+                        <input matInput type="text" formControlName="deptCode" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Tax</mat-label>
+                        <input matInput type="text" formControlName="tax" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Exchange Id</mat-label>
+                        <input matInput type="text" formControlName="exchangeId" />
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Fax</mat-label>
+                        <input matInput type="text" formControlName="fax" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Header Image</mat-label>
+                        <input matInput type="text" formControlName="headerImg" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Footer Image</mat-label>
+                        <input matInput type="text" formControlName="footerImg" />
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Sign Image</mat-label>
+                        <input matInput type="text" formControlName="signImg" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput type="text" formControlName="effectiveDate" required />
+                        <mat-error *ngIf="BranchFormValue.get('effectiveDate').errors">
+                            {{BranchFormValue.controls['effectiveDate'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="remarks" />
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-action-row class="justify-content-center">
+                <button mat-raised-button color="primary" (click)="onSaveBranchDetials()">Submit</button>
+            </mat-action-row>
+        </form>
+    </ng-container>-->
+</div>
+
+
+
+<ng-template #branchmodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Branch Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="BranchFormValue">
+            <div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Branch Name</mat-label>
+                        <input matInput type="text" formControlName="branchName" required />
+                    
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Core App Code</mat-label>
+                        <input matInput type="text" formControlName="coreAppCode" required />
+                        <mat-error *ngIf="BranchFormValue.get('coreAppCode').errors">
+                            {{BranchFormValue.controls['coreAppCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <!--<mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input matInput type="text" formControlName="city" />
+
+                    </mat-form-field>-->
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>City</mat-label>
+                        <input type="text" placeholder="Select City" matInput formControlName="city" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCityValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredCity | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                      
+                    </mat-form-field>
+                </div>
+                <!--<div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address1</mat-label>
+                        <input matInput type="text" formControlName="address1" />
+
+                    </mat-form-field>
+                </div>-->
+            </div>
+            <!--<div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Address2</mat-label>
+                        <input matInput type="text" formControlName="address2" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Belonging Branch</mat-label>
+                        <input matInput type="text" formControlName="belongingBranch" required />
+                        <mat-error *ngIf="BranchFormValue.get('belongingBranch').errors">
+                            {{BranchFormValue.controls['belongingBranch'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+              
+            </div>-->
+            <div class="row my-2">
+                <div class="col-4">
+                    <!--<mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Country</mat-label>
+                        <input matInput type="text" formControlName="country" />
+                    </mat-form-field>-->
+                    
+                        <mat-form-field class="mat-form-width" appearance="fill">
+                            <mat-label>Country</mat-label>
+                            <input type="text" placeholder="Select Country" matInput formControlName="country" [matAutocomplete]="auto2" required>
+                            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onChangeCountryValue($event.option.value)">
+                                <mat-option *ngFor="let option of filteredCountry | async" [value]="option.Code">
+                                    {{option.CodeDesc}}
+                                </mat-option>
+                            </mat-autocomplete>
+                         
+                        </mat-form-field>
+                   
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Region</mat-label>
+                        <input type="text" placeholder="Select Region" matInput formControlName="regionCode" [matAutocomplete]="auto1" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="onChangeRegionList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredRegionLists | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="BranchFormValue.get('regionCode').errors">
+                            {{BranchFormValue.controls['regionCode'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <!--<div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Destination CountryId</mat-label>
+                        <input matInput type="text" formControlName="destinationCountryId" required />
+                        <mat-error *ngIf="BranchFormValue.get('destinationCountryId').errors">
+                            {{BranchFormValue.controls['destinationCountryId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput type="text" formControlName="phone" required />
+                        <mat-error *ngIf="BranchFormValue.get('phone').errors">
+                            {{BranchFormValue.controls['phone'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>-->
+            </div>
+            
+            <div class="row my-2">
+            <div class="col-lg-4">
+                <div class="py-1">Status</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Status">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                    <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                </mat-radio-group>
+            </div>
+            
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput type="text" formControlName="remarks" required/>
+
+                </mat-form-field>
+            </div>
+            </div>
+
+            <!--<div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput type="text" formControlName="email" required />
+                        <mat-error *ngIf="BranchFormValue.get('email').errors">
+                            {{BranchFormValue.controls['email'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="insCompanyId" [matAutocomplete]="auto" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeCompanyList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="BranchFormValue.get('insCompanyId').errors">
+                            {{BranchFormValue.controls['insCompanyId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+               
+            </div>-->
+            <!--<div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Abbreviation</mat-label>
+                        <input matInput type="text" formControlName="currencyAbbreviation" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Acronym</mat-label>
+                        <input matInput type="text" formControlName="currencyAcronym" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Decimal Digit</mat-label>
+                        <input matInput type="text" formControlName="currencyDecimalDigit" />
+
+                    </mat-form-field>
+                </div>
+            </div>-->
+            <!--<div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Decimal Name</mat-label>
+                        <input matInput type="text" formControlName="currencyDecimalName" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Currency Name</mat-label>
+                        <input matInput type="text" formControlName="currencyName" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Decimal Places</mat-label>
+                        <input matInput type="text" formControlName="decimalPlaces" />
+
+                    </mat-form-field>
+                </div>
+            </div>-->
+            <!--<div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Department Code</mat-label>
+                        <input matInput type="text" formControlName="deptCode" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Tax</mat-label>
+                        <input matInput type="text" formControlName="tax" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Exchange Id</mat-label>
+                        <input matInput type="text" formControlName="exchangeId" />
+
+                    </mat-form-field>
+                </div>
+            </div>-->
+            <!--<div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Fax</mat-label>
+                        <input matInput type="text" formControlName="fax" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Header Image</mat-label>
+                        <input matInput type="text" formControlName="headerImg" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Footer Image</mat-label>
+                        <input matInput type="text" formControlName="footerImg" />
+
+                    </mat-form-field>
+                </div>
+            </div>-->
+            <!--<div class="row my-2">
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Sign Image</mat-label>
+                        <input matInput type="text" formControlName="signImg" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput type="text" formControlName="effectiveDate" required />
+                        <mat-error *ngIf="BranchFormValue.get('effectiveDate').errors">
+                            {{BranchFormValue.controls['effectiveDate'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+               
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput type="text" formControlName="remarks" />
+
+                    </mat-form-field>
+                </div>
+            </div>-->
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onSaveBranchDetials(modal)">Submit</button>
+    </div>
+  </ng-template>

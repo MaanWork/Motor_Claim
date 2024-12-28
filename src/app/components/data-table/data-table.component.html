@@ -1,0 +1,151 @@
+<mat-form-field class="mt-3">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort>
+    <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(columnHeader)">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
+            <ng-container *ngIf="columnHeader[tableData] != 'GARAGEALLOTED'">
+                {{ columnHeader[tableData] }}
+
+            </ng-container>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="
+          columnHeader[tableData] != 'VIEW' &&
+          columnHeader[tableData] != 'ACTION' &&
+          columnHeader[tableData] != 'EDIT' &&
+          columnHeader[tableData] != 'PDF' &&
+          columnHeader[tableData] != 'ACTIONS' &&
+          columnHeader[tableData] != 'SELECT' &&
+          columnHeader[tableData] != 'SELECTCLAIM' &&
+          columnHeader[tableData] != 'LOSS STATUS' &&
+          columnHeader[tableData] != 'SELECTS' &&
+          columnHeader[tableData] != 'GARAGE STATUS' &&
+          columnHeader[tableData] != 'CLAIMOFFICER' &&
+          columnHeader[tableData] != 'VIEW GARAGE' &&
+          columnHeader[tableData] != 'LPO' &&
+          columnHeader[tableData] != 'Quote Processed By'
+        ">
+                {{ element[tableData] == null ? "N/A" : element[tableData] }}
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'VIEW'">
+                <button mat-raised-button color="primary" (click)="onViewData(element)">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'EDIT'">
+                <button mat-raised-button color="primary" (click)="onEditClaimData(element)">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'PDF'">
+                <span class="hidemobileview" *ngIf="element.ClaimStatus != 'Claim Intimated'">N/A</span>
+                <button class="btn btn-primary" *ngIf="element.ClaimStatus == 'Claim Intimated'" (click)="onGeneratePdf(element)"><i class="fas fa-download"></i></button>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'ACTION'">
+                <button class="mx-1" mat-raised-button color="primary" [disabled]="element[tableData] == 'N'" (click)="onGetClaimLossDetails(element)">
+          <i class="fas fa-marker"></i>
+        </button>
+                <button class="mx-1" *ngIf="logindata.UserType == 'claimofficer' && element.GarageAllotedDetail" mat-raised-button color="primary" (click)="onViewGarageList(element)">
+          Garage
+        </button>
+
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'PAYMENT'">
+                <button mat-raised-button color="primary" [disabled]="logindata.UserType != 'claimofficer'">
+          <i class="fab fa-amazon-pay"></i>
+        </button>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'LOSS STATUS'">
+                <button mat-mini-fab color="accent" class="mx-1" (click)="onLossStatusView(element)">
+          <i class="fas fa-eye"></i>
+        </button>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'ACTIONS'">
+
+                <ng-container *ngIf="(element.Status != 'AS' && element.Status != 'SR' && element.Status != 'AS') || (logindata.UserType == 'claimofficer')">
+                    <button mat-mini-fab color="warn" class="mx-1" (click)="onLossModalView(element)">
+            <i class="fas fa-marker"></i>
+          </button>
+                    <button mat-mini-fab color="primary" [disabled]="logindata.UserType != 'claimofficer'" class="mx-1" (click)="onLossDelete(element)">
+            <i class="far fa-trash-alt"></i>
+          </button>
+                    <button mat-mini-fab color="accent" class="mx-1" [disabled]="logindata.UserType != 'claimofficer' || (element.UserType =='surveyor' &&  element.GarageYn != 'Y')" (click)="onAssignToSurveyor(element)">
+            <i class="fas fa-users-cog"></i>
+          </button>
+                </ng-container>
+                
+                <ng-container *ngIf="(element.Status == 'AS'|| element.Status == 'SR' || element.Status == 'AS') && (logindata.UserType == 'surveyor')">
+                    <div class="d-flex custombtncontainer">
+                        <div [class.active]="statusApproved" class="selectcustombtn mat-elevation-z4" (click)="onsurveyorApproverStatus('SA',element)" matRipple>
+                            Approved
+                        </div>
+                        <div [class.active]="element.Status == 'SR'" class="selectcustombtn mat-elevation-z4" (click)="onsurveyorApproverStatus('SR',element)" matRipple>
+                            Reject
+                        </div>
+                        <div [class.active]="element.Status == 'AS'" class="selectcustombtn mat-elevation-z4" (click)="onsurveyorApproverStatus('AS',element)" matRipple>
+                            Pending
+                        </div>
+                    </div>
+                </ng-container>
+
+
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'Quote Processed By'">
+                <div class="d-flex custombtncontainer">
+                    
+                    <div [class.active]="element[tableData] == 'Surveyor'" class="selectcustombtn mat-elevation-z4" (click)="onSelectQuoteProcessed(element,'Surveyor')"  matRipple>
+                       ASSESSOR
+                    </div>
+                    <div [class.active]="element[tableData] == 'Garage'" class="selectcustombtn mat-elevation-z4" (click)="onSelectQuoteProcessed(element,'Garage')"  matRipple>
+                        GARAGE
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'SELECTCLAIM'">
+                <mat-radio-button (change)="onClaimSelection(element.Loginid)" [value]="element.Loginid" [checked]="element.AllotedApproverYn == 'Y'"></mat-radio-button>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'SELECT'">
+                <mat-radio-button (change)="onSurveyorSelection(element)" [value]="element.SurveyorId" [checked]="element.AllottedYN == 'Y'"></mat-radio-button>
+            </ng-container>
+
+            <ng-container *ngIf="columnHeader[tableData] == 'SELECTS'">
+                <mat-checkbox class="example-margin" [value]="element.GarageId" [ngModel]="garageSet(element.AllottedYN, element.GarageId)" (change)="onGarageChange($event, element.GarageId)"></mat-checkbox>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'GARAGE STATUS'">
+                <span *ngIf="element[tableData] == 'Y'">Approved</span>
+                <span *ngIf="element[tableData] == 'R'">Rejected</span>
+                <span *ngIf="element[tableData] == 'N'">Pending</span>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'CLAIMOFFICER'">
+                <span *ngIf="element[tableData] == 'CA'">Approved</span>
+                <span *ngIf="element[tableData] == 'CR'">Rejected</span>
+                <span *ngIf="element[tableData] == 'Y'">Pending</span>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'VIEW GARAGE'">
+                <button mat-mini-fab color="warn" class="mx-1" (click)="onMoveToGarageSheet(element)" [disabled]="element.ApprovedYn !='Y'">
+          <i class="fas fa-eye"></i>
+        </button>
+            </ng-container>
+            <ng-container *ngIf="columnHeader[tableData] == 'LPO'">
+                <button mat-mini-fab color="primary" class="mx-1" (click)="onMoveToLOPSheet(element)" [disabled]="element.AllotedYn !='CA' && (element.Status == 'QS' || element.Status || 'QAFG' && 
+                element.Status == 'RQFG' || element.Status || 'QAFG')">
+          <i class="fas fa-edit"></i>
+        </button>
+            </ng-container>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="objectKeys(columnHeader)"></tr>
+    <tr mat-row *matRowDef="let row; columns: objectKeys(columnHeader)" [ngClass]="{ 'make-gold': row.AllottedYN == 'Y' }"></tr>
+</table>
+<table>
+    <tr *ngIf="!dataSource.data.length">
+        <td style="text-align: center" [attr.colspan]="objectKeys(columnHeader).length">
+            No Records Found!
+        </td>
+    </tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+</mat-paginator>

@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+section {
+  font-family: 'Muli', 'Roboto', sans-serif !important;
+}
+
+#hero {
+  min-height: 550px;
+}
+
+#hero .hero-content,
+#hero .hero-bg {
+  width: 50%;
+
+}
+
+#hero .hero-bg {
+  height: 550px;
+}
+
+.hero-actions {
+  padding: 1rem 0;
+}
+
+.EClaimBtn{
+  color: white;
+  background-color: #090909;
+  border-radius: 8px;
+  padding: 1.3rem 2rem;
+}
+
+.EClaimBtn:hover{
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  background-color: black;
+}
+
+.hero-bg{
+  background: url(../../../assets/Images/tesla_black.png);
+  background-size: cover;
+}
+
+
+/* .hero-actions button:first-child {
+  overflow: hidden;
+  color: #fff;
+  background: #ec6608;
+  padding: 1.3rem 2rem;
+}
+
+.hero-actions button:last-child {
+  overflow: hidden;
+  color: #ec6608;
+  background: transparent;
+  border: #ec6608 2px solid;
+  padding: 1.2rem 2rem;
+} */
+
+/* .hero-actions button {
+  border-radius: 30px;
+  border: 0;
+} */
+
+.hero-title {
+  font-size: 50px;
+  color: #33358C;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+}
+
+.hero-subtitle{
+  font-size: 20px;
+  color: #282828;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content-title {
+  color: #282828;
+  font-size: 48px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+}
+
+#content-1 .content-title {
+  text-align: center;
+  padding: 3rem;
+}
+
+#content-1 .d-sm-flex ,#content-2 .d-sm-flex{
+  gap: 20px;
+}
+
+#content-1 .content-card {
+  padding: 3rem;
+  text-align: center;
+  width: 25%;
+}
+
+#content-1 .content-card-title {
+  font-size: 25px;
+  font-weight: 500;
+  color: #ec6608;
+  padding-bottom: 12px;
+}
+
+.card-contents:hover {
+  box-shadow:0 1.4rem 3.5rem rgba(0,0,0, .175);
+  background-color: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
+}
+
+.card-contents{
+  padding: 2rem;
+  box-shadow: 0 1rem 3rem rgba(0,0,0, .175);
+  background-color: white;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+#content-1 .content-card-body {
+  font-size: 20px;
+  font-weight: 200;
+}
+
+
+#content-2 .content-card:first-child{
+  width: 30%;
+}
+#content-2 .content-card:last-child{
+  width: 60%;
+  padding: 1rem 3rem;
+}
+#content-2 .content-body{
+  line-height: 1.7;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.imageShow {
+  background: url(../../../assets/Images/tesla_blue.png);
+  object-fit: cover;
+}

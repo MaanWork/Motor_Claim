@@ -1,0 +1,184 @@
+<div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> COUNTRY MASTER</h6>
+            </div>
+            <!--<mat-panel-description class="admin-grid-header">
+            </mat-panel-description>-->
+        </div>
+        <div class="row mt-2">
+            <div class="col-2 offset-10 mr-5">
+                <button mat-raised-button color="warn" (click)="onAddNew(countrymodal)">
+                ADD NEW COUNTRY
+              </button>
+            </div>
+        </div>
+        <div class="card-body">
+        <div *ngIf="countryListGrid?.length > 0">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event,countrymodal)" changestatus="true" (onStatus)="onstatus($event)" (onChangeCheckBox)="onChangeCheckBox($event)"></app-admin-table>
+        </div>
+        <div class="text-center" *ngIf="countryListGrid?.length == 0 && InsuCode!=''">
+            <h3>No Data Available</h3>
+        </div>
+        </div>
+
+    </div>
+
+
+<ng-template #countrymodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Country Master</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="FormGroupData">
+            <div class="row my-2 mt-3">
+              
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Country Name</mat-label>
+                        <input matInput type="text" formControlName="Countryname" maxlength="50" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Country Shortname</mat-label>
+                        <input matInput type="text" formControlName="Countryshortname" maxlength="50" />
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+                <!--<div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Nationality</mat-label>
+                        <input matInput type="text" formControlName="Nationalityname" maxlength="50" />
+                    </mat-form-field>
+                </div>-->
+                 <div class="col-12 col-md-4 col-lg-4">
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Nationality</mat-label>
+                        <input type="text" placeholder="Select Nationality"  matInput formControlName="Nationalityname" [matAutocomplete]="auto2" required>
+                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onChangeCountryValue($event.option.value)">
+                            <mat-option *ngFor="let option of filteredNationalityList | async" [value]="option.CodeDesc">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Nationality Core Appcode</mat-label>
+                        <input matInput type="text" formControlName="Nationalitycoreappcode" maxlength="10" appNumbersOnly required/>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Country Core Appcode</mat-label>
+                        <input matInput type="text" formControlName="Countrycoreappcode" maxlength="10" appNumbersOnly required/>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-2">
+    
+                <div class="col-4">
+                    <div class="py-1">Status</div>
+                    <mat-radio-group aria-label="Select an option" formControlName="Status">
+                        <mat-radio-button value="Y">Active</mat-radio-button>
+                        <mat-radio-button value="N">De-Active</mat-radio-button>
+                        <!--<mat-radio-button value="R">Referral</mat-radio-button>-->
+                    </mat-radio-group>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="fill" class="mat-form-width">
+                        <mat-label>Remarks</mat-label>
+                        <textarea matInput type="text" formControlName="Remarks" maxlength="200"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--modal.close('Save click')-->
+        <button mat-raised-button color="warn" (click)="modal.dismiss('Cross click')">Close</button>
+        <button mat-raised-button color="primary" (click)="onFormSubmit(modal)">Submit</button>
+    </div>
+  </ng-template>
+
+<!--<ng-container *ngIf="!panelOpen">
+    <form [formGroup]="FormGroupData">
+        <div class="row my-2 mt-3">
+          
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Country Name</mat-label>
+                    <input matInput type="text" formControlName="Countryname" maxlength="50" />
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Country Shortname</mat-label>
+                    <input matInput type="text" formControlName="Countryshortname" maxlength="50" />
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Effective Date</mat-label>
+                    <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="effectiveValue" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Nationality</mat-label>
+                    <input matInput type="text" formControlName="Nationalityname" maxlength="50" />
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Nationality Core Appcode</mat-label>
+                    <input matInput type="text" formControlName="Nationalitycoreappcode" maxlength="10" appNumbersOnly />
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Country Core Appcode</mat-label>
+                    <input matInput type="text" formControlName="Countrycoreappcode" maxlength="10" appNumbersOnly />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row my-2">
+
+            <div class="col-4">
+                <div class="py-1">Status</div>
+                <mat-radio-group aria-label="Select an option" formControlName="Status">
+                    <mat-radio-button value="Y">Active</mat-radio-button>
+                    <mat-radio-button value="N">De-Active</mat-radio-button>
+                    <mat-radio-button value="R">Referral</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="fill" class="mat-form-width">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput type="text" formControlName="Remarks" maxlength="200"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+    <mat-action-row class="justify-content-center">
+        <button mat-raised-button color="warn" (click)="onCloseForm()">Back</button>
+        <button mat-raised-button color="primary" (click)="onFormSubmit()">Submit</button>
+    </mat-action-row>
+</ng-container>-->

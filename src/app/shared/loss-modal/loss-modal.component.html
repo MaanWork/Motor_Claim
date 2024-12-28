@@ -1,0 +1,140 @@
+
+<div class="d-flex justify-content-between">
+    <div>
+        <h2 mat-dialog-title>Loss Information</h2>
+    </div>
+    <div *ngIf="approverName">
+        <h2 mat-dialog-title>Approver ~ {{approverName}}</h2>
+    </div>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="card-header d-flex justify-content-between">
+        <div>
+            Loss Name - {{LossTypeDes}} &nbsp;&nbsp; | &nbsp;&nbsp; Loss Id - {{subLossTypeId}}
+        </div>
+        <div (click)="onViewInfo()">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+    <ul class="list-group list-group-flush mx-2" *ngIf="panelOpen">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Claim No</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">{{claimDetails?.ClaimNo == null ? 'N/A': claimDetails?.ClaimNo}}
+                </div>
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Claim Ref No</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">{{claimDetails?.Claimrefno == null ? 'N/A': claimDetails?.Claimrefno}}
+                </div>
+
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Party Name</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">
+                </div>
+                <div class="infopadding col-lg-3 col-md-3 bg-label">Party Id</div>
+                <div class="infopadding col-lg-3 col-md-3 bg-value">{{LossInformation?.PartyNo == null ? 'N/A': LossInformation?.PartyNo}}
+                </div>
+
+            </div>
+        </li>
+    </ul>
+    <form [formGroup]="primaryLossFrom">
+        <mat-card class="my-2 p-0">
+            <ng-container *ngIf="PolicyInformation && PolicyInformation != undefined">
+                <app-vehicle-information [VehicleInformation]="PolicyInformation"></app-vehicle-information>
+            </ng-container>
+        </mat-card>
+        <div *ngIf="garageYN!='Y'">
+            <mat-card class="my-2 p-0">
+                <app-loss-document-file lossAcc="Y" pagefrom="lossInfo"></app-loss-document-file>
+            </mat-card>
+            <mat-card class="my-2 p-0">
+                <ng-container *ngIf="LossInformation && LossInformation != undefined">
+                        <app-secondary-loss [hidebtn]="data.hidebtn" *ngIf="(subLossTypeId != '48' && subLossTypeId != '49' && subLossTypeId != '50' &&
+                        subLossTypeId != '7' && subLossTypeId != '6' && subLossTypeId != '8' && subLossTypeId != '9')" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                        </app-secondary-loss>
+    
+                        <app-total-loss-by-accident *ngIf="subLossTypeId == '48'" [hidebtn]="data.hidebtn" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                        </app-total-loss-by-accident>
+                        <!-- <app-total-loss-by-theft *ngIf="subLossTypeId == '49'" [hidebtn]="data.hidebtn" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                        </app-total-loss-by-theft> -->
+                        <app-total-loss-by-fire *ngIf="subLossTypeId == '50'" [hidebtn]="data.hidebtn" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                        </app-total-loss-by-fire>
+    
+                        <app-total-theft *ngIf="subLossTypeId == '9' || subLossTypeId == '49'" [hidebtn]="data.hidebtn" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                        </app-total-theft>
+                </ng-container>
+            </mat-card>
+        </div>
+        <div *ngIf="garageYN=='Y' && (subLossTypeId != '48' && subLossTypeId != '49' && subLossTypeId != '50' &&
+        subLossTypeId != '7' && subLossTypeId != '6' && subLossTypeId != '8' && subLossTypeId != '9')">
+            <mat-card class="my-2 p-0">
+                <ng-container>
+                    <app-loss-map [form]="primaryLossFrom"></app-loss-map>
+                </ng-container>
+            </mat-card>
+
+            <mat-card class="my-2 p-0">
+                <app-loss-accident-file lossAcc="Y" pagefrom="lossInfo" [lossInfo]="LossInformation"></app-loss-accident-file>
+            </mat-card>
+            <mat-card class="my-2 p-0">
+                <app-loss-dmage-parts [WhoView]="WhoView" pageFrom="lossEdit" approvedSection="none" (DamageListValues)="getDamageListValues($event)" [form]="primaryLossFrom" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
+            </mat-card>
+            <mat-card class="my-2 p-0">
+                <app-loss-document-file lossAcc="Y" pagefrom="lossInfo" [lossInfo]="LossInformation"></app-loss-document-file>
+            </mat-card>
+            <mat-card class="my-2 p-0">
+                <app-loss-surveyor-document-file [lossInfo]="LossInformation"></app-loss-surveyor-document-file>
+            </mat-card>
+            <mat-card class="my-2 p-0">
+                <app-loss-driver-details [form]="primaryLossFrom" [claimIntimate]="ClaimIntimateInformation">
+                </app-loss-driver-details>
+            </mat-card>
+            <mat-card class="my-2 p-0">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xl-4 offset-2 mt-3 mb-2">
+                        <div class="py-1">VAT Required?</div>
+                        <mat-radio-group aria-label="Select an option" [(ngModel)]="VatYN" [ngModelOptions]="{standalone: true}" name="VatYN">
+                            <mat-radio-button value="Y">Yes</mat-radio-button>
+                            <mat-radio-button value="N">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div *ngIf="totalAmount" class="col-md-4 col-lg-4 col-xl-4 offset-2 mt-3 mb-2">
+                        <div class="py-1">Total Amount</div>
+                        <span><b>{{totalAmount}}</b></span>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div *ngIf="subLossTypeId == '6' || subLossTypeId == '7' || subLossTypeId == '8'">
+            <mat-card class="my-2 p-0">
+                <app-loss-document-file lossAcc="Y" pagefrom="lossInfo"></app-loss-document-file>
+            </mat-card>
+            <mat-card class="my-2 p-0">
+                <ng-container *ngIf="LossInformation && LossInformation != undefined">
+                   
+                    <app-secondary-loss [hidebtn]="data.hidebtn" *ngIf="subLossTypeId == '8'" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                    </app-secondary-loss>
+                    <app-tplbody-injury *ngIf="subLossTypeId == '7'" [hidebtn]="data.hidebtn" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                    </app-tplbody-injury>
+                    <app-tpldeath *ngIf="subLossTypeId == '6'" [hidebtn]="data.hidebtn" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                    </app-tpldeath>
+                    <app-lossReport *ngIf="subLossTypeId == '6' || subLossTypeId == '7'" [hidebtn]="data.hidebtn" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                    </app-lossReport>
+                    <!-- <app-tplproperty-damage *ngIf="subLossTypeId == '8'" [hidebtn]="data.hidebtn" [secdLossInfo]="LossInformation" (onSubmitFrom)="getSubmitLoss($event)">
+                    </app-tplproperty-damage> -->
+                </ng-container>
+            </mat-card>
+        </div>
+
+    </form>
+</mat-dialog-content>
+<div class="my-2 text-center p-1" *ngIf="garageYN=='Y' && (subLossTypeId != '6' && subLossTypeId != '7' && subLossTypeId != '8')">
+    <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button *ngIf="!data.hidebtn" class="mx-2" mat-raised-button color="accent" (click)="saveLossDetails('Save')">Save</button>
+    <button *ngIf="!data.hidebtn" class="mx-2" type="submit" mat-raised-button color="primary" (click)="saveLossDetails('Submit')">Submit</button>
+    <!-- <button *ngIf="logindata.UserType == 'claimofficer'" class="mx-2" type="submit" mat-raised-button color="primary" (click)="onClarifyingStatus()"
+    >Clarify</button> -->
+</div>

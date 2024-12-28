@@ -1,0 +1,64 @@
+<div class="card">
+
+        <div class="card-header">
+            <div class="card-title">
+                <h6 class="admin-title-header"><i class="fas fa-user-tie"></i> CLAIM MASTER</h6>
+            </div>
+            <div class="admin-grid-header">
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <label><b>Inurance Company</b></label><br> {{insuranceName}}
+                </div>
+                <div class="col-2 offset-6 mr-5">
+                    <button mat-raised-button color="warn" (click)="onAddNewClaim()">
+                        ADD NEW CLAIMOFFICER
+                      </button>
+                </div>
+                
+        <ng-container *ngIf="tableData && ClaimList.length!=0">
+            <app-admin-table [cols]="columnHeader" [data]="tableData" (onAction)="onActionHandler($event)">
+            </app-admin-table>
+        </ng-container>
+        <ng-container *ngIf="tableData && ClaimList.length==0">
+            <div class="row text-center">
+                <h3>No Data Available</h3>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!tableData && InsuGridCode!=''">
+            <app-loader></app-loader>
+        </ng-container>
+            </div>
+        </div>
+       
+        <!-- <form [formGroup]="ClaimInsForm">
+
+            <div class="row my-3">
+                <div class="col-4">
+                    <div class="col-4">
+                        <label><b>Inurance Company</b></label><br> {{insuranceName}}
+                    </div>
+                    <mat-form-field class="mat-form-width" appearance="fill">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Select Insurance" matInput formControlName="InsuranceId" [matAutocomplete]="auto4">
+                        <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete" (optionSelected)="onChangeCompanyGridList($event.option.value)">
+                            <mat-option *ngFor="let option of filteredInsurance | async" [value]="option.Code">
+                                {{option.CodeDesc}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="ClaimInsForm.get('InsuranceId').errors">
+                            {{ClaimInsForm.controls['InsuranceId'].errors.message}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </form> -->
+
+
+   
+    
+
+</div>

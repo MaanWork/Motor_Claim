@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <mat-card>
+        <mat-card class="font-weight-bolder card-heading-strip">
+                <div class="d-flex justify-content-start">
+                    <div><i class="far fa-folder-open mx-2"></i></div>
+                    <div>{{StatusData.Statusdescrip}}</div>
+                </div>
+        </mat-card>
+        <ng-container *ngIf="!tableData">
+            <app-loader></app-loader>
+        </ng-container>
+        <ng-container *ngIf="tableData">
+            <app-data-table-one [data]="tableData" [cols]="columnHeader" [innercols]="innerColumnHeader" (onClaimLossEdit)="onClaimLossEdit($event)" (onClaimLossStatusTrack)="onClaimLossStatusTrack($event)" (onGarageAccept)="onGarageAccept($event)" (onGarageReject)="onGarageReject($event)" (onAllotedGarage)="onAllotedGarage($event)">
+            </app-data-table-one>
+        </ng-container>
+
+    </mat-card>
+    <app-btn-footer></app-btn-footer>
+</div>

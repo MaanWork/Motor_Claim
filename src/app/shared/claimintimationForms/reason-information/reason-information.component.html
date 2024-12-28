@@ -1,0 +1,344 @@
+<div class="card material-shadow border-0">
+    <div class="card-header">
+        <div class="d-flex justify-content-between p-0">
+            <div class="flex-item">
+                <h5 class="card-title mb-0 p-0"><b>Reasons Information</b></h5>
+            </div>
+            <div class="flex-item" *ngIf="claimRefNo">
+                <h5 class="p-0"><b>Claim Ref No ~ {{claimRefNo}}</b></h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="createDamageToInsuVeh">
+            <div class="d-md-flex flex-md-row d-lg-flex flex-lg-row my-3">
+                <div class="p-2 flex-fill-item">
+                    <div class="">
+                        <div class="d-flex flex-wrap align-content-start m-2 typeofAccident">
+                            <div class="p-3 border">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="DamagetoInsu" [checked]="createDamageToInsuVeh.controls.DamgVehYn.value=='Y'" (change)="onTypeofAccident(1)" name="AccidentType1">&nbsp;&nbsp;
+                                    <label class="custom-control-label" for="DamagetoInsu"> Damage to Insured
+                                        Vehicle</label>
+                                </div>
+                            </div>
+                            <div class="p-3 border">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="othervehicle" [checked]="createDamageToInsuVeh.controls.DamgPropYn.value=='Y'" (change)="onTypeofAccident(2)" name="AccidentType2">&nbsp;&nbsp;
+                                    <label class="custom-control-label" for="othervehicle">
+                                        Other Vehicle Involved And Property Damaged
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="p-3 border">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="personInjur" [checked]="createDamageToInsuVeh.controls.DamgPersYn.value=='Y'" (change)="onTypeofAccident(3)" name="AccidentType3">&nbsp;&nbsp;
+                                    <label class="custom-control-label" for="personInjur">
+                                        Persons Injured
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="p-3 border">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="independentWitne" [checked]="createDamageToInsuVeh.controls.DamIndiYn.value=='Y'" (change)="onTypeofAccident(4)" name="AccidentType4">&nbsp;&nbsp;
+                                    <label class="custom-control-label" for="independentWitne">
+                                        Independent Witnesses
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="p-3 border">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="passInVehicle" [checked]="createDamageToInsuVeh.controls.DamPassenYn.value=='Y'" (change)="onTypeofAccident(5)" name="AccidentType5">&nbsp;&nbsp;
+                                    <label class="custom-control-label" for="passInVehicle">
+                                        Passengers In Your Vehicle
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card my-1" *ngIf="createDamageToInsuVeh.controls.DamgVehYn.value=='Y'">
+                <div class="card-header">
+                    Damage to Insured Vehicle
+                </div>
+                <div class="card-body">
+                    <div class="p-3">
+                        <div class="row my-1">
+                            <div class="col-md-5 offset-md-1">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>State briefly apparents damage</mat-label>
+                                    <input matInput formControlName="appartmentDamage" name="appartmentDamage">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-5 offset-md-1">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>Repair's name and address</mat-label>
+                                    <input matInput formControlName="repairNameAndAdrss" name="repairNameAndAdrss">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row my-1">
+                            <div class="col-md-5 offset-md-1">
+                                <label>Is the vehicle still in use?</label><br>
+                                <div class="radio-toolbar">
+                                    <input type="radio" value="Y" formControlName="isTheVehlStillUse" (change)="getVehicleStatus()" name="isTheVehlStillUse" id="isTheVehlStillUse_yes">
+                                    <label for="isTheVehlStillUse_yes">Yes</label>&nbsp;
+                                    <input type="radio" value="N" formControlName="isTheVehlStillUse" (change)="getVehicleStatus()" name="isTheVehlStillUse" id="isTheVehlStillUse_no">
+                                    <label for="isTheVehlStillUse_no">No</label>
+                                </div>
+                            </div>
+                            <div class="col-md-5 offset-md-1" *ngIf="createDamageToInsuVeh.controls.isTheVehlStillUse.value == 'Y'">
+                                <mat-form-field appearance="fill" class="mat-form-width">
+                                    <mat-label>When & Where</mat-label>
+                                    <input matInput formControlName="whenAndWhere" name="whenAndWhere" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div class="card my-1" *ngIf="createDamageToInsuVeh.controls.DamgPropYn.value=='Y'">
+            <div class="card-header">
+                Other Vehicle Involved And Property Damaged
+            </div>
+            <div class="card-body">
+                <div class="p-3">
+                    <ul class="list-group inlineTableEdit">
+                        <li class="list-group-item list-group-item-dark">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-1">
+                                    S.No
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    Name and Address of the Insured
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Registration No of Vehicle
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Name of Driver
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Address of the Driver
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Actions
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item" *ngFor="let item of otherVehicleInvolvedArray;let i=index">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-1">
+                                    {{i+1}}
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Nameofinsured">
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Vehregno">
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Nameofdriver">
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Addrofdriver">
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <button class="btn btn-warning mx-1" (click)="removeOtherVehicleInvolved(i)"><i
+                                            class="fas fa-trash-alt px-1"></i>Remove</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center my-2">
+                        <button class="btn btn-success mx-2" (click)="onAddRowOtherVehInv()">Add New</button>
+                    </div>
+                    <!-- {{ IndentWitnesArray | json}} -->
+                </div>
+            </div>
+        </div>
+        <div class="card my-1" *ngIf="createDamageToInsuVeh.controls.DamgPersYn.value=='Y'">
+            <div class="card-header">
+                Persons Injured
+            </div>
+            <div class="card-body">
+                <div class="p-3">
+                    <ul class="list-group inlineTableEdit">
+                        <li class="list-group-item list-group-item-dark">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-1">
+                                    S.No
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    Name
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Address
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    Whether Driver or Passenger & Reg Number of Vehicle
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Apparent Injuries
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Actions
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item" *ngFor="let item of personsInjuredArray;let i=index">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-1">
+                                    {{i+1}}
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Name">
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Address">
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Persontype">
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Apparentinjuries">
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <button class="btn btn-warning mx-1" (click)="removePersonsInjured(i)"><i
+                                            class="fas fa-trash-alt px-1"></i>Remove</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center my-2">
+                        <button class="btn btn-success mx-2" (click)="onAddRowPersonsInjured()">Add New</button>
+                    </div>
+                    <!-- {{ IndentWitnesArray | json}} -->
+                </div>
+            </div>
+        </div>
+        <div class="card my-1" *ngIf="createDamageToInsuVeh.controls.DamIndiYn.value=='Y'">
+            <div class="card-header">
+                Independent Witnesses
+            </div>
+            <div class="card-body">
+                <div class="p-3">
+                    <ul class="list-group inlineTableEdit">
+                        <li class="list-group-item list-group-item-dark">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2">
+                                    S.No
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    Name
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    Address
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Actions
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item" *ngFor="let item of IndentWitnesArray;let i=index">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2">
+                                    {{i+1}}
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <input type="text" class="form-control" [(ngModel)]="item.IndenWit_Name">
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <textarea class="form-control" [(ngModel)]="item.IndenWit_Address"></textarea>
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <button class="btn btn-warning mx-1" (click)="removeIndependentWitness(i)"><i
+                                            class="fas fa-trash-alt px-1"></i>Remove</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center my-2">
+                        <button class="btn btn-success mx-2" (click)="onAddRowIndependentWit()">Add New</button>
+                    </div>
+                    <!-- {{ IndentWitnesArray | json}} -->
+                </div>
+            </div>
+        </div>
+        <div class="card my-1" *ngIf="createDamageToInsuVeh.controls.DamPassenYn.value=='Y'">
+            <div class="card-header">
+                Passengers In Your Vehicle
+            </div>
+            <div class="card-body">
+                <div class="p-3">
+                    <ul class="list-group inlineTableEdit">
+                        <li class="list-group-item list-group-item-dark">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2">
+                                    S.No
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    Name
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    Address
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    Actions
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item" *ngFor="let item of passengersInVehicleArray;let i=index">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2">
+                                    {{i+1}}
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Name">
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <input type="text" class="form-control" [(ngModel)]="item.Address">
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <button class="btn btn-warning mx-1" (click)="removePassenInVeh(i)"><i
+                                            class="fas fa-trash-alt px-1"></i>Remove</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center my-2">
+                        <button class="btn btn-success mx-2" (click)="onAddRowPassengerInVehicle()">Add
+                            New</button>
+                    </div>
+
+                </div>
+                <!-- <div class="p-3">
+                    <div class="row my-1">
+                        <div class="col-md-3 offset-md-1">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Date</mat-label>
+                                <input matInput [max]="accidentMaxDate" [matDatepicker]="dobpicker"
+                                    required>
+                                <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                                <mat-datepicker #dobpicker [startAt]="startDate"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5 offset-md-3">
+                                <label>Signature</label><br>
+                                <input type="file" class="form-control" (change)="onSignatureFileSelected($event)">
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onReasonInfoSubmit()">Next</button>
+    </div>
+</div>

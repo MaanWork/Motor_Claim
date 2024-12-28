@@ -1,0 +1,110 @@
+<div class="card border-0">
+
+    <div class="card-header d-flex justify-content-between">
+      <div>
+        Policy Information
+      </div>
+      <div (click)="onViewInfo()">
+       <i class="fas fa-chevron-down"></i></div>
+      </div>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+          <div class="row">
+              <div class="col-lg-3 col-md-3 bg-label">Policy No</div>
+              <div class="col-lg-3 col-md-3 bg-value">
+                  {{
+                  PolicyInformation?.PolicyInfo?.PolicyNo == null
+                  ? "N/A"
+                  : PolicyInformation?.PolicyInfo?.PolicyNo
+                  }}
+              </div>
+              <div class="col-lg-3 col-md-3 bg-label">Policy Period</div>
+              <div class="col-lg-3 col-md-3 bg-value">
+                  {{ PolicyInformation?.PolicyInfo?.PolicyFrom?.split(" ")[0] }} |
+                  {{ PolicyInformation?.PolicyInfo?.PolicyTo?.split(" ")[0] }}
+              </div>
+          </div>
+      </li>
+      <li class="list-group-item">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 bg-label bg-label">Product</div>
+            <div class="col-lg-3 col-md-3 bg-value bg-value">
+              {{PolicyInformation?.PolicyInfo?.ProductDesc ==null
+              ?'N/A':PolicyInformation?.PolicyInfo?.ProductDesc}}
+            </div>
+            <div class="col-lg-3 col-md-3 bg-label">OutStanding Premium</div>
+          <div class="col-lg-3 col-md-3 bg-value">
+                {{PolicyInformation?.PolicyInfo?.OutstandingAmt == null ? 'N/A':
+                  PolicyInformation?.PolicyInfo?.OutstandingAmt}}
+          </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 bg-label"><b>Currency</b></div>
+            <div class="col-lg-8 col-md-8 bg-value text-center">
+              {{PolicyInformation?.PolicyInfo?.CurrencyName == null ?
+              'N/A':PolicyInformation?.PolicyInfo?.CurrencyName}}&nbsp;({{PolicyInformation?.PolicyInfo?.CurrencyCode == null ?
+                'N/A':PolicyInformation?.PolicyInfo?.CurrencyCode}})
+            </div>
+          </div>
+        </li>
+        <ng-container>
+          <mat-expansion-panel [expanded]="panelOpen" class="noshadow">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-lg-3 col-md-3 bg-label">Branch</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                  {{PolicyInformation?.PolicyInfo?.Branch == null ?
+                  'N/A':PolicyInformation?.PolicyInfo?.Branch}}
+    
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label">Broker</div>
+                    <div class="col-lg-3 col-md-3 bg-value">
+                      {{PolicyInformation?.PolicyInfo?.Broker == null ? 'N/A':
+                      PolicyInformation?.PolicyInfo?.Broker}}
+    
+                    </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-lg-3 col-md-3 bg-label">Bank</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                  {{PolicyInformation?.PolicyInfo?.Bank == null ? 'N/A':
+                  PolicyInformation?.PolicyInfo?.Bank}}
+
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label">U/W Year</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                  {{PolicyInformation?.PolicyInfo?.Uwyear == null ? 'N/A':
+                  PolicyInformation?.PolicyInfo?.Uwyear}}
+
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+
+                <div class="col-lg-3 col-md-3 bg-label">Agency Repair</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                  {{PolicyInformation?.PolicyInfo?.AgencyRepair == null ? 'N/A':
+                  PolicyInformation?.PolicyInfo?.AgencyRepair}}
+
+                </div>
+                <div class="col-lg-3 col-md-3 bg-label">Fleet Policy</div>
+                <div class="col-lg-3 col-md-3 bg-value">
+                  {{PolicyInformation?.PolicyInfo?.FleetPolicy == null ? 'N/A':
+                  PolicyInformation?.PolicyInfo?.FleetPolicy}}
+
+                </div>
+              </div>
+            </li>
+          </mat-expansion-panel>
+
+        </ng-container>
+
+    </ul>
+</div>
+

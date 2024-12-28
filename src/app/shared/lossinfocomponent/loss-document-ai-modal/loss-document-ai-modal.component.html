@@ -1,0 +1,77 @@
+<h2 mat-dialog-title>Document AI Information</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="card-body">
+        <div *ngFor="let document of documentDetails">
+            <div class="row">
+                <div class="text-center">
+                    <h2>{{document.Filename}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <img [src]="document.RawImage" class="img-fluid">
+                    <div class="d-flex justify-content-center">
+                        <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.RawImage)"><i class="far fa-eye mx-1"></i></a> -->
+                        <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.RawImage)"><i
+                                class="fas fa-download mx-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img [src]="document.PartsImage" class="img-fluid">
+                    <div class="d-flex justify-content-center">
+                        <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.PartsImage)"><i class="far fa-eye mx-1"></i></a> -->
+                        <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.PartsImage)"><i
+                class="fas fa-download mx-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img [src]="document.DamageImage" class="img-fluid">
+                    <div class="d-flex justify-content-center">
+                        <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.DamageImage)"><i class="far fa-eye mx-1"></i></a> -->
+                        <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.DamageImage)"><i
+                class="fas fa-download mx-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-10 offset-1" *ngIf="document.Report.length!=0">
+                    <table border="1" class="table table-hover table-striped responsive">
+                        <thead class="table-info">
+                            <tr>
+                                <th style="padding:15px;" class="customRow"><b>Part</b></th>
+                                <th style="padding:15px;" class="customRow"><b>Action</b></th>
+                                <th style="padding:15px;" class="customRow"><b>Damage</b></th>
+                                <th style="padding:15px;" class="customRow"><b>Region</b></th>
+                                <th style="padding:15px;" class="customRow"><b>Damage Severity</b></th>
+                                <th style="padding:15px;" class="customRow"><b>Internal Damage</b></th>
+                                <th style="padding:15px;" class="customRow"><b>Percentage</b></th>
+                                <th style="padding:15px;" class="customRow"><b>Cost Estimation</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let entry of  document.Report; let i = index">
+                                <td style="padding:5px;">{{entry.Part}}</td>
+                                <td style="padding:5px;">{{entry.Action}} </td>
+                                <td style="padding:5px;">{{entry.Damage}} </td>
+                                <td style="padding:5px;">{{entry.Region}} </td>
+                                <td style="padding:5px;">{{entry.Damageseverity}}</td>
+                                <td style="padding:5px;">{{entry.InternalDamage}} </td>
+                                <td style="padding:5px;">{{entry.Percentage}} </td>
+                                <td style="padding:5px;">{{entry.Costestimation}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-9" *ngIf="document.Report.length==0">
+                    <div class="text-center">
+                        <h4>No Damages Found</h4>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-card class="text-center">
+    <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+</mat-card>

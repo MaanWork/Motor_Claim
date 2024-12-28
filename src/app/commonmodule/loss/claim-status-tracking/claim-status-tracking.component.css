@@ -1,0 +1,106 @@
+.custom .fa-circle:before {
+  border-radius: 50%;
+  background: #cccc;
+  color: transparent;
+}
+
+.round-shape {
+  border: 1px solid #cccc;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.middle-line {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+
+.middle-box {
+  /* border: 1px solid #cccc; */
+  height: 100px;
+  position: relative;
+}
+
+.left-box {
+  height: 100px;
+  border: 1px solid #cccc;
+}
+
+.margin-left-minus {
+  margin-left: -45px;
+}
+
+.vertical-box{
+  width: 100px;
+  height: 150px;
+  position: relative;
+}
+.vertical-line{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-left: 1px solid #ccc;
+}
+
+.icon-middle{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* overflow: hidden; */
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+#outerContainer {
+  display: inline-block;
+}
+.fa-stack {
+  z-index: 1
+}
+.item {
+  /* z-index: 100; */
+  padding: 5px;
+}
+
+.circle {
+  border-radius: 50%;
+  background-color: skyblue;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  opacity: 0;
+  animation: scaleIn 4s infinite cubic-bezier(0.36, 0.11, 0.89, 0.32);
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5, 0.5);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(2.5, 2.5);
+    opacity: 0;
+  }
+}

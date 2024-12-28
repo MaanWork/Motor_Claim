@@ -1,0 +1,114 @@
+<div class="card my-1">
+    <div class="card-header">
+        {{LossTypeDes}}
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <form [formGroup]="createSecondaryForm">
+                    <div class="row my-2">
+                        <div class="col-4" *ngIf="LossTypeId == 48 || LossTypeId ==50">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Salvage Amount</mat-label>
+                                <input matInput formControlName="SalvageAmount" [required]="LossTypeId == 48 || LossTypeId ==50 ? '' : null">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4" *ngIf="LossTypeId == 48 || LossTypeId ==49 || LossTypeId ==50">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Excess Amount</mat-label>
+                                <input matInput formControlName="ExcessAmount" [required]="LossTypeId == 48 || LossTypeId ==49 || LossTypeId ==50 ? '' : null">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-4" *ngIf="LossTypeId == 48 || LossTypeId ==49 || LossTypeId ==50">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Depreciation Amount</mat-label>
+                                <input matInput formControlName="DepreciationAmount" [required]="LossTypeId == 48 || LossTypeId ==49 || LossTypeId ==50 ? '' : null">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>
+                                    <ng-container *ngIf="LossTypeId==28">Advocate Name</ng-container>
+                                    <ng-container *ngIf="LossTypeId==34">Court Name</ng-container>
+                                    <ng-container *ngIf="LossTypeId==37">Surveyor Name</ng-container>
+                                    <ng-container *ngIf="LossTypeId!=28 && LossTypeId!=34 && LossTypeId!=37">Company Name</ng-container>
+                                </mat-label>
+                                <input matInput formControlName="PayeeName"  required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Amount</mat-label>
+                                <input matInput formControlName="Amount" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="py-1">VAT Required?</div>
+                            <mat-radio-group aria-label="Select an option" [(ngModel)]="VatYN" [ngModelOptions]="{standalone: true}" name="VatYN">
+                                <mat-radio-button value="Y">Yes</mat-radio-button>
+                                <mat-radio-button value="N">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-12">
+                            <mat-form-field appearance="fill" class="mat-form-width">
+                                <mat-label>Remarks</mat-label>
+                                <textarea matInput formControlName="Remarks"></textarea>
+                            </mat-form-field>
+                        </div>
+                        
+                    </div>
+                    <div class="row my-2">
+                        
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="col-md-3 col-lg-3 col-xl-3">
+                <div class="lossdocument" *ngIf="LossTypeId==28 || LossTypeId==34 || LossTypeId==37 || LossTypeId==33 || LossTypeId==35 || LossTypeId==36 || LossTypeId==46">
+                    <ng-container *ngFor="let item of DocumentImageList">
+                        <mat-card class="imag-card">
+                            <div class="text-center d-flex" *ngIf="item.Mandatorystatus =='Y'">
+                                <div class="text-danger flex-fill text-center" >
+                                    Required *
+                                </div>
+                            </div>
+                            <input style="display: none;" type="file" (change)="onSelectAccidentPhotos($event,item)" #fileInput>
+                            <div id="Image_{{item.documentId}}" (click)="fileInput.click()" class="image-grid" style="
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            height: 150px;
+                            width: 100%;">
+                            </div>
+                            <div class="text-center">
+                                <span><b style="color: black;">{{item.Description}}</b></span>
+                                <br>
+                                <div>
+                                    {{item.fileName}}
+                                </div>
+                            </div>
+                            <div class="d-flex mt-1" *ngIf="my['image'+item.documentId]">
+                                <a mat-raised-button class="mx-1" ><i
+                      class="far fa-eye mx-1"></i></a>
+                                <a mat-raised-button class="mx-1" [href]="my['image'+item.documentId]" download><i
+                      class="fas fa-download mx-1"></i></a>
+                                <a mat-raised-button class="mx-1" ><i class="far fa-trash-alt"></i></a>
+                            </div>
+                        </mat-card>
+                    </ng-container>
+                </div>
+            </div> -->
+        </div>
+        
+        
+        
+    </div>
+    <div class="my-2 text-center p-1">
+        <button class="mx-2" mat-raised-button color="warn" mat-dialog-close>Close</button>
+        <button class="mx-2" *ngIf="!hidebtn" mat-raised-button color="accent" (click)="saveLossDetails('Save')">Save</button>
+        <button class="mx-2" *ngIf="!hidebtn" type="submit" mat-raised-button color="primary" (click)="saveLossDetails('Submit')">Submit</button>
+    </div>
+</div>
