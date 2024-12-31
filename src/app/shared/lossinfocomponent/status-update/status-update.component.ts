@@ -75,7 +75,7 @@ export class StatusUpdateComponent implements OnInit {
   }
 
   async onStatusList() {
-    console.log("Losss Details On Status Update",this.LossDetails,this.GarageLoss);
+    console.log("Losss Details On Status Update",this.LossDetails,this.GarageLoss,this.GaragaeAuthData);
     let partyNo = "";let lossId = "",garageId=null;
       if(this.data){
         if(this.data?.garageId) garageId=this.data?.garageId;
@@ -87,6 +87,10 @@ export class StatusUpdateComponent implements OnInit {
       else if(this.GaragaeAuthData){
           partyNo = this.GaragaeAuthData.PartyNo;
           lossId = this.GaragaeAuthData.LosstypeId;
+      }
+      else {
+        partyNo = sessionStorage.getItem("PartyNo");
+        lossId = sessionStorage.getItem("Losstypeid");
       }
       let status = "";
       if(this.LossDetails.Status== 'CLG' && this.LossDetails.newStatus != undefined){
@@ -152,6 +156,10 @@ export class StatusUpdateComponent implements OnInit {
       else if(this.GaragaeAuthData){
           partyNo = this.GaragaeAuthData.PartyNo;
           lossId = this.GaragaeAuthData.LosstypeId;
+      }
+      else {
+        partyNo = sessionStorage.getItem("PartyNo");
+        lossId = sessionStorage.getItem("Losstypeid");
       }
       let ReqObj = {
         "ClaimNo": this.LossDetails.ClaimNo,

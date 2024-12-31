@@ -48,6 +48,7 @@ export class LossService {
 
   public logindata: any;
   public claimDetails: any;
+  insuranceId: any;
 
   constructor(
     private http: HttpClient,
@@ -60,7 +61,7 @@ export class LossService {
   ) {
 
     this.logindata = JSON.parse(sessionStorage.getItem("Userdetails"))?.LoginResponse;
-
+    this.insuranceId = this.logindata.InsuranceId;
 
   }
 
@@ -330,7 +331,7 @@ export class LossService {
       }
       if (this.logindata.UserType == "garage") {
         sessionStorage.setItem("GarageLossDetails", JSON.stringify(row));
-        if (row.SubStatus == 'PLC' || row.SubStatus == 'QAFG' || row.SubStatus == 'GQA' || row.SubStatus == 'QRFG' || row.SubStatus == 'RQFG' || row.SubStatus == 'QS' || row.SubStatus == 'SD' || row.SubStatus == 'AS' || row.SubStatus == 'SA' || row.SubStatus == 'SR' || row.SubStatus == 'CLG' || row.SubStatus == 'CLS' || row.SubStatus == 'PCD' || row.SubStatus == 'QA' || row.SubStatus == 'SPCG' ) {
+        if (row.SubStatus == 'PLC' || row.SubStatus == 'QAFG' || row.SubStatus == 'GQA' || row.SubStatus == 'QRFG' || row.SubStatus == 'RQFG' || row.SubStatus == 'QS' || row.SubStatus == 'SD' || row.SubStatus == 'AS' || row.SubStatus == 'SA' || row.SubStatus == 'SR' || row.SubStatus == 'CLG' || row.SubStatus == 'CLS' || row.SubStatus == 'PCD' || row.SubStatus == 'QA' || row.SubStatus == 'SPCG' || (row.SubStatus == 'GA' && this.insuranceId == '100008')) {
           this.router.navigate(['/Home/Garage']);
         } if (row.SubStatus == 'SLP' || row.SubStatus == 'SLF' || row.SubStatus == 'SLPR' || row.SubStatus == 'RC' || row.SubStatus == 'RG' || row.SubStatus == 'CIRFP' || row.SubStatus == 'IVG' || row.SubStatus == 'PFS' || row.SubStatus == 'UP' || row.SubStatus == 'AFA'  ) {
           this.router.navigate(['/Home/PendingAuthLetter']);

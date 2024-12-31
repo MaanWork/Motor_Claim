@@ -192,12 +192,18 @@ export class NewLossModalComponent implements OnInit, OnDestroy {
       console.log("saveloss", data);
       if (data.Response == "SUCCESS") {
         this.dialogRef.close(true);
-        //this.onStatusUpdate();
-        Swal.fire(
-          `Loss Created Successfully`,
-          'success',
-          'success'
-        );
+        if(this.insuranceId=='100008'){
+          sessionStorage.setItem('PartyNo',this.data.PartyNo);
+          sessionStorage.setItem('Losstypeid',this.lossTypeChoosed);
+          this.onStatusUpdate();
+        }
+        else{
+          Swal.fire(
+            `Loss Created Successfully`,
+            'success',
+            'success'
+          );
+        }
 
       }
       if (data.ErrorsList) {

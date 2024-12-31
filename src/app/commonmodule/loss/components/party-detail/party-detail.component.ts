@@ -18,6 +18,7 @@ import { StatusTrackComponent } from 'src/app/shared/statusTrackComponent/status
 import { ReserveModalComponent } from 'src/app/shared/reserve-modal/reserve-modal.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ExcessModalComponent } from 'src/app/shared/excess-modal/excess-modal.component';
+import { StatusUpdateComponent } from 'src/app/shared/lossinfocomponent/status-update/status-update.component';
 
 export interface PeriodicElement {
   Address: any,
@@ -389,9 +390,10 @@ export class PartyDetailComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result != null && result != '')
         this.onGetLossList(item);
+
     });
   }
-
+ 
   onLossEdit(item) {
     let ReqObj = {
       "ChassisNo": this.claimDetails.ChassisNo,
