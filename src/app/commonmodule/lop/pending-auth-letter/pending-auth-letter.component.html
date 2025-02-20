@@ -88,13 +88,16 @@
 </mat-card> -->
 <form [formGroup]="garageForms">
     <div class="row" *ngIf="logindata.UserType == 'surveyor' || (logindata.UserType == 'garage' && lossStatus == 'AFA')">
-        <mat-card class="col-6 my-2 p-2" style="box-shadow: none;">
+        <mat-card   [ngClass]="{
+            'col-6 my-2 p-2': userType === 'surveyor' && (insuranceId === '100003' || insuranceId === '100002'),
+            'col-12 my-2 p-2': userType !== 'surveyor'
+          }" style="box-shadow: none; margin-bottom: 5px;">
             <ng-container>
                 <app-loss-dmage-parts [WhoView]="WhoView" pageFrom="garageComponent" approvedSection="garage" (DamageListValues)="getDamageListValues($event)" [form]="surveyorForms" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
             </ng-container>
         </mat-card>
-        <mat-card class="col-6 my-2 p-2" style="box-shadow: none;">
-            <ng-container>
+        <mat-card *ngIf="userType==='surveyor' && (insuranceId==='100003' || insuranceId === '100002')" class="col-6 my-2 p-2" style="box-shadow: none;">
+            <ng-container >
                 <app-loss-dmage-parts [WhoView]="WhoView" [surveyorLoginId]="surveyorLoginId" pageFrom="surveyorComponent" approvedSection="garage" (DamageListValues)="getDamageListValues($event)" [form]="garageForms" [DamagePoints]="DamagePoints" [LossInformation]="LossInformation"></app-loss-dmage-parts>
             </ng-container>
         </mat-card>

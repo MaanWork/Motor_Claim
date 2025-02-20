@@ -6,8 +6,8 @@
         Claim Ref No - {{claimDetails?.Claimrefno}}
     </div>
 </div>
-<mat-tab-group class="mt-2">
-    <mat-tab label="Policy Details">
+<!-- <mat-tab-group class="mt-2">
+    <mat-tab label="Policy Details"> -->
         <div class="flex-container">
             <mat-card class="flex-item-left m-1 p-0" style="box-shadow: none;">
                 <ng-container *ngIf="PolicyInformation">
@@ -35,7 +35,61 @@
                 </ng-container>
             </mat-card>
         </div>
-    </mat-tab>
+        <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div style="line-height: 30px;">
+                        Reserve Amount Details
+                    </div>
+                    <div>
+                        <button class="button" (click)="addReserveAmount()" *ngIf="logindata.UserType=='claimofficer' && logindata.UserType != 'surveyor'  && logindata.SubUserType != 'Approver'"><i class="fa fa-plus"></i>&nbsp;Reserve Amount</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ng-container  *ngIf="reserveData.length==0">
+                        <div class="text-center">
+                            No Reserve Amount Added
+                        </div>   
+                    </ng-container>
+                    <ng-container  *ngIf="reserveData.length!=0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-Primary">
+                                <div class="row ">
+                                    <div class="col-lg-2 col-md-2 bg-label">Reserve Type</div>
+                                    <div class="col-lg-2 col-md-2 bg-label">Payment Type</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Reserve<br> ({{currencyCode}})</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Paid <br>({{currencyCode}})</div>
+                                    <div class="col-lg-1 col-md-1 bg-label">Exchange Rate</div>
+                                    <div class="col-lg-1 col-md-1 bg-label text-center">Reserve FC <br>(USD)</div>
+                                    <div class="col-lg-2 col-md-2 bg-label text-center">Paid FC<br> (USD)</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item" *ngFor="let entry of reserveData|paginate:{itemsPerPage: 3, currentPage:p,id: 'p'} ;">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 bg-value" >{{entry.ReserveCodeDesc}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value">{{entry.PaymentCodeDesc}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.ReserveAmount}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmount}}</div>
+                                    <div class="col-lg-1 col-md-1 bg-value" >{{entry.ExchangeRate}}</div>
+                                    <div class="col-lg-1 col-md-1 bg-value text-center">{{entry.ReserveAmountFc}}</div>
+                                    <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmountFc}}</div>
+                                    <!-- <div class="col-lg-3 col-md-3 bg-value text-center">{{entry.EffectiveDate}}</div> -->
+                                </div>
+                            </li>
+                        </ul>
+    
+                        <div class="d-flex justify-content-end">
+                            <pagination-controls (pageChange)="p=$event" id="p"></pagination-controls>
+                          </div>
+                        <div class="text-center" *ngIf="logindata.UserType != 'surveyor' && logindata.SubUserType != 'Approver'">
+                            <button class="mx-2" type="submit" mat-raised-button color="warn" (click)="onMakePayment()"><i class="fa fa-credit-card"></i>&nbsp;Make Payment</button>
+                        </div>
+                    </ng-container>
+                    
+                </div>
+            </div>
+        </mat-card>
+    <!-- </mat-tab>
     <mat-tab label="Cover Details">
         <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
             <div class="card">
@@ -77,7 +131,7 @@
                                         <ng-container *ngIf="entry.ExcessAmount==null">N/A</ng-container>
                                     </div>
                                     <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.EffectiveDate}}</div>
-                                    <!-- <div class="col-lg-3 col-md-3 bg-value text-center">{{entry.EffectiveDate}}</div> -->
+                                   
                                 </div>
                             </li>
                         </ul>
@@ -87,76 +141,9 @@
         </mat-card>
     </mat-tab>
     <mat-tab label="Reserve Amount">
-            <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <div style="line-height: 30px;">
-                            Reserve Amount Details
-                        </div>
-                        <div>
-                            <button class="button" (click)="addReserveAmount()" *ngIf="logindata.UserType=='claimofficer' && logindata.UserType != 'surveyor'  && logindata.SubUserType != 'Approver'"><i class="fa fa-plus"></i>&nbsp;Reserve Amount</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <ng-container  *ngIf="reserveData.length==0">
-                            <div class="text-center">
-                                No Reserve Amount Added
-                            </div>   
-                        </ng-container>
-                        <ng-container  *ngIf="reserveData.length!=0">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-Primary">
-                                    <div class="row ">
-                                        <div class="col-lg-2 col-md-2 bg-label">Reserve Type</div>
-                                        <div class="col-lg-2 col-md-2 bg-label">Payment Type</div>
-                                        <div class="col-lg-2 col-md-2 bg-label text-center">Reserve<br> ({{currencyCode}})</div>
-                                        <div class="col-lg-2 col-md-2 bg-label text-center">Paid <br>({{currencyCode}})</div>
-                                        <div class="col-lg-1 col-md-1 bg-label">Exchange Rate</div>
-                                        <div class="col-lg-1 col-md-1 bg-label text-center">Reserve FC <br>(USD)</div>
-                                        <div class="col-lg-2 col-md-2 bg-label text-center">Paid FC<br> (USD)</div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item" *ngFor="let entry of reserveData|paginate:{itemsPerPage: 3, currentPage:p,id: 'p'} ;">
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-2 bg-value" >{{entry.ReserveCodeDesc}}</div>
-                                        <div class="col-lg-2 col-md-2 bg-value">{{entry.PaymentCodeDesc}}</div>
-                                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.ReserveAmount}}</div>
-                                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmount}}</div>
-                                        <div class="col-lg-1 col-md-1 bg-value" >{{entry.ExchangeRate}}</div>
-                                        <div class="col-lg-1 col-md-1 bg-value text-center">{{entry.ReserveAmountFc}}</div>
-                                        <div class="col-lg-2 col-md-2 bg-value text-center">{{entry.TotalPaidAmountFc}}</div>
-                                        <!-- <div class="col-lg-3 col-md-3 bg-value text-center">{{entry.EffectiveDate}}</div> -->
-                                    </div>
-                                </li>
-                            </ul>
-        
-                            <div class="d-flex justify-content-end">
-                                <pagination-controls (pageChange)="p=$event" id="p"></pagination-controls>
-                              </div>
-                            <div class="text-center" *ngIf="logindata.UserType != 'surveyor' && logindata.SubUserType != 'Approver'">
-                                <button class="mx-2" type="submit" mat-raised-button color="warn" (click)="onMakePayment()"><i class="fa fa-credit-card"></i>&nbsp;Make Payment</button>
-                            </div>
-                        </ng-container>
-                        
-                    </div>
-                </div>
-            </mat-card>
-            <!-- <mat-card  style="background-color: transparent; margin-bottom: 10px; box-shadow: none;">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <div style="line-height: 30px;">
-                            Excess Details
-                        </div>
-                        <div>
-                            <button class="button" (click)="addExcessAmount()" *ngIf="logindata.UserType=='claimofficer' && logindata.UserType != 'surveyor'  && logindata.SubUserType != 'Approver'"><i class="fa fa-plus"></i>&nbsp;Excess Amount</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                    </div>
-                </div>
-            </mat-card> -->
+            
     </mat-tab>
-</mat-tab-group>
+</mat-tab-group> -->
 
 
 

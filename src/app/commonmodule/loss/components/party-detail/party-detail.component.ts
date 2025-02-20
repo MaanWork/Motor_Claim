@@ -405,8 +405,8 @@ export class PartyDetailComponent implements OnInit {
       "BranchCode": this.logindata.BranchCode,
       "InsuranceId": this.logindata.InsuranceId,
       "RegionCode": this.logindata.RegionCode,
-      "CreatedBy": item.CreatedBy,
-      "UserType": item.UserType,
+      "CreatedBy": this.logindata.LoginId,
+      "UserType": this.logindata.UserType,
       "UserId": this.logindata?.OaCode
     }
 
@@ -560,7 +560,14 @@ export class PartyDetailComponent implements OnInit {
   }
 
   onUpdateStatus(status, item) {
-    let UrlLink = null;
+    const dialogRef = this.dialog.open(StatusUpdateComponent, {
+      width: '100%',
+      panelClass: 'full-screen-modal',
+      data: item
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if( result == 'submit'){
+      let UrlLink = null;
     if(this.logindata.InsuranceId=='100002') UrlLink = `api/updateclaimstatus`;
     else if(this.logindata.InsuranceId=='100003' || this.logindata.InsuranceId=='100008') UrlLink = `api/updateclaimstatusV1`; 
     let GarageId = '';
@@ -582,10 +589,6 @@ export class PartyDetailComponent implements OnInit {
       "Authcode": sessionStorage.getItem('UserToken'),
       "GarageId": GarageId
     }
-
-
-
-
     return this.lossService.onUpdateStatus(UrlLink, ReqObj).subscribe(async (data: any) => {
 
       if (data.Response == "Success") {
@@ -613,7 +616,9 @@ export class PartyDetailComponent implements OnInit {
     }, (err) => {
       this.handleError(err);
     })
-
+  }
+    });
+  
   }
   onSurveyorLossPdf(event) {
     let UrlLink = "pdf/damageappraisal";

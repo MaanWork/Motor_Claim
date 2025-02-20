@@ -80,7 +80,7 @@ export class NewLossModalComponent implements OnInit, OnDestroy {
       this.claimIntimateValue = event;
       console.log(this.claimIntimateValue);
     });
-    this.getCoverList();
+    if(this.insuranceId!='100002')this.getCoverList();
     
   }
   getCoverList(){
@@ -143,6 +143,11 @@ export class NewLossModalComponent implements OnInit, OnDestroy {
     if(this.logindata.UserType=='claimofficer')  status = 'PLC';
     else if(this.logindata.UserType=='surveyor')  status = 'SA';
     else if (this.logindata.UserType=='garage')  status = 'QA';
+    let coverId='',coverName='';
+    if(this.LossTypeForm.controls['CoverName'].value!=''){
+      coverId = this.LossTypeForm.controls['CoverName'].value;
+      coverName = this.coverData.find(ele=>ele.CoverId==coverId)?.CoverName;
+    }
     let ReqObj = {
       "ChassisNo": this.ClaimDetails.ChassisNo,
       "ClaimNo": this.ClaimDetails.ClaimNo,
@@ -167,8 +172,8 @@ export class NewLossModalComponent implements OnInit, OnDestroy {
       "Losstypeid": this.lossTypeChoosed,
       "ConsumablesCost": "",
       "LabourCost": "",
-      "CoverId": this.LossTypeForm.controls['CoverName'].value,
-      "CoverName": this.coverData.find(ele=>ele.CoverId==this.LossTypeForm.controls['CoverName'].value)?.CoverName,
+      "CoverId": coverId,
+      "CoverName": coverName,
       "SectionIds": this.claimIntimateValue.Vehpartsid,
       "Claimrefno": this.claimIntimateValue.Claimrefno,
       "SparepartsCost": 0,

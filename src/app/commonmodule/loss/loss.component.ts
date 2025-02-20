@@ -75,7 +75,7 @@ export class LossComponent implements OnInit, OnDestroy {
       this.Nationality = event;
     })
     this.onGetReserveAmountList();
-    this.getCoverList();
+    if(this.insuranceId!='100002')this.getCoverList();
   }
 
   ngOnDestroy() {

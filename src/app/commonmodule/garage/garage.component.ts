@@ -690,17 +690,27 @@ export class GarageComponent implements OnInit, OnDestroy {
 
 
           } else {
-            if(this.GarageEdit.ApprovedYn!='N'){
-              this.onStatusUpdate()
+           // if(this.insuranceId!='100002'){
+              if(this.GarageEdit.ApprovedYn!='N'){
+                this.onStatusUpdate()
+              }
+              else{
+                Swal.fire(
+                  'Quotation Details Saved Successfully',
+                  'success',
+                  'success'
+                )
+                this.router.navigate(['./Home/Dashboard']);
+            //  }
             }
-            else{
-              Swal.fire(
-                'Quotation Details Saved Successfully',
-                'success',
-                'success'
-              )
-              this.router.navigate(['./Home/Dashboard']);
-            }
+            // else{
+            //   Swal.fire(
+            //     'Quotation Details Saved Successfully',
+            //     'success',
+            //     'success'
+            //   )
+            //   this.router.navigate(['./Home/Dashboard']);
+            // }
           }
 
         }

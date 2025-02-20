@@ -189,6 +189,24 @@ export class DashboardTableComponent implements OnInit, AfterViewInit {
     return response;
   }
   updateGarageDetails(rowData,type){
+    sessionStorage.setItem('PartyNo',rowData.PartyNo);
+    sessionStorage.setItem('Losstypeid',rowData.LosstypeId);
+    sessionStorage.setItem('Status',rowData.Status);
+    sessionStorage.removeItem('LossDetails');
+    sessionStorage.setItem('LossDetails', JSON.stringify(rowData));
+    if(this.commonReqObject().InsuranceId!='100002'){
+    const dialogRef = this.dialog.open(StatusUpdateComponent, {
+      width: '100%',
+      panelClass: 'full-screen-modal',
+      data: rowData
+    });
+    // dialogRef.afterOpened().subscribe(result => {
+      
+    // });
+    dialogRef.afterClosed().subscribe(result => {
+      // sessionStorage.removeItem('LossDetails');
+      // sessionStorage.setItem('LossDetails', JSON.stringify(rowData));
+      if( result == 'submit'){
     let ReqObj = {
       "ClaimNo": rowData?.ClaimNo,
       "PartyNo": rowData?.PartyNo,
@@ -231,6 +249,53 @@ export class DashboardTableComponent implements OnInit, AfterViewInit {
     }, (err) => {
       this.handleError(err);
     })
+  }
+});
+  }
+  else{
+      let ReqObj = {
+        "ClaimNo": rowData?.ClaimNo,
+        "PartyNo": rowData?.PartyNo,
+        "LosstypeId": rowData?.LosstypeId,
+        "PolicyNo": rowData?.PolicyNo,
+        "GarageId": rowData?.GarageId,
+        "ApprovedYn": type,
+        "ExpectedStartdate": null,
+        "LabourCost": null,
+        "Noofdays": null,
+        "Uploadquatationyn": 'N',
+        "GarageRemarks": null,
+        "Remarks": "",
+        "AllotedYn": 'Y',
+        "SaveorSubmit": 'Submit',
+        "YoungAgeDriver": null,
+        "SparepartsCost": null,
+        "VehpartsId": null,
+        "ConsumablesCost": null,
+        "ClaimofficerRemarks": null,
+        "TotalLabourHour": null,
+        "PerHourLabourCost": null,
+        "SalvageAmount": null,
+        "TotalPrice": null,
+        ...this.commonReqObject()
+      }
+      let UrlLink = `api/updategarageapprovaldetail`;
+      return this.lossService.onUpdateStatus(UrlLink, ReqObj).subscribe(async (data: any) => {
+  
+        console.log("saveloss", data);
+        if (data.Response == "Success") {
+            if(type=='A') this.onUpdateStatus(rowData,'QA')
+            else  this.onUpdateStatus(rowData,'QR')
+          
+        }
+        if (data.Errors) {
+          this.errorService.showValidateError(data.Errors);
+  
+        }
+      }, (err) => {
+        this.handleError(err);
+      })
+  }
   }
   onUpdateStatus(rowData,status){
     let UrlLink = null;

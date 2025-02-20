@@ -191,8 +191,15 @@ export class StatusUpdateComponent implements OnInit {
           );
           sessionStorage.removeItem("GarageLossDetails");
           if (this.router.url == '/Home/Loss' ) {
+            if(this.StatusCode=='SA'){
+              this.dialogRef.close(true);
+              this.router.navigate(['/Home']);
+           }
+           else{
             window.location.reload();
           }
+          }
+          
           else if(this.router.url == '/Home/Table'){
             this.dialogRef.close(true);
             this.router.navigate(['/Home']);

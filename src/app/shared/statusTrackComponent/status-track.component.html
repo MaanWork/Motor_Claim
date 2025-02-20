@@ -58,21 +58,7 @@
             <span>- Pending</span>
         </div>
     </div>
-    <!-- <div class="row mt-2" *ngIf="totalTrackList.length!=0">
-        <div class="col-md-12 col-lg-12">
-            <p-timeline [value]="totalTrackList">
-                <ng-template pTemplate="content" let-event>
-                    <span class="text-primary"><b>{{event.UserType}}</b></span> <br>
-                    <small class="p-text-secondary">&#123;&#123;event.Entrydate&#125;&#125;</small>
-                </ng-template>
-                <ng-template pTemplate="opposite" let-event>
-                    <h5 class="text-success p-0" *ngIf="event.CompletedYn=='Y'"><b>{{event.Substatusdescription}}</b></h5>
-                    <h5 class="text-secondary p-0" *ngIf="event.CompletedYn!='Y'"><b>{{event.Substatusdescription}}</b></h5>
-                    <small class="text-dark" *ngIf="event.Remarks!=null">Remarks :&nbsp;<small class="p-text-secondary p-0">&#123;&#123;event.Remarks&#125;&#125;</small></small>
-                </ng-template>
-            </p-timeline>
-        </div>
-    </div> -->
+  
     <section class="section-timeline" *ngIf="totalTrackList.length!=0">
         <div class="container">
             <ul class="timeline">
