@@ -9,8 +9,36 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="row mt-2">
+        <div class="row mt-2" *ngIf="insuranceId=='100003'">
             <div class="col-md-10 col-lg-10 offset-1">
+                <mat-form-field appearance="outline" class="mat-form-width">
+                    <mat-label>Reserve Type</mat-label>
+                    <!-- [(ngModel)]="ReserveType" -->
+                    <mat-select [(ngModel)]="ReserveType"  (selectionChange)="onReserveTypeChange($event)">
+                        <mat-option *ngFor="let type of reserveTypes" [value]="type.Code">
+                            {{ type.CodeDesc }}
+                        </mat-option>
+                    </mat-select>
+                      
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="insuranceId=='100003'">
+            <div class="col-md-10 col-lg-10 offset-1">
+                <mat-form-field appearance="outline" class="mat-form-width">
+                    <mat-label>Payment Type</mat-label>
+                    <!-- [(ngModel)]="ReserveType" -->
+                    <mat-select [(ngModel)]="PaymentType" >
+                        <mat-option *ngFor="let type of PaymentTypelist" [value]="type.Code">
+                            {{ type.CodeDesc }}
+                        </mat-option>
+                    </mat-select>
+                      
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="insuranceId=='100002'">
+            <div class="col-md-10 col-lg-10 offset-1" >
                 <mat-form-field appearance="outline" class="mat-form-width">
                     <mat-label>Reserve Type</mat-label>
                     <!-- [(ngModel)]="ReserveType" -->

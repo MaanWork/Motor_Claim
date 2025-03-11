@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LossService } from 'src/app/commonmodule/loss/loss.service';
 import { ErrorService } from '../services/errors/error.service';
@@ -8,11 +8,14 @@ import { ErrorService } from '../services/errors/error.service';
   selector: 'app-reserve-modal',
   templateUrl: './reserve-modal.component.html'
 })
-export class ReserveModalComponent {
+export class ReserveModalComponent implements OnInit{
   claimDetails:any;maxDate:Date;
   effectiveDate:any=null;reserveAmount:any=null;
   logindata: any;insuranceId:any=null;currencyCode:any=null;
   ReserveType:any;
+  reserveTypes: any[]=[];
+  PaymentTypelist: any[]=[];
+  PaymentType:any;
   constructor(public dialog: MatDialog,private datePipe:DatePipe,public dialogRef: MatDialogRef<ReserveModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,private lossService:LossService,private errorService: ErrorService){
       this.maxDate = new Date();
@@ -25,6 +28,32 @@ export class ReserveModalComponent {
 
       }
     }
+  ngOnInit(): void {
+    if(this.insuranceId=='100003')this.getReserveType()
+  }
+  getReserveType(){
+    let ReqObj = {
+      "CompanyId": this.logindata?.InsuranceId,
+    }
+    let UrlLink = `api/dropdown/reserveType`;
+    return this.lossService.getReserveType(UrlLink, ReqObj).subscribe(async (data: any) => {
+      this.reserveTypes = data
+    }, (err) => {
+
+    })
+  }
+  onReserveTypeChange(event){
+    let ReqObj = {
+       "CompanyId": this.logindata?.InsuranceId,
+        "ReserveType": event.value
+    }
+    let UrlLink = `api/dropdown/reservePaymentType`;
+    return this.lossService.getReserveType(UrlLink, ReqObj).subscribe(async (data: any) => {
+      this.PaymentTypelist = data
+    }, (err) => {
+
+    })
+  }
     onSaveReserve(){
           let UrlLink = `api/insertreservedetails`;let date = null,reserveAmount:any=null;
           if(this.effectiveDate!=null){
@@ -34,6 +63,8 @@ export class ReserveModalComponent {
             const regEx = new RegExp(',', "g");
             reserveAmount = this.reserveAmount.replace(regEx,'');
           }
+          let paymetDesc = this.PaymentTypelist.find(ele=>ele.Code==this.PaymentType)?.CodeDesc
+          let ReserveTypeDesc = this.reserveTypes.find(ele=>ele.Code == this.ReserveType)?.CodeDesc
           let ReqObj = {
             "ClaimNo": this.claimDetails?.ClaimNo,
             "EffectiveDate": date,
@@ -44,6 +75,10 @@ export class ReserveModalComponent {
             "CreatedBy": this.logindata.LoginId,
             "UserType": this.logindata.UserType,
             "UserId": this.logindata?.OaCode,
+            "PaymentCode": this.PaymentType,
+            "PaymentCodeDesc": paymetDesc,
+            "ReserveCode" : this.ReserveType,
+            "ReserveCodeDesc": ReserveTypeDesc
           }
           return this.lossService.onLossEdit(UrlLink, ReqObj).subscribe((data: any) => {
                 if(data?.Response=='Success'){

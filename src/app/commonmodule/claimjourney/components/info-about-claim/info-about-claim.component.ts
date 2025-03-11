@@ -206,8 +206,8 @@ export class InfoAboutClaimComponent implements OnInit,OnChanges,OnDestroy {
   }
 
   onLossListView(item) {
-    console.log()
-    let ReqObj = {
+
+  let ReqObj = {
       "ChassisNo": this.claimDetails.ChassisNo,
       "ClaimNo": this.claimDetails.ClaimNo,
       "PartyNo": item.PartyNo,

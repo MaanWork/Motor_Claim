@@ -503,6 +503,13 @@ export class LossService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  // async getReserveType(UrlLink,Reqobj): Promise<Observable<any[]>> {
+  //   let headers = new HttpHeaders();
+  //   headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+  //   return await this.http
+  //     .get<any>(this.ApiUrl + UrlLink, Reqobj, { headers: headers })
+  //     .pipe(retry(1), catchError(this.handleError));
+  // }
   async getClaimLossType(UrlLink,ReqObj): Promise<Observable<any[]>> {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
@@ -519,6 +526,13 @@ export class LossService {
       .pipe(retry(1), catchError(this.handleError));
   }
   onUpdateStatus(UrlLink, Reqobj): Observable<any[]> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    return this.http
+      .post<any>(this.ApiUrl + UrlLink, Reqobj, { headers: headers })
+      .pipe(retry(1), catchError(this.handleError));
+  }
+  getReserveType(UrlLink, Reqobj): Observable<any[]> {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return this.http
