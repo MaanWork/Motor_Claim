@@ -41,7 +41,7 @@
                                     <input matInput formControlName="NoOfDays">
                                 </mat-form-field>
                             </div>
-                            <div class="col-12 mt-3" *ngIf="(GarageEdit.ApprovedYn!='N' && GarageEdit.ApprovedYn!='CL') && GarageEdit.SubStatus!='GQA'">
+                            <div class="col-12 mt-3" *ngIf="(GarageEdit.ApprovedYn!='CL') && GarageEdit.SubStatus!='GQA'">
                                 <mat-form-field appearance="fill" class="mat-form-width">
                                     <mat-label>Remarks</mat-label>
                                     <textarea matInput required formControlName="GarageRemarks"></textarea>
